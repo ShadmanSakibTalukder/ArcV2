@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\PartsListController;
-use App\Http\Controllers\PurchasedOrderController;
-use App\Http\Controllers\TendersController;
-use App\Http\Controllers\VendorsController;
-use App\Http\Controllers\WorkOrderController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BuyersController;
+use App\Http\Controllers\TendersController;
+use App\Http\Controllers\VendorsController;
+use App\Http\Controllers\PartsListController;
+use App\Http\Controllers\WorkOrderController;
+use App\Http\Controllers\PurchasedOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,4 @@ Route::resource('admin/parts_list',PartsListController::class);
 Route::resource('admin/tenders',TendersController::class);
 Route::resource( 'admin/purchased_order',PurchasedOrderController::class);
 Route::resource( 'admin/vendors',VendorsController::class);
+Route::resource( 'admin/buyers',BuyersController::class);
