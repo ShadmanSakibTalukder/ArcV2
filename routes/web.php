@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\PartsListController;
+use App\Http\Controllers\PurchasedOrderController;
+use App\Http\Controllers\TendersController;
+use App\Http\Controllers\VendorsController;
+use App\Http\Controllers\WorkOrderController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +26,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('admin/work_orders', WorkOrderController::class);
+Route::resource('admin/parts_list',PartsListController::class);
+Route::resource('admin/tenders',TendersController::class);
+Route::resource( 'admin/purchased_order',PurchasedOrderController::class);
+Route::resource( 'admin/vendors',VendorsController::class);
