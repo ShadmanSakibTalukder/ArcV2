@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('parts_lists', function (Blueprint $table) {
             $table->id();
+            $table->string('requested_part_no');
+            $table->string('requested_nomenclature');
+            $table->string('cat_part_no')->nullable();
+            $table->string('cat_nomenclature')->nullable();
+            $table->string('nsn')->nullable();
+            $table->string('classification')->nullable();
+            $table->string('lead_time')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('image')->nullable();
+            $table->integer('surplus_price')->nullable();
+            $table->integer('fs_price')->nullable();
+            $table->integer('navister_price')->nullable();
+            $table->integer('declared_price')->nullable();
+
+
             $table->timestamps();
         });
     }
