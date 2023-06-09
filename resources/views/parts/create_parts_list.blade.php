@@ -16,64 +16,44 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label>Parts ID</label>
-                                <input type="text" name="slug" class="form-control" />
-                                @error('slug') <small class="text-danger">{($message)}</small> @enderror
+                                <label>Image</label>
+                                <input type="file" name="file" class="form-control" />
+                                @error('file') <small class="text-danger">{($message)}</small> @enderror
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label>Nomenclature</label>
+                                <label>Parts No.</label>
                                 <input type="text" name="name" class="form-control" />
                                 @error('name') <small class="text-danger">{($message)}</small> @enderror
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label>Requested Part No.</label>
+                                <label>NSN</label>
                                 <input type="text" name="slug" class="form-control" />
                                 @error('slug') <small class="text-danger">{($message)}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>Catalog Part No.</label>
+                                <label>Nomenclature</label>
                                 <input type="text" name="meta_title" class="form-control" />
                                 @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>NSN</label>
+                                <label>Purchase Price</label>
                                 <input type="text" name="meta_title" class="form-control" />
                                 @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>Flight Source New Surplus Stock</label>
+                                <label>Declared Price</label>
                                 <input type="text" name="meta_title" class="form-control" />
                                 @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>Flight Source New Surplus Price</label>
+                                <label>Classification</label>
                                 <input type="text" name="meta_title" class="form-control" />
                                 @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label>Flight Source New Price</label>
-                                <input type="text" name="meta_title" class="form-control" />
-                                @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Navister Price</label>
-                                <input type="text" name="meta_title" class="form-control" />
-                                @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Previous Declared Price</label>
-                                <input type="text" name="meta_title" class="form-control" />
-                                @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Certificate</label>
-                                <input type="text" name="meta_title" class="form-control" />
-                                @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Lean Time</label>
+                                <label>Lead Time</label>
                                 <input type="date" name="meta_title" class="form-control" />
                                 @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
                             </div>
@@ -81,7 +61,6 @@
                                 <label>Weight</label>
                                 <input type="text" name="meta_title" class="form-control" />
                                 @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label>Status</label> <br/>

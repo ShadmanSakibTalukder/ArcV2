@@ -21,7 +21,7 @@
             <tr>
                 <th scope="col">sl</th>
                 <th scope="col">image</th>
-                <th scope="col">Part No.</th>
+                <th scope="col">Parts No.</th>
                 <th scope="col">NSN</th>
                 <th scope="col">Nomenclature</th>
                 <th scope="col">Purchase Price</th>
