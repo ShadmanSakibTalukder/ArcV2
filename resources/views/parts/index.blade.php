@@ -132,7 +132,7 @@
 
 
                 </td>
-                <td>nsn number can be nullable</td>
+                <td>5567-01-556-1234</td>
 
                 <td>
                     <table class="table table-bordered align-middle">
