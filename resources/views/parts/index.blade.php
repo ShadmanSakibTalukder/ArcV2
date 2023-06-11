@@ -2,22 +2,28 @@
     <x-slot:title>
         Parts List
     </x-slot:title>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h4 class="h2">{{__('Parts List')}}</h4>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h4 class="h2">{{__('Parts List')}}</h4>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        </div>
+                        <a type="button" href="{{route('parts_list.create')}}" class="btn btn-sm btn-outline-secondary">
+                            <span><i class="fa-solid fa-plus"></i></span>{{__(' Create')}}
+                        </a>
+                    </div>
+                </div>
             </div>
-            <a type="button" href="{{route('parts_list.create')}}" class="btn btn-sm btn-outline-secondary">
-                <span><i class="fa-solid fa-plus"></i></span>{{__(' Create')}}
-            </a>
-
-
         </div>
-    </div>
-
-    <table class="table table-bordered align-middle">
-        <thead>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <!-- Table content -->
+ <thead>
             <tr>
                 <th scope="col">sl</th>
                 <th scope="col">image</th>
@@ -39,7 +45,7 @@
                 @if($item->image)
                 <td class="tableImage"><img style="width: 150px; height: 100px;" src="{{asset('storage/parts/'.$item->image)}}" alt="image"></td>
                 @else
-                <td>Image Missing</td>
+                <td class="text-danger">Image Missing</td>
                 @endif
                 <td>
                     <table class="table table-bordered align-middle">
@@ -53,7 +59,7 @@
                                 @if ($item->cat_part_no)
                                 <td>{{$item->cat_part_no}}</td>
                                 @else
-                                <td>Not Available!</td>
+                                <td class="text-danger">Not Available!</td>
                                 @endif
                             </tr>
                         </tbody>
@@ -62,7 +68,7 @@
                 @if ($item->nsn)
                 <td>{{$item->nsn}}</td>
                 @else
-                <td>Not Available!</td>
+                <td class="text-danger">Not Available!</td>
                 @endif
                 <td>
                     <table class="table table-bordered align-middle">
@@ -76,7 +82,7 @@
                                 @if ($item->cat_nomenclature)
                                 <td>{{$item->cat_nomenclature}}</td>
                                 @else
-                                <td>Not Available!</td>
+                                <td class="text-danger">Not Available!</td>
                                 @endif
                             </tr>
                         </tbody>
@@ -90,7 +96,7 @@
                                 @if ($item->surplus_price)
                                 <td>{{$item->surplus_price}}</td>
                                 @else
-                                <td>Not Available!</td>
+                                <td class="text-danger">Not Available!</td>
                                 @endif
                             </tr>
                             <tr>
@@ -98,7 +104,7 @@
                                 @if ($item->fs_price)
                                 <td>{{$item->fs_price}}</td>
                                 @else
-                                <td>Not Available!</td>
+                                <td class="text-danger">Not Available!</td>
                                 @endif
                             </tr>
                             <tr>
@@ -106,7 +112,7 @@
                                 @if ($item->navister_price)
                                 <td>{{$item->navister_price}}</td>
                                 @else
-                                <td>Not Available!</td>
+                                <td class="text-danger">Not Available!</td>
                                 @endif
                             </tr>
                         </tbody>
@@ -115,22 +121,22 @@
                 @if ($item->declared_price)
                 <td>{{$item->declared_price}}</td>
                 @else
-                <td>Not Available!</td>
+                <td class="text-danger">Not Available!</td>
                 @endif
                 @if ($item->classification)
                 <td>{{$item->classification}}</td>
                 @else
-                <td>Not Available!</td>
+                <td class="text-danger">Not Available!</td>
                 @endif
                 @if ($item->lead_time)
                 <td>{{$item->lead_time}}</td>
                 @else
-                <td>Not Available!</td>
+                <td class="text-danger">Not Available!</td>
                 @endif
                 @if ($item->weight)
                 <td>{{$item->weight}}</td>
                 @else
-                <td>Not Available!</td>
+                <td class="text-danger">Not Available!</td>
                 @endif
 
                 <td>
@@ -158,8 +164,10 @@
 
             @endforelse
         </tbody>
-    </table>
 
-
-
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-master>
