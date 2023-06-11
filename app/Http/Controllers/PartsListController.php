@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Parts_list;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class PartsListController extends Controller
 {
@@ -12,7 +13,8 @@ class PartsListController extends Controller
      */
     public function index()
     {
-        return view('parts.index');
+        $parts = Parts_list::orderBy('id', 'DESC')->paginate(15);
+        return view('parts.index', compact('parts'));
     }
 
     /**
@@ -28,7 +30,25 @@ class PartsListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->image);
+        $fileName = $this->uploadImage($request->file('image'));
+        $request_data = [
+            'requested_part_no' => $request->requested_part_no,
+            'requested_nomenclature' => $request->requested_nomenclature,
+            'cat_part_no' => $request->cat_part_no,
+            'cat_nomenclature' => $request->cat_nomenclature,
+            'nsn' => $request->nsn,
+            'classification' => $request->classification,
+            'lead_time' => $request->lead_time,
+            'weight' => $request->weight,
+            'surplus_price' => $request->surplus_price,
+            'fs_price' => $request->fs_price,
+            'navister_price' => $request->navister_price,
+            'declared_price' => $request->declared_price,
+            'image' => $fileName
+        ];
+        Parts_list::create($request_data);
+        return redirect()->back()->with('message', 'Successfully Created!');
     }
 
     /**
@@ -61,5 +81,17 @@ class PartsListController extends Controller
     public function destroy(Parts_list $parts_list)
     {
         //
+    }
+
+    public function uploadImage($image)
+    {
+
+        $originalName = $image->getClientOriginalName();
+        $fileName = date('Y-m-d') . time() . $originalName;
+        $image->move(storage_path('/app/public/parts'), $fileName);
+        // Image::make($image)
+        //     ->save(storage_path() . '/app/public/parts/' . $fileName);
+
+        return $fileName;
     }
 }
