@@ -6,11 +6,12 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h2> Work Orders
-                        <div class="d-flex justify-content-end align-items-center">
-          <a href="{{ route('work_orders.create') }}" class="btn btn-primary btn-sm text-white me-2">Create Work Order</a>
+                        <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                         <h2> Work Orders </h2>
+                         <div class="btn-toolbar mb-2 mb-md-0">
+          <a href="{{ route('work_orders.create') }}" class="btn btn-md btn-outline-secondary">Create Work Order</a>
         </div>
-                 </h2>
+    </div>
                 </div>
                 <div class="card-body">
                     <form action="{{url('')}}" method="POST" enctype="multipart/form-data">

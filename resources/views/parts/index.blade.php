@@ -19,12 +19,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-bordered align-middle">
+                    <table class="table table-bordered align-middle" >
                         <!-- Table content -->
  <thead>
-            <tr>
+            <tr class= "text-center">
                 <th scope="col">sl</th>
                 <th scope="col">image</th>
                 <th scope="col">Parts No.</th>

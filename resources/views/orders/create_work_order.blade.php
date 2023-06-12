@@ -1,67 +1,134 @@
 <x-master>
     <x-slot:title>
-        Work Order
+        Create Work order
     </x-slot:title>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h2> Create Tenders
-                        <a href="{{ Route('tenders.index') }}" class="btn btn-primary btn-sm text-white float-end"> Back </a>
-                    </h2>
+  <div class="container">
+        <h3>Create Work Order</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-section">
+                    <div class="mb-3">
+                        <label for="vendorName" class="form-label">Vendor Name:</label>
+                        <input type="text" class="form-control" id="vendorName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address:</label>
+                        <input type="text" class="form-control" id="address">
+                    </div>
+                    <div class="mb-3">
+                        <label for="partsNo" class="form-label">Parts Number:</label>
+                        <input type="string" class="form-control" id="partsNo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date:</label>
+                        <input type="date" class="form-control" id="date">
+                    </div>
+                    <div class="table responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Parts No.</th>
+                                <th>NSN</th>
+                                <th>Nomenclature</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Unit Price</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Part 1</td>
+                                <td>1234</td>
+                                <td>Nomenclature 1</td>
+                                <td>10</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="fsPrice">FS Price</option>
+                                        <option value="surplusPrice">Surplus Price</option>
+                                        <option value="navisterPrice">Navister Price</option>
+                                    </select>
+                                </td>
+                                <td>$10</td>
+                                <td>$100</td>
+                            </tr>
+                            <tr>
+                                <td>Part 2</td>
+                                <td>5678</td>
+                                <td>Nomenclature 2</td>
+                                <td>5</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="fsPrice">FS Price</option>
+                                        <option value="surplusPrice">Surplus Price</option>
+                                        <option value="navisterPrice">Navister Price</option>
+                                    </select>
+                                </td>
+                                <td>$15</td>
+                                <td>$75</td>
+                            </tr>
+                            <tr>
+                                <td>Part 3</td>
+                                <td>9012</td>
+                                <td>Nomenclature 3</td>
+                                <td>2</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option value="fsPrice">FS Price</option>
+                                        <option value="surplusPrice">Surplus Price</option>
+                                        <option value="navisterPrice">Navister Price</option>
+                                    </select>
+                                </td>
+                                <td>$20</td>
+                                <td>$40</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-md btn-outline-primary px-3 mx-2">Save</button>
                 </div>
-                <div class="card-body">
-                    <form action="{{ ('')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label>Work Order ID</label>
-                                <input type="text" name="name" class="form-control" />
-                                @error('name') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Work Order No.</label>
-                                <input type="text" name="name" class="form-control" />
-                                @error('name') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Tender No.</label>
-                                <input type="text" name="slug" class="form-control" />
-                                @error('slug') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Date</label>
-                                <input type="date" name="meta_title" class="form-control" />
-                                @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Items</label>
-                                <input type="text" name="meta_title" class="form-control" />
-                                @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Ordered By</label>
-                                <input type="text" name="meta_title" class="form-control" />
-                                @error('meta_title') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                        <div class="col-md-6 mb-3">
-                            <label>Status</label> <br/>
-                            <input type="checkbox" name="status" />
-                            @error('status') <small class="text-danger">{($message)}</small> @enderror
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <button type="submit" class="btn btn-primary float-end">Save</button>
-                            </div>
-                        </div>
-
-                    </form>
+            </div>
+            </div>
+            <div class="col-md-6">
+                <div class="search-section">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search parts">
+                        <button type="button" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="listbox-section">
+                    <div class="listbox">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Parts No.</th>
+                                    <th>Nomenclature</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Part 4</td>
+                                    <td>Nomenclature 4</td>
+                                    <td><button type="button" class="btn btn-sm btn-outline-secondary btn-add">+</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Part 5</td>
+                                    <td>Nomenclature 5</td>
+                                    <td><button type="button" class="btn btn-sm btn-outline-secondary btn-add">+</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Part 6</td>
+                                    <td>Nomenclature 6</td>
+                                    <td><button type="button" class="btn btn-sm btn-outline-secondary btn-add">+</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 
 
 </x-master>

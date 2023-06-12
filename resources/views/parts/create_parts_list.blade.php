@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2> Create Parts List
-                        <a href="{{ Route('parts_list.index') }}" class="btn btn-primary btn-sm text-white float-end"> Back </a>
+                        <a href="{{ Route('parts_list.index') }}" class="btn btn-sm btn-outline-secondary float-end"> Back </a>
                     </h2>
                 </div>
                 <div class="card-body">
