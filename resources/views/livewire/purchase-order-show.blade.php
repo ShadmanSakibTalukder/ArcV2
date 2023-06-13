@@ -1,4 +1,19 @@
 <div>
+    @if (session()->has('message'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ session('message') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @elseif (session()->has('success_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success_message') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+    @php
+    $subTotal=0
+    @endphp
     <h3>Create Purchase Order</h3>
     <div class="row">
         <div class="col-md-6">
@@ -11,63 +26,54 @@
                                 <th>Parts No.</th>
                                 <th>Nomenclature</th>
                                 <th>Qty</th>
-                                <th>Price</th>
+                                <th>Price By</th>
                                 <th>Unit Price</th>
                                 <th>Total Price</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse ($added_to_list as $item)
                             <tr>
-                                <td>Part 1</td>
-                                <td>1234</td>
-                                <td>Nomenclature 1</td>
-                                <td>10</td>
+                                <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
+                                <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
                                 <td>
-                                    <select class="form-select sm">
+                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
+                                </td>
+                                <td>
+                                    <select class="form-select sm" wire:model="selectedOption">
                                         <option value="fsPrice">FS Price</option>
                                         <option value="surplusPrice">Surplus Price</option>
                                         <option value="navisterPrice">Navister Price</option>
                                     </select>
                                 </td>
-                                <td>$10</td>
-                                <td>$100</td>
-                            </tr>
-                            <tr>
-                                <td>Part 2</td>
-                                <td>5678</td>
-                                <td>Nomenclature 2</td>
-                                <td>5</td>
                                 <td>
-                                    <select class="form-select">
-                                        <option value="fsPrice">FS Price</option>
-                                        <option value="surplusPrice">Surplus Price</option>
-                                        <option value="navisterPrice">Navister Price</option>
-                                    </select>
+                                    {{ $this->calculateUnitPrice($item) }}
                                 </td>
-                                <td>$15</td>
-                                <td>$75</td>
-                            </tr>
-                            <tr>
-                                <td>Part 3</td>
-                                <td>9012</td>
-                                <td>Nomenclature 3</td>
-                                <td>2</td>
                                 <td>
-                                    <select class="form-select">
-                                        <option value="fsPrice">FS Price</option>
-                                        <option value="surplusPrice">Surplus Price</option>
-                                        <option value="navisterPrice">Navister Price</option>
-                                    </select>
+                                    @if (isset($parts_selected[$item->id]) && isset($parts_selected[$item->id]['qty']))
+                                    {{ $this->calculateTotalPrice($item, $parts_selected[$item->id]['qty']) }}
+                                    @php
+                                    $subTotal+= $this->calculateTotalPrice($item, $parts_selected[$item->id]['qty'])
+                                    @endphp
+                                    @else
+                                    0
+                                    @endif
                                 </td>
-                                <td>$20</td>
-                                <td>$40</td>
                             </tr>
+                            @empty
                             <tr>
-                                <td colspan="6">
+                                <td colspan="6">No items added yet.</td>
+                            </tr>
+                            @endforelse
+
+
+
+                            <tr>
+                                <td colspan="5">
                                     <h6>Total Price:</h6>
                                 </td>
                                 <td colspan="1">
-                                    <h4>4000</h4>
+                                    <h4>{{ $subTotal }}</h4>
                                 </td>
                             </tr>
                         </tbody>
@@ -130,17 +136,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($parts as $item)
+                            @forelse ($parts_list as $item)
                             <tr>
-                                <td>{{$item->requested_part_no}}</td>
-                                <td>{{$item->requested_nomenclature}}</td>
-                                <td><button type="button" class="btn btn-sm btn-outline-secondary btn-add"><i class="fa-solid fa-plus fa-bounce"></i></button></td>
+                                <td>{{ $item->requested_part_no }}</td>
+                                <td>{{ $item->requested_nomenclature }}</td>
+                                <td>
+                                    <button type="button" wire:click="addToList({{ $item->id }}, 1)" wire:loading.attr="disabled" wire:target="addToList_{{ $item->id }}" class="btn btn1 rounded" title="{{__('Add To PO')}}">
+                                        <span wire:loading.remove wire:target="addToList_{{ $item->id }}">
+                                            <i class="fa-solid fa-plus fa-bounce"></i>
+                                        </span>
+                                        <span wire:loading wire:target="addToList_{{ $item->id }}">{{__('Adding...')}}</span>
+                                    </button>
+                                </td>
                             </tr>
                             @empty
-                            <td colspan="3">No parts Available</td>
+                            <tr>
+                                <td colspan="3">No parts Available</td>
+                            </tr>
                             @endforelse
-
-
                         </tbody>
                     </table>
                 </div>
@@ -149,5 +162,4 @@
 
         </div>
     </div>
-</div>
 </div>
