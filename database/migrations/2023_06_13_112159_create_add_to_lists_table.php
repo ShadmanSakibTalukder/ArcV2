@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchased_orders_items', function (Blueprint $table) {
+        Schema::create('add_to_lists', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
             $table->integer('item_id');
-            $table->integer('qty');
-            $table->integer('price');
-            $table->integer('total_price');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchased_orders_items');
+        Schema::dropIfExists('add_to_lists');
     }
 };
