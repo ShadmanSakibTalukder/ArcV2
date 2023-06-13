@@ -48,7 +48,7 @@ class PartsListController extends Controller
             'image' => $fileName
         ];
         Parts_list::create($request_data);
-        return redirect()->back()->with('message', 'Successfully Created!');
+        return redirect()->route('parts_list.index')->with('message', 'Successfully Created!');
     }
 
     /**

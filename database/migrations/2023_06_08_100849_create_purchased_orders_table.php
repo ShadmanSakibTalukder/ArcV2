@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('purchased_orders', function (Blueprint $table) {
             $table->id();
+            $table->string('po_no');
+            $table->string('buyer_name')->nullable();
+            $table->mediumText('buyer_address')->nullable();
+            $table->string('vendor_name')->nullable();
+            $table->mediumText('vendor_address')->nullable();
+            $table->mediumText('shipping_address')->nullable();
+            $table->string('tender_no')->nullable();
+            $table->string('wo_no')->nullable();
+            $table->date('po_date');
+            $table->integer('total_purchase_price_no')->nullable();
+            $table->integer('total_declared_price_no')->nullable();
             $table->timestamps();
         });
     }

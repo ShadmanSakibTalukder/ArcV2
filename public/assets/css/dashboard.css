@@ -119,6 +119,7 @@
 .bd-mode-toggle {
     z-index: 1500;
 }
-.table td,.table th {
-            font-size: 9px; /* Adjust the font size as needed */
-        }
+.table td,
+.table th {
+    font-size: 11px; /* Adjust the font size as needed */
+}
