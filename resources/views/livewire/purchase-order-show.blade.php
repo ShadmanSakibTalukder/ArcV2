@@ -40,7 +40,7 @@
                                     <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
                                 </td>
                                 <td>
-                                    <select class="form-select sm" wire:model="selectedOption">
+                                    <select class="form-select sm" wire:model="selectedOption.{{ $item->id }}">
                                         <option value="fsPrice">FS Price</option>
                                         <option value="surplusPrice">Surplus Price</option>
                                         <option value="navisterPrice">Navister Price</option>
@@ -83,7 +83,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="po_no" class="form-label">Purchase Order No:</label>
-                    <input type="text" class="form-control" id="po_no" name="po_no">
+                    <input type="text" class="form-control" id="po_no" name="po_no" required>
                 </div>
                 <div class="mb-3">
                     <label for="buyer_name" class="form-label">Buyer Name:</label>
@@ -116,7 +116,8 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-md btn-outline-primary py-3 mx-2 mb-5">Save</button>
+            <button type="submit" wire:click="save" class="btn btn-md btn-outline-primary py-3 mx-2 mb-5">Save</button>
+
         </div>
         <div class="col-md-6">
             <div class="search-section">
