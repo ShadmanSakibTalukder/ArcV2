@@ -1,4 +1,4 @@
-<div>
+<div class="mb-5">
     @if (session()->has('message'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         {{ session('message') }}
@@ -11,14 +11,14 @@
     </div>
     @endif
 
+
     @php
-    $subTotal=0
+    $subTotal=0;
     @endphp
     <h3>Create Purchase Order</h3>
     <div class="row">
         <div class="col-md-6">
             <div class="form-section">
-
                 <div class="table responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -32,7 +32,9 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             @forelse ($added_to_list as $item)
+
                             <tr>
                                 <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
                                 <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
@@ -53,11 +55,21 @@
                                     @if (isset($parts_selected[$item->id]) && isset($parts_selected[$item->id]['qty']))
                                     {{ $this->calculateTotalPrice($item, $parts_selected[$item->id]['qty']) }}
                                     @php
-                                    $subTotal+= $this->calculateTotalPrice($item, $parts_selected[$item->id]['qty'])
+                                    $subTotal += $this->calculateTotalPrice($item, $parts_selected[$item->id]['qty']);
                                     @endphp
                                     @else
                                     0
                                     @endif
+                                </td>
+                                <td>
+                                    <div class="remove">
+                                        <button type="button" wire:click="removeListItem({{ $item->id }})" wire:loading.attr="disabled" class="btn btn-danger btn-sm" title="{{__('Remove')}}">
+                                            <span wire:loading.remove wire:target="removeListItem({{ $item->id }})">
+                                                <i class="fa fa-trash"></i>
+                                            </span>
+                                            <span wire:loading wire:target="removeListItem({{ $item->id }})">{{__('Removing')}}</span>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
@@ -65,8 +77,6 @@
                                 <td colspan="6">No items added yet.</td>
                             </tr>
                             @endforelse
-
-
 
                             <tr>
                                 <td colspan="5">
@@ -78,46 +88,54 @@
                             </tr>
                         </tbody>
                     </table>
-
-
-                </div>
-                <div class="mb-3">
-                    <label for="po_no" class="form-label">Purchase Order No:</label>
-                    <input type="text" class="form-control" id="po_no" name="po_no" required>
-                </div>
-                <div class="mb-3">
-                    <label for="buyer_name" class="form-label">Buyer Name:</label>
-                    <input type="text" class="form-control" id="buyer_name" name="buyer_name">
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label>Buyer Address</label>
-                    <textarea name="buyer_address" id="buyer_address" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="vendor_name" class="form-label">Vendor Name:</label>
-                    <input type="text" class="form-control" id="vendor_name" name="vendor_name">
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label>Buyer Address</label>
-                    <textarea name="vendor_address" id="vendor_address" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label>Shipping Address</label>
-                    <textarea name="shipping_address" id="shipping_address" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="tender_no" class="form-label">Tender No:</label>
-                    <input type="text" class="form-control" id="tender_no" name="tender_no">
                 </div>
 
-                <div class="mb-3">
-                    <label for="po_date" class="form-label">Purchase Order Date:</label>
-                    <input type="date" class="form-control" id="po_date" name="po_date">
-                </div>
+                <form wire:submit.prevent="savePO">
+                    <div class="mb-3">
+                        <label for="po_no" class="form-label">Purchase Order No:</label>
+                        <input type="text" class="form-control" id="po_no" wire:model.defer="po_no" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="buyer_name" class="form-label">Buyer Name:</label>
+                        <input type="text" class="form-control" id="buyer_name" wire:model.defer="buyer_name" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Buyer Address</label>
+                        <textarea name="buyer_address" id="buyer_address" class="form-control" wire:model.defer="buyer_address" rows="2" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vendor_name" class="form-label">Vendor Name:</label>
+                        <input type="text" class="form-control" id="vendor_name" name="vendor_name" wire:model.defer="vendor_name" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Vendor Address</label>
+                        <textarea name="vendor_address" id="vendor_address" class="form-control" rows="2" wire:model.defer="vendor_address" required></textarea>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Shipping Address</label>
+                        <textarea name="shipping_address" id="shipping_address" class="form-control" rows="2" wire:model.defer="shipping_address" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tender_no" class="form-label">Tender No:</label>
+                        <input type="text" class="form-control" id="tender_no" wire:model.defer="tender_no" name="tender_no" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="po_date" class="form-label">Purchase Order Date:</label>
+                        <input type="date" class="form-control" id="po_date" wire:model.defer="po_date" name="po_date" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="subTotal" class="form-label">Sub Total</label>
+                        <input type="number" class="form-control" id="subTotal" wire:model.defer="subTotal" readonly>
+                        <input type="hidden" name="subTotal" value="{{ $subTotal }}">
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span wire:loading.remove wire:target="savePO">Save</span>
+                        <span wire:loading wire:target="savePO">Saving Purchase Order</span>
+                    </button>
+                </form>
             </div>
-
-            <button type="submit" wire:click="save" class="btn btn-md btn-outline-primary py-3 mx-2 mb-5">Save</button>
-
         </div>
         <div class="col-md-6">
             <div class="search-section">
@@ -142,25 +160,23 @@
                                 <td>{{ $item->requested_part_no }}</td>
                                 <td>{{ $item->requested_nomenclature }}</td>
                                 <td>
-                                    <button type="button" wire:click="addToList({{ $item->id }}, 1)" wire:loading.attr="disabled" wire:target="addToList_{{ $item->id }}" class="btn btn1 rounded" title="{{__('Add To PO')}}">
-                                        <span wire:loading.remove wire:target="addToList_{{ $item->id }}">
-                                            <i class="fa-solid fa-plus fa-bounce"></i>
+                                    <button type="button" wire:click="addToList({{ $item->id }})" wire:loading.attr="disabled" wire:target="addToList({{ $item->id }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
+                                        <span wire:loading.remove wire:target="addToList({{ $item->id }})">
+                                            <i class="fa fa-plus fa-bounce"></i>
                                         </span>
-                                        <span wire:loading wire:target="addToList_{{ $item->id }}">{{__('Adding...')}}</span>
+                                        <span wire:loading wire:target="addToList({{ $item->id }})">{{__('Adding...')}}</span>
                                     </button>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="3">No parts Available</td>
+                                <td colspan="3">No parts available</td>
                             </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

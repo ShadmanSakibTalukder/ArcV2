@@ -20,6 +20,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No.</th>
+                                    <th scope="col">PO No.</th>
                                     <th scope="col">Tender No.</th>
                                     <th scope="col">Work Order No.</th>
                                     <th scope="col">Total Purchase Price</th>
@@ -28,30 +29,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @forelse ($purchaseOrders as $item )
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>1943</td>
-                                    <td>Not Available</td>
-                                    <td>4569</td>
-                                    <td>45698</td>
-                                    <td>view edit delete</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{$item->po_no}}</td>
+                                    <td>{{$item->tender_no}}</td>
+                                    <td>{{$item->wo_no}}</td>
+                                    <td>{{$item->total_purchase_price_no}}</td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>1943</td>
-                                    <td>Not Available</td>
-                                    <td>4569</td>
-                                    <td>45698</td>
-                                    <td>view edit delete</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>1943</td>
-                                    <td>Not Available</td>
-                                    <td>4569</td>
-                                    <td>45698</td>
-                                    <td>view edit delete</td>
-                                </tr>
+                                @empty
+
+                                @endforelse
                             </tbody>
                         </table>
                 </div>
