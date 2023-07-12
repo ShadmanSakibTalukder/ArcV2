@@ -8,9 +8,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('home')}}">
-                        <svg class="bi">
-                            <use xlink:href="#house-fill" />
-                        </svg>
+                        <i class="fa-solid fa-earth-asia fa-spin"></i>
                         Dashboard
                     </a>
                 </li>
@@ -22,17 +20,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('work_orders.index')}}">
-                        <svg class="bi">
-                            <use xlink:href="#file-earmark" />
-                        </svg>
+                        <i class="fa-regular fa-clipboard fa-flip fa-xl"></i>
                         Work Orders
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('tenders.index')}}">
-                        <svg class="bi">
-                            <use xlink:href="#puzzle" />
-                        </svg>
+                        <i class="fa-solid fa-print fa-fade"></i>
                         Tender
                     </a>
                 </li>
@@ -44,33 +38,25 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('vendors.index')}}">
-                        <svg class="bi">
-                            <use xlink:href="#people" />
-                        </svg>
+                        <i class="fa-solid fa-ghost fa-shake fa-xl"></i>
                         Vendors
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('buyers.index')}}">
-                        <svg class="bi">
-                            <use xlink:href="#people" />
-                        </svg>
+                        <i class="fa-regular fa-handshake fa-bounce"></i>
                         Buyers
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="#">
-                        <svg class="bi">
-                            <use xlink:href="#check2" />
-                        </svg>
+                        <i class="fa-solid fa-boxes-packing fa-beat-fade"></i>
                         Package List
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="#">
-                        <svg class="bi">
-                            <use xlink:href="#graph-up" />
-                        </svg>
+                        <i class="fa-solid fa-chart-line fa-bounce"></i>
                         Profit Loss
                     </a>
                 </li>
