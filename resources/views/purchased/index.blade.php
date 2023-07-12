@@ -37,6 +37,9 @@
                                     <td>{{$item->tender_no}}</td>
                                     <td>{{$item->wo_no}}</td>
                                     <td>{{$item->total_purchase_price_no}}</td>
+                                    <td>
+                                        <a href="{{route('purchased_order.show',$item->id)}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                                    </td>
                                 </tr>
                                 @empty
 

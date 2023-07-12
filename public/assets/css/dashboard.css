@@ -123,3 +123,25 @@
 .table th {
     font-size: 11px; /* Adjust the font size as needed */
 }
+.company-details {
+    text-align: center;
+}
+
+.company-details h2 {
+    margin-bottom: 5px;
+}
+
+.company-details p {
+    margin-top: 0;
+}
+
+.line {
+    border-top: 1px solid black;
+}
+.bold-text {
+    font-weight: bold;
+}
+.address-line {
+    margin-bottom: 5px;
+    font-size: 14px;
+}

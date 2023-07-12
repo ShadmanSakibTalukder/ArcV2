@@ -37,7 +37,7 @@ class PurchasedOrderController extends Controller
      */
     public function show(purchased_order $purchased_order)
     {
-        //
+        return view('purchased.show',compact('purchased_order'));
     }
 
     /**
