@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\tenders;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class TendersController extends Controller
 {
+    public function __construct()
+    {
+        Paginator::useBootstrap();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('tenders.index');
+        $tenderList = tenders::orderBy('id', 'DESC')->paginate(5);
+        return view('tenders.index', compact('tenderList'));
     }
 
     /**
