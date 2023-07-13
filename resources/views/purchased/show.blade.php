@@ -10,6 +10,8 @@
         <div class="line"></div>
     </div>
 
+     <h2 class="text-center">PURCHASE ORDER</h2>
+
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -19,11 +21,16 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="section flex-end">
-                    <p><span class="bold-text">Date:</span> <span class="regular-text">{{$purchased_order->po_date}}</span></p>
-                    <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$purchased_order->po_no}}</span></p>
+                <div class="section d-flex justify-content-end">
+                    <p><span class="bold-text">Date:</span></p>
+                    <p><span class="regular-text">{{$purchased_order->po_date}}</span></p>
+                </div>
+                <div class="section d-flex justify-content-end">
+                    <p><span class="bold-text">Purchased Order No:</span></p>
+                    <p><span class="regular-text">{{$purchased_order->po_no}}</span></p>
                 </div>
             </div>
+            
         </div>
     </div>
 
@@ -34,7 +41,7 @@
                 <p><strong>{{$purchased_order->vendor_name}}</strong></p>
                 <p>{{$purchased_order->vendor_address}}</p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex align-items-end flex-column bd-highlight mb-3" style="height: 100px;">
                 <h5>Shipping Address</h5>
                 <p><strong>{{$purchased_order->buyer_name}}</strong></p>
                 <p>{{$purchased_order->shipping_address}}</p>
@@ -96,31 +103,42 @@
                             <td colspan="6">No items available</td>
                         </tr>
                         @endforelse
-                        <!-- Add more rows as needed -->
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5" class="text-end fw-bold">Sub Total</td>
-                            <td class="text-end fw-bold">${{$purchased_order->total_purchase_price_no}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="text-end fw-bold">Freight</td>
-                            <td class="text-end fw-bold">$0</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="text-end fw-bold">Tax</td>
-                            <td class="text-end fw-bold">$0</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="text-end fw-bold">Miscellaneous</td>
-                            <td class="text-end fw-bold">$0</td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="text-end fw-bold">Total</td>
-                            <td class="text-end fw-bold">${{$purchased_order->total_purchase_price_no}}</td>
-                        </tr>
-                    </tfoot>
                 </table>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="small-text">Special Instructions/Comments</p>
+                            <p class="small-text">Shipping Mark, Address, BIN No and Work Order No to appear clearly on each page</p>
+                        </div>
+                        <div class="col-md-6 d-grid justify-content-md-end">
+                            <table class="table table-bordered">
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5" class="text-end fw-bold">Sub Total</td>
+                                        <td class="text-end fw-bold">${{$purchased_order->total_purchase_price_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-end fw-bold">Freight</td>
+                                        <td class="text-end fw-bold">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-end fw-bold">Tax</td>
+                                        <td class="text-end fw-bold">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-end fw-bold">Miscellaneous</td>
+                                        <td class="text-end fw-bold">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-end fw-bold">Total</td>
+                                        <td class="text-end fw-bold">${{$purchased_order->total_purchase_price_no}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -134,5 +152,11 @@
                 <p> <span class="bold-text">Date:</span></p>
             </div>
         </div>
+
+        <div class="line"></div>
+        <p class="small-text align-middle text-center">For more info on this purchase order, feel free to contact: missionsupport.procurement@protonmail.com</p>
     </div>
+
+
+
 </x-master>

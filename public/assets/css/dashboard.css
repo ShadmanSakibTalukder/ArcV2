@@ -145,3 +145,6 @@
     margin-bottom: 5px;
     font-size: 14px;
 }
+.small-text {
+    font-size: 11px; /* Adjust the font size as per your preference */
+}
