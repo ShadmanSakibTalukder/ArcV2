@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\purchased_order;
 use Illuminate\Http\Request;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 use Illuminate\Pagination\Paginator;
 
 class PurchasedOrderController extends Controller
@@ -71,5 +73,14 @@ class PurchasedOrderController extends Controller
     {
         $purchased_order->delete();
         return redirect()->back()->with('message', 'Successfully deleted!');
+    }
+
+    function purchaseOrderGenerator($purchase_order_id)
+    {
+        $purchase_order = purchased_order::findOrFail($purchase_order_id);
+        $data = ['po' => $purchase_order];
+        // return view('purchased.print_po', compact('purchase_order'));
+        $pdf = PDF::loadView('purchased.print_po', $data);
+        return $pdf->download('Purchase_order' . '.' . 'pdf');
     }
 }

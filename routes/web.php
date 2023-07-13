@@ -29,8 +29,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('admin/work_orders', WorkOrderController::class);
-Route::resource('admin/parts_list',PartsListController::class);
-Route::resource('admin/tenders',TendersController::class);
-Route::resource( 'admin/purchased_order',PurchasedOrderController::class);
-Route::resource( 'admin/vendors',VendorsController::class);
-Route::resource( 'admin/buyers',BuyersController::class);
+Route::resource('admin/parts_list', PartsListController::class);
+Route::resource('admin/tenders', TendersController::class);
+Route::resource('admin/purchased_order', PurchasedOrderController::class);
+
+Route::get('purchase-order/pdf/{id}', [PurchasedOrderController::class, 'purchaseOrderGenerator'])->name('purchased_order.pdf_download');
+
+
+Route::resource('admin/vendors', VendorsController::class);
+Route::resource('admin/buyers', BuyersController::class);
