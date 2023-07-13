@@ -84,12 +84,12 @@
                     <tbody>
                         @forelse ($purchased_order->purchaseOrderItems as $item)
                         <tr>
-                            <td{{$loop->iteration}}< /td>
-                                <td>{{item->parts->name}}</td>
-                                <td>{{item->parts->cat_nomenclature}}</td>
-                                <td>{{item->qty}}</td>
-                                <td>${{item->price}}</td>
-                                <td>${{item->total_price}}</td>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{$item->parts->cat_part_no}}</td>
+                            <td>{{$item->parts->cat_nomenclature}}</td>
+                            <td>{{$item->qty}}</td>
+                            <td>${{$item->price}}</td>
+                            <td>${{$item->total_price}}</td>
                         </tr>
                         @empty
                         <tr>

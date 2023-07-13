@@ -10,6 +10,7 @@ class PurchaseOrderItem extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'purchase_order_id',
         'item_id',
         'qty',
         'price',

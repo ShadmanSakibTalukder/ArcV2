@@ -5,14 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\purchased_order;
 use Illuminate\Http\Request;
 
+use Illuminate\Pagination\Paginator;
+
 class PurchasedOrderController extends Controller
 {
+    public function __construct()
+    {
+        Paginator::useBootstrap();
+    }
+
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $purchaseOrders = purchased_order::orderBy('id', 'DESC')->paginate(15);
+        $purchaseOrders = purchased_order::orderBy('id', 'DESC')->paginate(5);
         return view('purchased.index', compact('purchaseOrders'));
     }
 

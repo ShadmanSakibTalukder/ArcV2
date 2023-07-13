@@ -133,8 +133,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="subTotal" class="form-label">Sub Total</label>
-                        <input type="number" class="form-control" id="subTotal" wire:model.defer="subTotal" readonly>
                         <input type="hidden" name="subTotal" value="{{ $subTotal }}">
 
                     </div>

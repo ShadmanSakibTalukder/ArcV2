@@ -48,7 +48,7 @@
                             @endforelse
                         </tbody>
                     </table>
-                    {{$purchaseOrders->links()}}
+                    {!! $purchaseOrders->links() !!}
                 </div>
             </div>
         </div>

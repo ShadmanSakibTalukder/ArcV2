@@ -81,7 +81,6 @@ class PurchaseOrderShow extends Component
             $subTotal += $totalPrice;
         }
 
-        // Update the $subTotal property
         $this->subTotal = $subTotal;
 
         $validatedData = $this->validate([
@@ -98,10 +97,6 @@ class PurchaseOrderShow extends Component
             'subTotal' => 'required',
         ]);
 
-        // dd($validatedData);
-
-
-        // Save the purchase order details to the database
         $purchaseOrder = purchased_order::create([
             'po_no' => $validatedData['po_no'],
             'company' => $validatedData['company'],
@@ -115,9 +110,8 @@ class PurchaseOrderShow extends Component
             'po_date' => $validatedData['po_date'],
             'total_purchase_price_no' => $subTotal,
         ]);
-        // dd($purchaseOrder);
 
-        // Save the purchase order items to the database
+
         foreach ($this->added_to_list as $item) {
             $qty = $this->parts_selected[$item->id]['qty'] ?? 0;
             $unitPrice = $this->calculateUnitPrice($item);
@@ -137,8 +131,11 @@ class PurchaseOrderShow extends Component
         // Reset the form and show success message
         $this->reset(['po_no', 'buyer_name', 'buyer_address', 'vendor_name', 'vendor_address', 'shipping_address', 'tender_no', 'po_date', 'subTotal']);
         $this->parts_selected = [];
+        $this->added_to_list = [];
         session()->flash('success_message', 'Purchase order created successfully!');
     }
+
+
 
     public function render()
     {
@@ -146,6 +143,5 @@ class PurchaseOrderShow extends Component
         $this->added_to_list = AddToList::all();
 
         return view('livewire.purchase-order-show', ['parts_list' => $parts_list, 'added_to_list' => $this->added_to_list]);
-        // return view('livewire.purchase-order-show', compact('parts_list', 'added_to_list'));
     }
 }
