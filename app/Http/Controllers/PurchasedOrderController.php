@@ -12,7 +12,7 @@ class PurchasedOrderController extends Controller
      */
     public function index()
     {
-        $purchaseOrders = purchased_order::all();
+        $purchaseOrders = purchased_order::orderBy('id', 'DESC')->paginate(15);
         return view('purchased.index', compact('purchaseOrders'));
     }
 
@@ -37,7 +37,7 @@ class PurchasedOrderController extends Controller
      */
     public function show(purchased_order $purchased_order)
     {
-        return view('purchased.show',compact('purchased_order'));
+        return view('purchased.show', compact('purchased_order'));
     }
 
     /**
@@ -61,6 +61,7 @@ class PurchasedOrderController extends Controller
      */
     public function destroy(purchased_order $purchased_order)
     {
-        //
+        $purchased_order->delete();
+        return redirect()->back()->with('message', 'Successfully deleted!');
     }
 }

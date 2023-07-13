@@ -96,6 +96,14 @@
                         <input type="text" class="form-control" id="po_no" wire:model.defer="po_no" required>
                     </div>
                     <div class="mb-3">
+                        <label for="company" class="form-label">Company Name:</label>
+                        <input type="text" class="form-control" id="company" wire:model.defer="company" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Company Address</label>
+                        <textarea name="company_address" id="company_address" class="form-control" wire:model.defer="company_address" rows="2" required></textarea>
+                    </div>
+                    <div class="mb-3">
                         <label for="buyer_name" class="form-label">Buyer Name:</label>
                         <input type="text" class="form-control" id="buyer_name" wire:model.defer="buyer_name" required>
                     </div>

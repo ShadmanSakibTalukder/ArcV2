@@ -15,7 +15,7 @@ class PurchaseOrderShow extends Component
     public $selectedOption = [];
     public $parts_selected = [];
     public $added_to_list = [];
-    public $po_no, $buyer_name, $buyer_address, $vendor_name, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
+    public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
 
     public function addToList($part_id)
     {
@@ -86,6 +86,8 @@ class PurchaseOrderShow extends Component
 
         $validatedData = $this->validate([
             'po_no' => 'required',
+            'company' => 'required',
+            'company_address' => 'required',
             'buyer_name' => 'required',
             'buyer_address' => 'required',
             'vendor_name' => 'required',
@@ -102,6 +104,8 @@ class PurchaseOrderShow extends Component
         // Save the purchase order details to the database
         $purchaseOrder = purchased_order::create([
             'po_no' => $validatedData['po_no'],
+            'company' => $validatedData['company'],
+            'company_address' => $validatedData['company_address'],
             'buyer_name' => $validatedData['buyer_name'],
             'buyer_address' => $validatedData['buyer_address'],
             'vendor_name' => $validatedData['vendor_name'],
