@@ -2,126 +2,91 @@
 <html>
 <head>
     <style>
-        @page {
-            size: A4;
-            margin: 0;
-        }
-        
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 1.5cm;
+            font-size: 10px;
         }
-        
+
         .company-details {
             margin-bottom: 1cm;
             text-align: center;
         }
-        
+
         .line {
             height: 1px;
             background-color: #000;
             margin-top: 0.5cm;
             margin-bottom: 0.5cm;
         }
-        
+
         .section {
             margin-bottom: 0.5cm;
         }
-        
+
         .bold-text {
             font-weight: bold;
         }
-        
+
         .regular-text {
             font-weight: normal;
         }
-        
+
+        .table-container {
+            width: 100%;
+            margin-bottom: 1cm;
+        }
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         .table th, .table td {
-            padding: 0.3cm;
+            padding: 0.2cm;
             border: 1px solid #000;
             text-align: center;
         }
-        
+
         .table thead th {
             font-weight: bold;
         }
-        
+
         .table tfoot td {
             font-weight: bold;
             text-align: right;
         }
-        
+
         .small-text {
             font-size: 8px;
-            margin-top: 0.2cm;
-            margin-bottom: 0.2cm;
+            margin-top: 0.1cm;
+            margin-bottom: 0.1cm;
         }
-        
-        .justify-content-end {
-            justify-content: flex-end;
-        }
-        
-        .align-items-center {
-            align-items: center;
-        }
-        
-        .d-grid {
-            display: grid;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        .container {
-            margin-bottom: 0.5cm;
-        }
-        
-        .line-middle {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 0.5cm;
-        }
-        
-        /* CSS Grid styles */
+
+        /* Use CSS Grid to achieve the layout */
         .grid-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 10px;
+            grid-template-columns: auto auto;
         }
-        
+
         .grid-item {
-            display: flex;
-            flex-direction: column;
+            text-align: center;
         }
-        
-        .grid-item-1 {
-            justify-content: flex-start;
-            align-items: flex-start;
+
+        .grid-item-1, .grid-item-3 {
+            grid-column: 1;
         }
-        
-        .grid-item-2 {
-            justify-content: flex-end;
-            align-items: flex-end;
+
+        .grid-item-2, .grid-item-4 {
+            grid-column: 2;
         }
-        
-        .grid-item-3 {
-            justify-content: flex-start;
-            align-items: flex-start;
+
+        /* Adjust table font size to fit within A4 page */
+        .container table {
+            font-size: 8px;
         }
-        
-        .grid-item-4 {
-            justify-content: flex-end;
-            align-items: flex-end;
-        }
-        
+
     </style>
 </head>
 <body>
@@ -130,9 +95,9 @@
         <p>{{$po->company_address}}</p>
         <div class="line"></div>
     </div>
-    
-    <h2 class="text-center">PURCHASE ORDER</h2>
-    
+
+    <h2 style="text-align: center;">PURCHASE ORDER</h2>
+
     <div class="container">
         <div class="grid-container">
             <div class="grid-item grid-item-1">
@@ -147,11 +112,6 @@
                     <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$po->po_no}}</span></p>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <div class="container">
-        <div class="grid-container">
             <div class="grid-item grid-item-3">
                 <div class="section">
                     <h5>Vendor Name</h5>
@@ -168,8 +128,8 @@
             </div>
         </div>
     </div>
-    
-    <div class="container">
+
+    <div class="table-container">
         <table class="table">
             <thead>
                 <tr>
@@ -189,8 +149,8 @@
             </tbody>
         </table>
     </div>
-    
-    <div class="container">
+
+    <div class="table-container">
         <table class="table">
             <thead>
                 <tr>
@@ -218,48 +178,31 @@
                 </tr>
                 @endforelse
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" style="text-align: right; font-weight: bold;">Sub Total</td>
+                    <td style="text-align: right; font-weight: bold;">${{$po->total_purchase_price_no}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: right; font-weight: bold;">Freight</td>
+                    <td style="text-align: right; font-weight: bold;">$0</td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: right; font-weight: bold;">Tax</td>
+                    <td style="text-align: right; font-weight: bold;">$0</td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: right; font-weight: bold;">Miscellaneous</td>
+                    <td style="text-align: right; font-weight: bold;">$0</td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: right; font-weight: bold;">Total</td>
+                    <td style="text-align: right; font-weight: bold;">${{$po->total_purchase_price_no}}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
-    
-    <div class="container">
-        <div class="grid-container">
-            <div class="grid-item">
-                <div class="section">
-                    <p class="small-text">Special Instructions/Comments</p>
-                    <p class="small-text">Shipping Mark, Address, BIN No and Work Order No to appear clearly on each page</p>
-                </div>
-            </div>
-            <div class="grid-item">
-                <div class="section">
-                    <table class="table table-bordered">
-                        <tfoot>
-                            <tr>
-                                <td colspan="5" class="text-end fw-bold">Sub Total</td>
-                                <td class="text-end fw-bold">${{$po->total_purchase_price_no}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5" class="text-end fw-bold">Freight</td>
-                                <td class="text-end fw-bold">$0</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5" class="text-end fw-bold">Tax</td>
-                                <td class="text-end fw-bold">$0</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5" class="text-end fw-bold">Miscellaneous</td>
-                                <td class="text-end fw-bold">$0</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5" class="text-end fw-bold">Total</td>
-                                <td class="text-end fw-bold">${{$po->total_purchase_price_no}}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+
     <div class="container">
         <hr>
         <div class="grid-container">
@@ -272,7 +215,7 @@
         </div>
 
         <div class="line"></div>
-        <p class="small-text text-center">For more info on this purchase order, feel free to contact: missionsupport.procurement@protonmail.com</p>
+        <p class="small-text" style="text-align: center;">For more info on this purchase order, feel free to contact: missionsupport.procurement@protonmail.com</p>
     </div>
 </body>
 </html>
