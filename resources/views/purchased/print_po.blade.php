@@ -90,10 +90,11 @@
             margin-bottom: 0.5cm;
         }
         
+        /* CSS Grid styles */
         .grid-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            grid-gap: 10px;
         }
         
         .grid-item {
@@ -111,21 +112,14 @@
             align-items: flex-end;
         }
         
-        .small-text {
-            font-size: 8px;
-            margin-top: 0.1cm;
-            margin-bottom: 0.1cm;
+        .grid-item-3 {
+            justify-content: flex-start;
+            align-items: flex-start;
         }
         
-        /* Adjustments for dynamic behavior */
-        @media print {
-            .container {
-                page-break-inside: avoid;
-            }
-            
-            .table {
-                page-break-inside: avoid;
-            }
+        .grid-item-4 {
+            justify-content: flex-end;
+            align-items: flex-end;
         }
         
     </style>
@@ -143,14 +137,14 @@
         <div class="grid-container">
             <div class="grid-item grid-item-1">
                 <div class="section">
-                    <h5 style="font-size: 12px;">{{$po->company}}</h5>
-                    <p style="font-size: 10px;">{{$po->company_address}}</p>
+                    <h5>{{$po->company}}</h5>
+                    <p>{{$po->company_address}}</p>
                 </div>
             </div>
             <div class="grid-item grid-item-2">
                 <div class="section">
-                    <p><span class="bold-text">Date:</span> <span class="regular-text" style="font-size: 10px;">{{$po->po_date}}</span></p>
-                    <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text" style="font-size: 10px;">{{$po->po_no}}</span></p>
+                    <p><span class="bold-text">Date:</span> <span class="regular-text">{{$po->po_date}}</span></p>
+                    <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$po->po_no}}</span></p>
                 </div>
             </div>
         </div>
@@ -158,18 +152,18 @@
     
     <div class="container">
         <div class="grid-container">
-            <div class="grid-item">
+            <div class="grid-item grid-item-3">
                 <div class="section">
-                    <h5 style="font-size: 10px;">Vendor Name</h5>
-                    <p><strong style="font-size: 10px;">{{$po->vendor_name}}</strong></p>
-                    <p style="font-size: 10px;">{{$po->vendor_address}}</p>
+                    <h5>Vendor Name</h5>
+                    <p><strong>{{$po->vendor_name}}</strong></p>
+                    <p>{{$po->vendor_address}}</p>
                 </div>
             </div>
-            <div class="grid-item">
+            <div class="grid-item grid-item-4">
                 <div class="section">
-                    <h5 style="font-size: 10px;">Shipping Address</h5>
-                    <p><strong style="font-size: 10px;">{{$po->buyer_name}}</strong></p>
-                    <p style="font-size: 10px;">{{$po->shipping_address}}</p>
+                    <h5>Shipping Address</h5>
+                    <p><strong>{{$po->buyer_name}}</strong></p>
+                    <p>{{$po->shipping_address}}</p>
                 </div>
             </div>
         </div>
@@ -236,7 +230,7 @@
                 </div>
             </div>
             <div class="grid-item">
-                <div class="section justify-content-md-end">
+                <div class="section">
                     <table class="table table-bordered">
                         <tfoot>
                             <tr>
