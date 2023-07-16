@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BuyersController;
+use App\Http\Controllers\CatelogPartListController;
 use App\Http\Controllers\TendersController;
 use App\Http\Controllers\VendorsController;
 use App\Http\Controllers\PartsListController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\PurchasedOrderController;
+use App\Models\CatelogPartList;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,7 @@ Route::resource('admin/work_orders', WorkOrderController::class);
 Route::resource('admin/parts_list', PartsListController::class);
 Route::resource('admin/tenders', TendersController::class);
 Route::resource('admin/purchased_order', PurchasedOrderController::class);
+Route::resource('admin/catelog_part_list', CatelogPartListController::class);
 
 Route::get('purchase-order/pdf/{id}', [PurchasedOrderController::class, 'purchaseOrderGenerator'])->name('purchased_order.pdf_download');
 

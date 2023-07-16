@@ -19,6 +19,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('catelog_part_list.index')}}">
+                        <i class="fa-solid fa-gears fa-spin fa-l"></i>
+                        Cateog Parts List
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('work_orders.index')}}">
                         <i class="fa-regular fa-clipboard fa-flip fa-xl"></i>
                         Work Orders

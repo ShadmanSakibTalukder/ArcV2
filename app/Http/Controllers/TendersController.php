@@ -41,9 +41,9 @@ class TendersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(tenders $tenders)
+    public function show(tenders $tender)
     {
-        //
+        return view('tenders.show', compact('tender'));
     }
 
     /**
@@ -65,8 +65,10 @@ class TendersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(tenders $tenders)
+    public function destroy(tenders $tender)
     {
-        //
+        // dd($tender);
+        $tender->delete();
+        return redirect()->back()->with('message', 'Successfully deleted!');
     }
 }
