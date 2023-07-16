@@ -58,7 +58,7 @@
         }
         
         .small-text {
-            font-size: 9px;
+            font-size: 8px;
             margin-top: 0.2cm;
             margin-bottom: 0.2cm;
         }
@@ -89,6 +89,39 @@
             align-items: center;
             margin-bottom: 0.5cm;
         }
+        
+        /* CSS Grid styles */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+        }
+        
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid-item-1 {
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        
+        .grid-item-2 {
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+        
+        .grid-item-3 {
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        
+        .grid-item-4 {
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+        
     </style>
 </head>
 <body>
@@ -101,15 +134,15 @@
     <h2 class="text-center">PURCHASE ORDER</h2>
     
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
+        <div class="grid-container">
+            <div class="grid-item grid-item-1">
                 <div class="section">
                     <h5>{{$po->company}}</h5>
                     <p>{{$po->company_address}}</p>
                 </div>
             </div>
-            <div class="col-md-6 justify-content-end">
-                <div class="section justify-content-end">
+            <div class="grid-item grid-item-2">
+                <div class="section">
                     <p><span class="bold-text">Date:</span> <span class="regular-text">{{$po->po_date}}</span></p>
                     <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$po->po_no}}</span></p>
                 </div>
@@ -118,15 +151,15 @@
     </div>
     
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
+        <div class="grid-container">
+            <div class="grid-item grid-item-3">
                 <div class="section">
                     <h5>Vendor Name</h5>
                     <p><strong>{{$po->vendor_name}}</strong></p>
                     <p>{{$po->vendor_address}}</p>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="grid-item grid-item-4">
                 <div class="section">
                     <h5>Shipping Address</h5>
                     <p><strong>{{$po->buyer_name}}</strong></p>
@@ -189,15 +222,15 @@
     </div>
     
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
+        <div class="grid-container">
+            <div class="grid-item">
                 <div class="section">
                     <p class="small-text">Special Instructions/Comments</p>
                     <p class="small-text">Shipping Mark, Address, BIN No and Work Order No to appear clearly on each page</p>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="section justify-content-md-end">
+            <div class="grid-item">
+                <div class="section">
                     <table class="table table-bordered">
                         <tfoot>
                             <tr>
@@ -229,11 +262,11 @@
     
     <div class="container">
         <hr>
-        <div class="row">
-            <div class="col-md-6">
+        <div class="grid-container">
+            <div class="grid-item">
                 <p><span class="bold-text">Authorised By:</span></p>
             </div>
-            <div class="col-md-6">
+            <div class="grid-item">
                 <p> <span class="bold-text">Date:</span></p>
             </div>
         </div>
