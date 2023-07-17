@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 
 use Smalot\PdfParser\Parser;
-
+use Spatie\PdfToText\Pdf;
 
 class CatelogPartListController extends Controller
 {
@@ -16,7 +16,8 @@ class CatelogPartListController extends Controller
      */
     public function index()
     {
-        return view('catelogPartList.index');
+        $cat_parts = CatelogPartList::all();
+        return view('catelogPartList.index', compact('cat_parts'));
     }
 
     /**
@@ -32,27 +33,37 @@ class CatelogPartListController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('pdf_file')) {
-            $file = $request->file('pdf_file');
+        $pdfPath = $request->file('pdf')->getRealPath();
+        $text = (new Pdf())->setPdf($pdfPath)->text();
 
-            // Validate the file if needed
+        $lines = explode(PHP_EOL, $text);
+        $data = [];
+        foreach ($lines as $line) {
+            // Ignore blank lines or lines containing only whitespace
+            if (trim($line) === '') {
+                continue;
+            }
 
-            // Determine the storage path and generate a unique filename
-            $path = $file->store('pdfs'); // Store in the 'storage/app/pdfs' directory
+            // Extract relevant data using regular expressions
+            if (preg_match('/(\d+)\sPAFZZ\s([\d-]+)\s([\w\d]+)\s(.+)/', $line, $matches)) {
+                $itemNo = $matches[1];
+                $nsn = $matches[2];
+                $partNo = $matches[3];
+                $description = $matches[4];
 
-            // Extract data from the uploaded PDF
-            $textContent = $this->extractTextFromPDF(storage_path('app/' . $path));
-
-            // Perform data extraction logic on the extracted text
-            $pdfData = $this->extractData($textContent);
-
-            // Save the extracted data to the database
-            CatelogPartList::insert($pdfData);
-
-            return redirect()->back()->with('success', 'PDF uploaded and data extracted successfully.');
+                $data[] = [
+                    'item_no' => $itemNo,
+                    'nsn' => $nsn,
+                    'part_no' => $partNo,
+                    'description' => $description,
+                ];
+            }
         }
 
-        return redirect()->back()->with('error', 'No PDF file selected.');
+        // Save the extracted data to your database table
+        CatelogPartList::insert($data);
+
+        return redirect()->back()->with('message', 'PDF data saved successfully.');
     }
 
     /**
