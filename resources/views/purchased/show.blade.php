@@ -12,42 +12,64 @@
 
      <h2 class="text-center">PURCHASE ORDER</h2>
 
-    <div class="container">
+     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="section">
+                <div class="box" style="max-width: 400px;"> {{-- Set the max-width as required --}}
                     <h5>{{$purchased_order->company}}</h5>
-                    <p>{{$purchased_order->company_address}}</p>
+                    <div class="d-flex align-items-center">
+                        <p style="flex: 1;">{{$purchased_order->company_address}}</p>
+                    </div>
                 </div>
             </div>
+            
             <div class="col-md-6">
-                <div class="section d-flex justify-content-end">
+                <div class="section d-flex justify-content-end align-items-center">
                     <p><span class="bold-text">Date:</span></p>
                     <p><span class="regular-text">{{$purchased_order->po_date}}</span></p>
                 </div>
-                <div class="section d-flex justify-content-end">
+                <div class="section d-flex justify-content-end align-items-center">
                     <p><span class="bold-text">Purchased Order No:</span></p>
                     <p><span class="regular-text">{{$purchased_order->po_no}}</span></p>
                 </div>
             </div>
-            
         </div>
     </div>
+    
 
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <h5>Vendor Name</h5>
-                <p><strong>{{$purchased_order->vendor_name}}</strong></p>
-                <p>{{$purchased_order->vendor_address}}</p>
+                <div class="card mb-3 border-0" style="width: 100%;">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <strong>{{$purchased_order->vendor_name}}</strong>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <p class="card-text">{{$purchased_order->vendor_address}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 d-flex align-items-end flex-column bd-highlight mb-3" style="height: 100px;">
+            <div class="col-md-6">
                 <h5>Shipping Address</h5>
-                <p><strong>{{$purchased_order->buyer_name}}</strong></p>
-                <p>{{$purchased_order->shipping_address}}</p>
+                <div class="card mb-3 border-0" style="width: 100%;">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <strong>{{$purchased_order->buyer_name}}</strong>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <p class="card-text">{{$purchased_order->shipping_address}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
+    
+    
 
     <div class="container">
         <div class="row">

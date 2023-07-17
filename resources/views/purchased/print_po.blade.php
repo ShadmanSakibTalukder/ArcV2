@@ -67,19 +67,14 @@
         /* Use CSS Grid to achieve the layout */
         .grid-container {
             display: grid;
-            grid-template-columns: auto auto;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 0.2cm;
+            width: 21cm; /* A4 paper width */
+            height: 21cm; /* Allow content to flow naturally */
         }
 
         .grid-item {
             text-align: center;
-        }
-
-        .grid-item-1, .grid-item-3 {
-            grid-column: 1;
-        }
-
-        .grid-item-2, .grid-item-4 {
-            grid-column: 2;
         }
 
         /* Adjust table font size to fit within A4 page */
@@ -100,26 +95,26 @@
 
     <div class="container">
         <div class="grid-container">
-            <div class="grid-item grid-item-1">
+            <div class="grid-item">
                 <div class="section">
                     <h5>{{$po->company}}</h5>
                     <p>{{$po->company_address}}</p>
                 </div>
             </div>
-            <div class="grid-item grid-item-2">
+            <div class="grid-item">
                 <div class="section">
                     <p><span class="bold-text">Date:</span> <span class="regular-text">{{$po->po_date}}</span></p>
                     <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$po->po_no}}</span></p>
                 </div>
             </div>
-            <div class="grid-item grid-item-3">
+            <div class="grid-item">
                 <div class="section">
                     <h5>Vendor Name</h5>
                     <p><strong>{{$po->vendor_name}}</strong></p>
                     <p>{{$po->vendor_address}}</p>
                 </div>
             </div>
-            <div class="grid-item grid-item-4">
+            <div class="grid-item">
                 <div class="section">
                     <h5>Shipping Address</h5>
                     <p><strong>{{$po->buyer_name}}</strong></p>
