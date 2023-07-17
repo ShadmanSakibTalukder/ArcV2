@@ -15,7 +15,7 @@
      <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="box" style="max-width: 400px;"> {{-- Set the max-width as required --}}
+                <div class="box" style="max-width: 400px;"> 
                     <h5>{{$purchased_order->company}}</h5>
                     <div class="d-flex align-items-center">
                         <p style="flex: 1;">{{$purchased_order->company_address}}</p>
@@ -24,6 +24,7 @@
             </div>
             
             <div class="col-md-6">
+                <div class="box" style="max-width: 400px;"> 
                 <div class="section d-flex justify-content-end align-items-center">
                     <p><span class="bold-text">Date:</span></p>
                     <p><span class="regular-text">{{$purchased_order->po_date}}</span></p>
@@ -32,6 +33,7 @@
                     <p><span class="bold-text">Purchased Order No:</span></p>
                     <p><span class="regular-text">{{$purchased_order->po_no}}</span></p>
                 </div>
+            </div>
             </div>
         </div>
     </div>
