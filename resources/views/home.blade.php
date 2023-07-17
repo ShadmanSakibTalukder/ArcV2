@@ -4,7 +4,6 @@
     </x-slot:title>
 
     <style>
-        /* Custom styles for card headers and card bodies */
         .card-header {
             background-color:mediumspringgreen;
             color: black;
@@ -15,13 +14,12 @@
             color: black;
         }
 
-        /* Custom styles for tables */
         table {
             background-color: mediumturquoise;
             color: black;
         }
 
-        /* Additional styles for the table to remove some default Bootstrap styles */
+       
         table.table {
             border-color: #ccc;
         }
