@@ -41,10 +41,20 @@
                                 <th scope="col">Part No</th>
                                 <th scope="col">NSN</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">CAGEC</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse ($cat_parts as $item)
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{$item->item_no}}</td>
+                                <td>{{$item->part_no}}</td>
+                                <td>{{$item->nsn}}</td>
+                                <td>{{$item->description}}</td>
+                            </tr>
+                            @empty
+
+                            @endforelse
                             <tr>
                                 <td colspan="6">
                                     <h4>No Part Available</h4>
