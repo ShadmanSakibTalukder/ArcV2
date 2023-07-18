@@ -290,6 +290,9 @@ class CatelogPartListController extends Controller
                     $partNo = $matches[4];
                     $description = $matches[5];
 
+                    // Check if Cagec value is present (matches[5] holds the Cagec value)
+                    $cagec = isset($matches[5]) ? $matches[5] : '';
+
                     // Extract the first word from the description as part_no
                     $descriptionWords = explode(' ', $description);
                     $partNo = $descriptionWords[0];
@@ -301,6 +304,7 @@ class CatelogPartListController extends Controller
                         'nsn' => $matches[3],
                         'part_no' => $partNo,
                         'description' => $description,
+                        'cagec' => $cagec, // Add the Cagec value to the data array
                     ];
                 }
             }
@@ -315,7 +319,7 @@ class CatelogPartListController extends Controller
         $catalogPart->nsn = $dataItem['nsn'];
         $catalogPart->part_no = $dataItem['part_no'];
         $catalogPart->description = $dataItem['description'];
-        $catalogPart->cgec = $dataItem['cgec'];
+        $catalogPart->cagec = $dataItem['cagec'];
         $catalogParts[] = $catalogPart;
     }
 
@@ -326,6 +330,7 @@ class CatelogPartListController extends Controller
 
     return redirect()->back()->with('success_message', 'PDF data loaded and saved successfully.');
 }
+
 
 
 
