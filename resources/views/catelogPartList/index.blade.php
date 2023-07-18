@@ -63,6 +63,7 @@
                         </tbody>
 
                     </table>
+                    {{$cat_parts->links()}}
                 </div>
             </div>
         </div>
