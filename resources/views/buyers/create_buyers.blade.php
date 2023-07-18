@@ -4,10 +4,10 @@
     </x-slot:title>
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
+            <div class="card border-0">
+                <div class="card-header bg-transparent">
                     <h2> Create Buyer
-                        <a href="{{ Route('buyers.index') }}" class="btn btn-primary btn-sm text-white float-end"> Back </a>
+                        <a href="{{ Route('buyers.index') }}" class="btn btn-sm btn-outline-secondary float-end"> Back </a>
                     </h2>
                 </div>
                 <div class="card-body">
@@ -43,7 +43,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <button type="submit" class="btn btn-primary float-end">Save</button>
+                                <button type="submit" class="btn btn-md btn-outline-primary px-3 mx-2">Save</button>
                             </div>
                         </div>
 

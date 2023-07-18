@@ -22,7 +22,6 @@
             <div class="col-md-12">
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle" >
-                        <!-- Table content -->
  <thead>
             <tr class= "text-center">
                 <th scope="col">sl</th>

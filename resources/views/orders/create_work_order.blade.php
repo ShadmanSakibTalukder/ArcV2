@@ -84,7 +84,11 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-md btn-outline-primary px-3 mx-2">Save</button>
+                    <div class="my-5 d-flex justify-content-end p-3">
+                        <button type="button" class="btn btn-md btn-outline-primary px-3 mx-2">Save</button>
+                        <a href="{{route('work_orders.index')}}" class="btn btn-md btn-outline-secondary px-3 mx-2">Back</a>
+                    </div>
+
                 </div>
             </div>
             </div>

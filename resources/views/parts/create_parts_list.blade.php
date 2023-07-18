@@ -4,8 +4,8 @@
     </x-slot:title>
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
+            <div class="card border-0">
+                <div class="card-header bg-transparent">
                     <h2> Create Parts List
                         <a href="{{ Route('parts_list.index') }}" class="btn btn-sm btn-outline-secondary float-end"> Back </a>
                     </h2>
