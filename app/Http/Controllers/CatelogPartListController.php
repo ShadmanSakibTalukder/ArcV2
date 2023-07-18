@@ -6,7 +6,7 @@ use App\Models\CatelogPartList;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
 
-
+use Illuminate\Support\Str;
 
 use Smalot\PdfParser\Parser;
 use Spatie\PdfToText\Pdf;
@@ -263,61 +263,69 @@ class CatelogPartListController extends Controller
     // }
 
     public function store(Request $request)
-    {
-        $pdfPath = $request->file('pdf')->getRealPath();
-        $parser = new Parser();
-        $pdf = $parser->parseFile($pdfPath);
+{
+    $pdfPath = $request->file('pdf')->getRealPath();
+    $parser = new Parser();
+    $pdf = $parser->parseFile($pdfPath);
 
-        $requestedData = ['1'];
+    $requestedData = ['1'];
 
-        $data = [];
+    $data = [];
 
-        foreach ($pdf->getPages() as $page) {
-            $text = $page->getText();
-            $lines = explode(PHP_EOL, $text);
-            $pattern = '/^(\d+)\s(\w+)\s([\d-]+)\s([\w\d]+)\s(.+)(\n|$)/m';
+    foreach ($pdf->getPages() as $page) {
+        $text = $page->getText();
+        $lines = explode(PHP_EOL, $text);
+        $pattern = '/^(\d+)\s(\w+)\s([\d-]+)\s([\w\d]+)\s(.+)(\n|$)/m';
 
-            foreach ($lines as $line) {
-                if (trim($line) === '') {
-                    continue;
-                }
+        foreach ($lines as $line) {
+            if (trim($line) === '') {
+                continue;
+            }
 
-                preg_match($pattern, $line, $matches);
+            preg_match($pattern, $line, $matches);
 
-                if (
-                    isset($matches[1]) && $matches[1] !== ''
-                ) {
-                    if (in_array($matches[1], $requestedData)) {
-                        $data[] = [
-                            'item_no' => $matches[1],
-                            'nsn' => $matches[3],
-                            'part_no' => $matches[4],
-                            'description' => $matches[5],
-                        ];
-                    }
+            if (isset($matches[1]) && $matches[1] !== '') {
+                if (in_array($matches[1], $requestedData)) {
+                    // Separate part_no and description
+                    $partNo = $matches[4];
+                    $description = $matches[5];
+
+                    // Extract the first word from the description as part_no
+                    $descriptionWords = explode(' ', $description);
+                    $partNo = $descriptionWords[0];
+                    $description = Str::replaceFirst($partNo, '', $description);
+                    $description = trim($description);
+
+                    $data[] = [
+                        'item_no' => $matches[1],
+                        'nsn' => $matches[3],
+                        'part_no' => $partNo,
+                        'description' => $description,
+                    ];
                 }
             }
         }
-        dd($data);
-
-        // Create catalog part objects from the data array
-        $catalogParts = [];
-        foreach ($data as $dataItem) {
-            $catalogPart = new CatelogPartList();
-            $catalogPart->item_no = $dataItem['item_no'];
-            $catalogPart->nsn = $dataItem['nsn'];
-            $catalogPart->part_no = $dataItem['part_no'];
-            $catalogPart->description = $dataItem['description'];
-            $catalogParts[] = $catalogPart;
-        }
-
-        // Save the catalog parts to the database
-        foreach ($catalogParts as $catalogPart) {
-            $catalogPart->save();
-        }
-
-        return redirect()->back()->with('success_message', 'PDF data loaded and saved successfully.');
     }
+
+    // Create catalog part objects from the data array
+    $catalogParts = [];
+    foreach ($data as $dataItem) {
+        $catalogPart = new CatelogPartList();
+        $catalogPart->item_no = $dataItem['item_no'];
+        $catalogPart->nsn = $dataItem['nsn'];
+        $catalogPart->part_no = $dataItem['part_no'];
+        $catalogPart->description = $dataItem['description'];
+        $catalogPart->cgec = $dataItem['cgec'];
+        $catalogParts[] = $catalogPart;
+    }
+
+    // Save the catalog parts to the database
+    foreach ($catalogParts as $catalogPart) {
+        $catalogPart->save();
+    }
+
+    return redirect()->back()->with('success_message', 'PDF data loaded and saved successfully.');
+}
 
 
 

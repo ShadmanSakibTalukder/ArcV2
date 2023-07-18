@@ -1,6 +1,6 @@
 <x-master>
     <x-slot:title>
-        Parts List
+       Category Parts List
     </x-slot:title>
     @if (session()->has('message'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -37,7 +37,8 @@
                             <tr class="text-center">
                                 <th scope="col">sl</th>
                                 <th scope="col">Item No</th>
-                                <th scope="col">Part No</th>
+                                <th scope="col">Part No</th> <!-- Previously "CGEC" -->
+                                <th scope="col">CGEC</th> <!-- Add a new column for CGEC -->
                                 <th scope="col">NSN</th>
                                 <th scope="col">Description</th>
                             </tr>
@@ -47,20 +48,20 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->item_no}}</td>
-                                <td>{{$item->part_no}}</td>
+                                <td>{{$item->part_no}}</td> <!-- Previously "cgec" -->
+                                <td>{{$item->cgec}}</td> <!-- Add a new column for CGEC -->
                                 <td>{{$item->nsn}}</td>
                                 <td>{{$item->description}}</td>
                             </tr>
                             @empty
-
-                            @endforelse
                             <tr>
                                 <td colspan="6">
                                     <h4>No Part Available</h4>
                                 </td>
                             </tr>
+                            @endforelse
                         </tbody>
-
+                        
                     </table>
                     {{$cat_parts->links()}}
                 </div>
