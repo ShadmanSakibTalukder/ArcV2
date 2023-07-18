@@ -43,6 +43,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('m_purchase_order.index')}}">
+                        <i class="fa-solid fa-cart-shopping fa-bounce fa-l"></i>
+                        Mens Logistics Purchased Order
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('vendors.index')}}">
                         <i class="fa-solid fa-ghost fa-shake fa-xl"></i>
                         Vendors
