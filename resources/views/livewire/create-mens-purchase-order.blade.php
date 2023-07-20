@@ -31,9 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                            $total=0
-                            @endphp
+
 
                             @forelse ($added_to_list as $item)
 
@@ -41,15 +39,16 @@
                                 <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
                                 <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
                                 <td>
-                                    <input type="number" name="qty" value="{{$item->qty}}" class="input-quantity" />
-                                    @php
-                                    //$total=$item->parts_added_inlist->declared_price*qty
-                                    @endphp
+                                    <input type="number" name="qty" wire:model.defer="qty" class="input-quantity" />
+
                                 </td>
                                 <td>
                                     {{$item->parts_added_inlist->declared_price}}
                                 </td>
-                                <td>{{ $item->parts_added_inlist->declared_price * $item->qty}}</td>
+                                <td>
+                                    {{$item->parts_added_inlist->declared_price * $qty}}
+
+                                </td>
 
 
                                 <td>
@@ -63,6 +62,7 @@
                                     </div>
                                 </td>
                             </tr>
+
                             @empty
                             <tr>
                                 <td colspan="6">No items added yet.</td>

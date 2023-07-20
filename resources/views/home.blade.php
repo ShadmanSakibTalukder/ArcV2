@@ -5,7 +5,7 @@
 
     <style>
         .card-header {
-            background-color:lavender;
+            background-color: lavender;
             color: black;
         }
 
@@ -105,102 +105,102 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Tender Under Process</h2>
-                <div class="line"></div>
-                <div class="table-responsive d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>SL</th>
-                                <th>Date</th>
-                                <th>Tender No</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2023-07-17</td>
-                                <td>TN001</td>
-                                <td>
-                                    <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
-                                    <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                                    <form action="{{('#')}}" method="post" style="display:inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>2023-07-18</td>
-                                <td>TN002</td>
-                                <td>
-                                    <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
-                                    <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                                    <form action="{{('#')}}" method="post" style="display:inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <h2>Purchase Order In Process</h2>
-                <div class="line"></div>
-                <div class="table-responsive d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-                    <table class="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>SL</th>
-                                <th>Date</th>
-                                <th>Purchase Order No</th>
-                                <th>Purchase Order Position</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2023-07-17</td>
-                                <td>poiuyt567</td>
-                                <td>TN001</td>
-                                <td>
-                                    <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
-                                    <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                                    <form action="{{('#')}}" method="post" style="display:inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>2023-07-18</td>
-                                <td>poiuyt567</td>
-                                <td>TN002</td>
-                                <td>
-                                    <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
-                                    <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                                    <form action="{{('#')}}" method="post" style="display:inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    </div>
+    <br><br>
+    <h2>Tender Under Process</h2>
+    <div class="line"></div>
+    <br>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">SL</th>
+                <th scope="col">Date</th>
+                <th scope="col">Tender No</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2023-07-17</td>
+                <td>TN001</td>
+                <td>
+                    <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
+                    <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                    <form action="{{('#')}}" method="post" style="display:inline">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2023-07-18</td>
+                <td>TN002</td>
+                <td>
+                    <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
+                    <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                    <form action="{{('#')}}" method="post" style="display:inline">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <div class="col-md-12">
+        <h2>Purchase Order In Process</h2>
+        <div class="line"></div>
+        <br>
+        <div class="table-responsive d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Date</th>
+                        <th>Purchase Order No</th>
+                        <th>Purchase Order Position</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2023-07-17</td>
+                        <td>poiuyt567</td>
+                        <td>TN001</td>
+                        <td>
+                            <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
+                            <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                            <form action="{{('#')}}" method="post" style="display:inline">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2023-07-18</td>
+                        <td>poiuyt567</td>
+                        <td>TN002</td>
+                        <td>
+                            <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
+                            <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                            <form action="{{('#')}}" method="post" style="display:inline">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </x-master>

@@ -12,10 +12,8 @@ use Livewire\Component;
 class CreateMensPurchaseOrder extends Component
 {
     public $search = '';
-    public $selectedOption = [];
-    public $parts_selected = [];
     public $added_to_list = [];
-    public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
+    public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal, $qty;
 
     public function addToList($part_id)
     {
@@ -48,18 +46,7 @@ class CreateMensPurchaseOrder extends Component
 
     public function calculateUnitPrice($item)
     {
-        $unitPrice = 0;
-
-        $selectedOption = $this->selectedOption[$item->id] ?? '';
-
-        if ($selectedOption === 'fsPrice') {
-            $unitPrice = $item->parts_added_inlist->declared_price;
-        } elseif ($selectedOption === 'surplusPrice') {
-            $unitPrice = $item->parts_added_inlist->declared_price;
-        } elseif ($selectedOption === 'navisterPrice') {
-            $unitPrice = $item->parts_added_inlist->declared_price;
-        }
-
+        $unitPrice = $item->parts_added_inlist->declared_price * $this->qty;
         return $unitPrice;
     }
 
@@ -126,7 +113,7 @@ class CreateMensPurchaseOrder extends Component
 
         // Reset the form and show success message
         $this->reset(['po_no', 'buyer_name', 'buyer_address', 'vendor_name', 'vendor_address', 'shipping_address', 'tender_no', 'po_date', 'subTotal']);
-        $this->parts_selected = [];
+
         $this->added_to_list = [];
         session()->flash('success_message', 'Purchase order created successfully!');
     }
