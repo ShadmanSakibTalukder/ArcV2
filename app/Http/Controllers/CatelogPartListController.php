@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\CatelogPartList;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Str;
-
 use Smalot\PdfParser\Parser;
-use Spatie\PdfToText\Pdf;
+
+
+use TCPDF;
 
 class CatelogPartListController extends Controller
 {
@@ -17,6 +17,7 @@ class CatelogPartListController extends Controller
     {
         Paginator::useBootstrap();
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,14 +27,10 @@ class CatelogPartListController extends Controller
         return view('catelogPartList.index', compact('cat_parts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('catelogPartList.create');
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -287,49 +284,47 @@ class CatelogPartListController extends Controller
             if (isset($matches[1]) && $matches[1] !== '') {
                 if (in_array($matches[1], $requestedData)) {
                     // Separate part_no and description
-                    $partNo = $matches[4];
-                    $description = $matches[5];
+                    $partNo = '';
+                    $description = '';
+                    $cagec = '';
 
-                    // Check if Cagec value is present (matches[5] holds the Cagec value)
-                    $cagec = isset($matches[5]) ? $matches[5] : '';
+                    if (isset($matches[4])) {
+                        // Extract Cagec value
+                        $cagec = $matches[4];
+                    }
 
-                    // Extract the first word from the description as part_no
-                    $descriptionWords = explode(' ', $description);
-                    $partNo = $descriptionWords[0];
-                    $description = Str::replaceFirst($partNo, '', $description);
-                    $description = trim($description);
+                    if (isset($matches[5])) {
+                        // Extract part number and description
+                        $lineData = explode(' ', $matches[5], 2);
+                        if (count($lineData) === 2) {
+                            $partNo = $lineData[0];
+                            $description = $lineData[1];
+                        }
+                    }
 
                     $data[] = [
                         'item_no' => $matches[1],
                         'nsn' => $matches[3],
                         'part_no' => $partNo,
                         'description' => $description,
-                        'cagec' => $cagec, // Add the Cagec value to the data array
+                        'cagec' => $cagec,
                     ];
                 }
             }
         }
     }
 
-    // Create catalog part objects from the data array
-    $catalogParts = [];
-    foreach ($data as $dataItem) {
-        $catalogPart = new CatelogPartList();
-        $catalogPart->item_no = $dataItem['item_no'];
-        $catalogPart->nsn = $dataItem['nsn'];
-        $catalogPart->part_no = $dataItem['part_no'];
-        $catalogPart->description = $dataItem['description'];
-        $catalogPart->cagec = $dataItem['cagec'];
-        $catalogParts[] = $catalogPart;
-    }
-
     // Save the catalog parts to the database
-    foreach ($catalogParts as $catalogPart) {
-        $catalogPart->save();
-    }
+    CatelogPartList::insert($data);
 
     return redirect()->back()->with('success_message', 'PDF data loaded and saved successfully.');
 }
+
+
+
+
+
+
 
 
 
