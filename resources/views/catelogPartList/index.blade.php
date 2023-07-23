@@ -37,21 +37,21 @@
                             <tr class="text-center">
                                 <th scope="col">sl</th>
                                 <th scope="col">Item No</th>
-                                <th scope="col">Part No</th> <!-- Previously "CGEC" -->
-                                <th scope="col">CAGEC</th> <!-- Add a new column for CGEC -->
+                                <th scope="col">Part No</th>
+                                <th scope="col">CAGEC</th>
                                 <th scope="col">NSN</th>
                                 <th scope="col">Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($cat_parts as $item)
-                            <tr>
+                            <tr @if($item->has_missing_data) class="table-danger" @endif>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->item_no}}</td>
-                                <td>{{$item->part_no}}</td> <!-- Previously "cgec" -->
-                                <td>{{$item->cagec}}</td> <!-- Add a new column for CGEC -->
-                                <td>{{$item->nsn}}</td>
-                                <td>{{$item->description}}</td>
+                                <td @if($item->has_missing_data) class="table-danger" @endif>{{$item->part_no}}</td>
+                                <td @if($item->has_missing_data) class="table-danger" @endif>{{$item->cagec}}</td>
+                                <td @if($item->has_missing_data) class="table-danger" @endif>{{$item->nsn}}</td>
+                                <td @if($item->has_missing_data) class="table-danger" @endif>{{$item->description}}</td>
                             </tr>
                             @empty
                             <tr>

@@ -18,9 +18,9 @@
     <form action="{{ route('catelog_part_list.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label for="pdf" class="form-label">Select PDF File</label>
-            <input type="file" class="form-control" id="pdf" name="pdf">
+            <label for="csv" class="form-label">Select CSV File</label>
+            <input type="file" class="form-control" id="csv" name="csv">
         </div>
-        <button type="submit" class="btn btn-primary">Load PDF</button>
+        <button type="submit" class="btn btn-primary">Load CSV</button>
     </form>
 </x-master>
