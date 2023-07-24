@@ -38,16 +38,17 @@
                             <tr>
                                 <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
                                 <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
-                                <td>
-                                    <input type="number" name="qty" wire:model.defer="qty" class="input-quantity" />
+                                <td>{{ $item->qty }}</td>
 
-                                </td>
                                 <td>
                                     {{$item->parts_added_inlist->declared_price}}
                                 </td>
                                 <td>
-                                    {{$item->parts_added_inlist->declared_price * $qty}}
+                                    {{$this->calculateTotalPrice($item)}}
+                                    @php
+                                    $subTotal+=$this->calculateTotalPrice($item);
 
+                                    @endphp
                                 </td>
 
 
@@ -144,6 +145,7 @@
                             <tr>
                                 <th>Parts No.</th>
                                 <th>Nomenclature</th>
+                                <th>Qty</th>
                                 <th>Add</th>
                             </tr>
                         </thead>
@@ -152,6 +154,7 @@
                             <tr>
                                 <td>{{ $item->requested_part_no }}</td>
                                 <td>{{ $item->requested_nomenclature }}</td>
+                                <td><input type="text" wire:model.defer="qty" class="input-quantity" /></td>
                                 <td>
                                     <button type="button" wire:click="addToList({{ $item->id }})" wire:loading.attr="disabled" wire:target="addToList({{ $item->id }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
                                         <span wire:loading.remove wire:target="addToList({{ $item->id }})">

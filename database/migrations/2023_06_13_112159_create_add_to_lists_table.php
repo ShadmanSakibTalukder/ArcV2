@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('add_to_lists', function (Blueprint $table) {
             $table->id();
             $table->integer('item_id');
+            $table->integer('qty');
             $table->timestamps();
         });
     }

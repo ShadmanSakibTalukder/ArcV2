@@ -13,7 +13,7 @@ class CreateMensPurchaseOrder extends Component
 {
     public $search = '';
     public $added_to_list = [];
-    public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal, $qty;
+    public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal, $qty = 1;
 
     public function addToList($part_id)
     {
@@ -24,6 +24,7 @@ class CreateMensPurchaseOrder extends Component
         } else {
             $order_item = AddToList::create([
                 'item_id' => $part_id,
+                'qty' => $this->qty,
             ]);
 
             $this->emit('addToListUpdated');
@@ -46,17 +47,31 @@ class CreateMensPurchaseOrder extends Component
 
     public function calculateUnitPrice($item)
     {
-        $unitPrice = $item->parts_added_inlist->declared_price * $this->qty;
+        $unitPrice = $item->parts_added_inlist->declared_price;
         return $unitPrice;
     }
 
-    public function calculateTotalPrice($item, $qty)
+    // public function calculateTotalPrice($item, $qty)
+    // {
+    //     $unitPrice = $item->parts_added_inlist->declared_price;
+    //     $totalPrice = $unitPrice * $qty;
+
+    //     return $totalPrice;
+    // }
+
+    public function calculateTotalPrice($item)
     {
-        $unitPrice = $this->calculateUnitPrice($item);
-        $totalPrice = $unitPrice * $qty;
+        // Get the qty and declared_price directly from the $item
+        $qty = $item->qty;
+        $declaredPrice = $item->parts_added_inlist->declared_price;
+
+        // Calculate the total price
+        $totalPrice = $qty * $declaredPrice;
 
         return $totalPrice;
     }
+
+
 
     public function savePO()
     {
@@ -64,7 +79,7 @@ class CreateMensPurchaseOrder extends Component
         foreach ($this->added_to_list as $item) {
             $qty = $this->parts_selected[$item->id]['qty'] ?? 0;
             $unitPrice = $this->calculateUnitPrice($item);
-            $totalPrice = $this->calculateTotalPrice($item, $qty);
+            $totalPrice = $this->calculateTotalPrice($item);
             $subTotal += $totalPrice;
         }
 
@@ -91,14 +106,14 @@ class CreateMensPurchaseOrder extends Component
             'shipping_address' => $validatedData['shipping_address'],
             'tender_no' => $validatedData['tender_no'],
             'po_date' => $validatedData['po_date'],
-            'total_purchase_price_no' => $subTotal,
+            'total_declared_price_no' => $subTotal,
         ]);
 
 
         foreach ($this->added_to_list as $item) {
             $qty = $this->parts_selected[$item->id]['qty'] ?? 0;
             $unitPrice = $this->calculateUnitPrice($item);
-            $totalPrice = $this->calculateTotalPrice($item, $qty);
+            $totalPrice = $this->calculateTotalPrice($item);
 
             // dd($purchaseOrder->id);
 

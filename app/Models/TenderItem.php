@@ -20,14 +20,4 @@ class TenderItem extends Model
     {
         return $this->belongsTo(tenders::class, 'tender_id', 'id');
     }
-
-    /**
-     * Get the parts that owns the PurchaseOrderItem
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function parts(): BelongsTo
-    {
-        return $this->belongsTo(Parts_list::class, 'item_id', 'id');
-    }
 }
