@@ -48,10 +48,10 @@
                             <tr @if($item->has_missing_data) class="table-danger" @endif>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->item_no}}</td>
-                                <td @if($item->has_missing_data) class="table-danger" @endif>{{$item->part_no}}</td>
-                                <td @if($item->has_missing_data) class="table-danger" @endif>{{$item->cagec}}</td>
-                                <td @if($item->has_missing_data) class="table-danger" @endif>{{$item->nsn}}</td>
-                                <td @if($item->has_missing_data) class="table-danger" @endif>{{$item->description}}</td>
+                                <td @if(empty($item->part_no)) class="table-danger" @endif>{{$item->part_no}}</td>
+                                <td @if(empty($item->nsn)) class="table-danger" @endif>{{$item->cagec}}</td>
+                                <td @if(empty($item->nsn)) class="table-danger" @endif>{{$item->nsn}}</td>
+                                <td>{{$item->description}}</td>
                             </tr>
                             @empty
                             <tr>

@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use TCPDF;
+use League\Csv\Reader;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Smalot\PdfParser\Parser;
 use App\Models\CatelogPartList;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Smalot\PdfParser\Parser;
+
+
 use Illuminate\Support\Facades\Storage;
-use League\Csv\Reader;
-
-
-use TCPDF;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class CatelogPartListController extends Controller
 {
@@ -97,53 +100,58 @@ class CatelogPartListController extends Controller
 //     return redirect()->back()->with('success_message', 'PDF data loaded and saved successfully.');
 // }
 
+
 public function store(Request $request)
 {
+    $validator = Validator::make($request->all(), [
+        'csv' => 'required|mimes:csv,txt',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
     $csvPath = $request->file('csv')->getRealPath();
-    $data = array_map('str_getcsv', file($csvPath));
+    $rows = array_map('str_getcsv', file($csvPath));
+    $headers = array_shift($rows);
 
-    $requestedData = ['1'];
+    foreach ($rows as $row) {
+        if (count($row) >= 5) { // Check if the row has at least 5 columns
 
-    $rows = [];
-    foreach ($data as $row) {
-        // Assuming the CSV format: ITEM, SMR, NSN, CAGEC, PART, DESCRIPTION AND USABLE ON
-        $itemNo = $row[0];
-        $smrCode = $row[1];
-        $nsn = $row[2];
-        $cagec = $row[3];
-        $partNo = $row[4];
-        $description = $row[5];
+            // Extract the correct columns based on their positions
+            $item_no = $row[0];
+            $smr_code = $row[1];
+            $nsn = $row[2];
+            $cagec = $row[3];
+            $part_no = $row[4];
+            $description = $row[5];
 
-        // Skip the row if item_no is not numeric
-        if (!is_numeric($itemNo)) {
-            continue;
-        }
+            // Check if item_no is an integer, if not, skip this row
+            if (!is_numeric($item_no)) {
+                continue;
+            }
 
-        // Add the row data with a flag indicating missing data
-        $rows[] = [
-            'item_no' => $itemNo,
-            'smr_code' => $smrCode,
-            'nsn' => $nsn,
-            'cagec' => $cagec,
-            'part_no' => $partNo,
-            'description' => $description,
-            'has_missing_data' => empty($partNo) || empty($nsn),
-        ];
+            // Create a new CatelogPartList instance
+            $catelogPartList = new CatelogPartList();
 
-        // Save the catalog part to the database if it doesn't have missing data
-        if (!$rows[count($rows) - 1]['has_missing_data']) {
-            CatelogPartList::create([
-                'item_no' => $itemNo,
-                'part_no' => $partNo,
-                'cagec' => $cagec,
-                'nsn' => $nsn,
-                'description' => $description,
-            ]);
+            // Set the values for item_no, part_no, nsn, description, and cagec
+            $catelogPartList->item_no = $item_no;
+            $catelogPartList->part_no = $part_no;
+            $catelogPartList->nsn = $nsn;
+            $catelogPartList->description = $description;
+            $catelogPartList->cagec = $cagec;
+
+            // Save the record
+            $catelogPartList->save();
         }
     }
 
     return redirect()->back()->with('success_message', 'CSV data loaded and saved successfully.');
 }
+
+
+
+
 
 
 
