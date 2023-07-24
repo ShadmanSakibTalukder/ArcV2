@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenders', function (Blueprint $table) {
+        Schema::create('add_to_tender_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('tender_no');
-            $table->date('issue_date');
-            $table->string('orderd_by')->nullable();
-            $table->tinyInteger('status')->default('0')->comment('1=done,0=under process');
+            $table->string('part_no');
+            $table->string('nomenclature');
+            $table->integer('qty');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenders');
+        Schema::dropIfExists('add_to_tender_lists');
     }
 };

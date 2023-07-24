@@ -29,14 +29,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($added_to_list as $item)
+                            @forelse ($added_to_tender_list as $item)
 
                             <tr>
-                                <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
-                                <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
-                                <td>
-                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
-                                </td>
+                                <td>{{ $item->part_no }}</td>
+                                <td>{{ $item->nomenclature }}</td>
+                                <td>{{ $item->qty }}</td>
+
                                 <td>
                                     <div class="remove">
                                         <button type="button" wire:click="removeListItem({{ $item->id }})" wire:loading.attr="disabled" class="btn btn-danger btn-sm" title="{{__('Remove')}}">
@@ -97,25 +96,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($parts_list as $item)
                             <tr>
-                                <td>{{ $item->requested_part_no }}</td>
-                                <td>{{ $item->requested_nomenclature }}</td>
                                 <td>
-                                    <button type="button" wire:click="addToList({{ $item->id }})" wire:loading.attr="disabled" wire:target="addToList({{ $item->id }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
-                                        <span wire:loading.remove wire:target="addToList({{ $item->id }})">
+                                    <input type="text" class="form-control" id="part_no" wire:model="part_no" name="part_no">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="nomenclature" wire:model="nomenclature" name="nomenclature">
+                                </td>
+                                <td>
+                                    <input type="qty" class="form-control" id="qty" wire:model="qty" name="qty">
+                                </td>
+                                <td>
+                                    <button type="button" wire:click="addToList({{ $part_no }})" wire:loading.attr="disabled" wire:target="addToList({{ $part_no }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
+                                        <span wire:loading.remove wire:target="addToList({{ $part_no }})">
                                             <i class="fa fa-plus fa-bounce"></i>
                                         </span>
-                                        <span wire:loading wire:target="addToList({{ $item->id }})">{{__('Adding...')}}</span>
+                                        <span wire:loading wire:target="addToList({{ $part_no }})">{{__('Adding...')}}</span>
                                     </button>
-
                                 </td>
                             </tr>
-                            @empty
-                            <tr>
-                                <td colspan="3">No parts available</td>
-                            </tr>
-                            @endforelse
                         </tbody>
                     </table>
                 </div>

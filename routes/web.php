@@ -35,6 +35,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('admin/work_orders', WorkOrderController::class);
 Route::resource('admin/parts_list', PartsListController::class);
 Route::resource('admin/tenders', TendersController::class);
+Route::get('admin/tenders/active/{id}', [TendersController::class, 'active'])->name('tenders.active');
+Route::get('admin/tenders/inactive/{id}', [TendersController::class, 'inactive'])->name('tenders.inactive');
+
+
 Route::resource('admin/purchased_order', PurchasedOrderController::class);
 Route::resource('admin/catelog_part_list', CatelogPartListController::class);
 Route::resource('support/m_purchase_order', MensPurchaseOrderController::class);

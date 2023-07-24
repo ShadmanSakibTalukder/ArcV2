@@ -29,19 +29,20 @@
             <thead>
                 <tr>
                     <th scope="col">sl</th>
-                    <th scope="col">Part Number</th>
-                    <th scope="col">Cat Part Number</th>
+                    <th scope="col">Part No</th>
                     <th scope="col">Nomenclature</th>
                     <th scope="col">Qty</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($tender->tenderItems as $item)
-                <tr>
+                @php
+                $catPart = App\Models\CatelogPartList::where('part_no', $item->part_no)->first();
+                @endphp
+                <tr class="{{ $catPart ? 'table-success' : 'table-danger' }}">
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$item->parts->requested_part_no}}</td>
-                    <td></td>
-                    <td>{{$item->parts->requested_nomenclature}}</td>
+                    <td>{{$item->part_no}}</td>
+                    <td>{{$item->nomenclature}}</td>
                     <td>{{$item->qty}}</td>
                 </tr>
                 @endforeach

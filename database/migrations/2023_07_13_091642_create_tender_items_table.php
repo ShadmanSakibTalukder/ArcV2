@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('tender_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('tender_id');
-            $table->integer('item_id');
+            $table->unsignedBigInteger('tender_id');
+            $table->string('part_no');
+            $table->string('nomenclature');
             $table->integer('qty');
             $table->timestamps();
+
+            $table->foreign('tender_id')->references('id')->on('tenders')->onDelete('cascade');
         });
     }
 

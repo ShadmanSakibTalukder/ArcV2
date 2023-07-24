@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatelogPartList;
 use App\Models\tenders;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class TendersController extends Controller
      */
     public function index()
     {
-        $tenderList = tenders::orderBy('id', 'DESC')->paginate(5);
+        $tenderList = tenders::orderBy('id', 'DESC')->paginate(15);
         return view('tenders.index', compact('tenderList'));
     }
 
@@ -43,7 +44,8 @@ class TendersController extends Controller
      */
     public function show(tenders $tender)
     {
-        return view('tenders.show', compact('tender'));
+        $cat_part = CatelogPartList::all();
+        return view('tenders.show', compact('tender', 'cat_part'));
     }
 
     /**
@@ -70,5 +72,22 @@ class TendersController extends Controller
         // dd($tender);
         $tender->delete();
         return redirect()->back()->with('message', 'Successfully deleted!');
+    }
+
+    public function active($id)
+    {
+        // dd($id);
+        $tender = tenders::find($id);
+        $tender->status = 1;
+        $tender->update();
+        return back();
+    }
+    public function inactive($id)
+    {
+        // dd($id);
+        $tender = tenders::find($id);
+        $tender->status = 0;
+        $tender->update();
+        return back();
     }
 }

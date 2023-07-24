@@ -22,6 +22,7 @@
                                     <th scope="col">Tender No.</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Ordered By</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -32,9 +33,15 @@
                                     <td>{{ $item->tender_no }}</td>
                                     <td>{{ $item->issue_date }}</td>
                                     <td>{{ $item->orderd_by }}</td>
+                                    <td>@if($item->status==0)
+                                        <a href="{{route('tenders.active',$item->id)}}" class="btn btn-sm link-success">{{__('Working')}}</a>
+                                        @else
+                                        <a href="{{route('tenders.inactive',$item->id)}}" class="btn btn-sm link-danger">{{__('Done')}}</a>
+
+                                        @endif
+                                    </td>
                                     <td>
-                                        <a href="{{ route('tenders.show', $item->id) }}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                                        <form action="{{ route('tenders.destroy', $item->id) }}" method="post" style="display:inline">
+                                        <form action="{{ route('tenders.destroy', $item->id) }}" method="POST" style="display:inline">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>
