@@ -35,12 +35,19 @@ class MensPurchaseOrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MensPurchaseOrder $mensPurchaseOrder)
-    {
-        // dd($mensPurchaseOrderShow);
-        // return view('mens_logistics_purchase_order.show', compact('mensPurchaseOrder'));
-        return view('mens_logistics_purchase_order.show', compact('mensPurchaseOrder'));
-    }
+    // public function show(MensPurchaseOrder $mensPurchaseOrder)
+    // {
+    //     // dd($mensPurchaseOrderShow);
+    //     // return view('mens_logistics_purchase_order.show', compact('mensPurchaseOrder'));
+    //     return view('mens_logistics_purchase_order.show', compact('mensPurchaseOrder'));
+    // }
+    public function show($id)
+{
+    $mensPurchaseOrder = MensPurchaseOrder::with('mensPurchaseOrderItem')->findOrFail($id);
+
+    return view('mens_logistics_purchase_order.show', compact('mensPurchaseOrder'));
+}
+
 
     /**
      * Show the form for editing the specified resource.
