@@ -41,6 +41,7 @@
                                         @endif
                                     </td>
                                     <td>
+                                        <a href="{{ route('tenders.show', $item->id) }}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
                                         <form action="{{ route('tenders.destroy', $item->id) }}" method="POST" style="display:inline">
                                             @csrf
                                             @method('delete')

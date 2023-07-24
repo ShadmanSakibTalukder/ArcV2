@@ -12,8 +12,8 @@ class MensPurchaseOrderController extends Controller
      */
     public function index()
     {
-
-        return view('mens_logistics_purchase_order.index');
+        $mensPurchaseOrder = MensPurchaseOrder::orderBy('id', 'DESC')->paginate(15);
+        return view('mens_logistics_purchase_order.index', compact('mensPurchaseOrder'));
     }
 
     /**
@@ -37,7 +37,9 @@ class MensPurchaseOrderController extends Controller
      */
     public function show(MensPurchaseOrder $mensPurchaseOrder)
     {
-        //
+        // dd($mensPurchaseOrderShow);
+        // return view('mens_logistics_purchase_order.show', compact('mensPurchaseOrder'));
+        return view('mens_logistics_purchase_order.show', compact('mensPurchaseOrder'));
     }
 
     /**
@@ -61,6 +63,7 @@ class MensPurchaseOrderController extends Controller
      */
     public function destroy(MensPurchaseOrder $mensPurchaseOrder)
     {
-        //
+        $mensPurchaseOrder->delete();
+        return redirect()->back()->with('message', 'Successfully deleted!');
     }
 }

@@ -27,9 +27,27 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse ($mensPurchaseOrder as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->po_no }}</td>
+                                    <td>{{ $item->tender_no }}</td>
+                                    <td>{{ $item->wo_no }}</td>
+                                    <td>{{ $item->total_declared_price_no }}</td>
+                                    <td>
+                                        <a href="{{ route('m_purchase_order.show', $item->id) }}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                                        <form action="{{ route('m_purchase_order.destroy', $item->id) }}" method="post" style="display:inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @empty
                                 <tr>
                                     <td>No Purchase Order Available</td>
                                 </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

@@ -111,7 +111,6 @@ class CreateMensPurchaseOrder extends Component
 
 
         foreach ($this->added_to_list as $item) {
-            $qty = $this->parts_selected[$item->id]['qty'] ?? 0;
             $unitPrice = $this->calculateUnitPrice($item);
             $totalPrice = $this->calculateTotalPrice($item);
 
@@ -120,7 +119,7 @@ class CreateMensPurchaseOrder extends Component
             MensPurchaseOrderItem::create([
                 'purchase_order_id' => $purchaseOrder->id,
                 'item_id' => $item->id,
-                'qty' => $qty,
+                'qty' => $this->qty,
                 'price' => $unitPrice,
                 'total_price' => $totalPrice,
             ]);
