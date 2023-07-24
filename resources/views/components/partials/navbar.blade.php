@@ -18,7 +18,31 @@
         </li>
     </ul>
 
-    <div id="navbarSearch" class="navbar-search w-100 collapse">
-        <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+    <form class="form-control form-control-dark w-80 rounded-0 border-0" action="#" method="GET">
+        <div class="row">
+            <div class="col-10">
+                <input class="form-control form-control-dark w-90 rounded-0 border-0" type="text" name="search" value="" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+            </div>
+            <div class="col-2">
+                <button class="btn btn-outline-dark" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+    </form>
+
+    <a id="navbarDropdown" class="nav-link text-white dropdown-toggle px-3" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+        {{ Auth::user()->name }}
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+        </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+    </div>
+    <div class="navbar-nav">
     </div>
 </header>
