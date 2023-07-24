@@ -113,45 +113,23 @@
                     </thead>
                     <tbody>
                         @if($mensPurchaseOrder->mensPurchaseOrderItem)
-                            @forelse ($mensPurchaseOrder->mensPurchaseOrderItem as $item)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>
-                                        @if($item->parts) <!-- Check if parts record exists -->
-                                            {{$item->parts->cat_part_no}}
-                                        @else
-                                            N/A <!-- or any default value you want to display when parts is null -->
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($item->parts) <!-- Check if parts record exists -->
-                                            {{$item->parts->cat_nomenclature}}
-                                        @else
-                                            N/A <!-- or any default value you want to display when parts is null -->
-                                        @endif
-                                    </td>
-                                    <td>{{$item->qty}}</td>
-                                    <td>${{$item->price}}</td>
-                                    <td>${{$item->total_price}}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6">No items found.</td>
-                                </tr>
-                            @endforelse
-                        @else
-                            <tr>
-                                <td colspan="6">No items found.</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                    {{-- <tbody>
-                        @if($mensPurchaseOrder->mensPurchaseOrderItem)
                         @forelse ($mensPurchaseOrder->mensPurchaseOrderItem as $item)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$item->parts->cat_part_no}}</td>
-                            <td>{{$item->parts->cat_nomenclature}}</td>
+                            <td>
+                                @if($item->parts) <!-- Check if parts record exists -->
+                                {{$item->parts->cat_part_no}}
+                                @else
+                                N/A <!-- or any default value you want to display when parts is null -->
+                                @endif
+                            </td>
+                            <td>
+                                @if($item->parts) <!-- Check if parts record exists -->
+                                {{$item->parts->cat_nomenclature}}
+                                @else
+                                N/A <!-- or any default value you want to display when parts is null -->
+                                @endif
+                            </td>
                             <td>{{$item->qty}}</td>
                             <td>${{$item->price}}</td>
                             <td>${{$item->total_price}}</td>
@@ -166,6 +144,28 @@
                             <td colspan="6">No items found.</td>
                         </tr>
                         @endif
+                    </tbody>
+                    {{-- <tbody>
+                        @if($mensPurchaseOrder->mensPurchaseOrderItem)
+                        @forelse ($mensPurchaseOrder->mensPurchaseOrderItem as $item)
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+                    <td>{{$item->parts->cat_part_no}}</td>
+                    <td>{{$item->parts->cat_nomenclature}}</td>
+                    <td>{{$item->qty}}</td>
+                    <td>${{$item->price}}</td>
+                    <td>${{$item->total_price}}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6">No items found.</td>
+                    </tr>
+                    @endforelse
+                    @else
+                    <tr>
+                        <td colspan="6">No items found.</td>
+                    </tr>
+                    @endif
 
                     </tbody> --}}
                 </table>
