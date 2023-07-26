@@ -1,4 +1,4 @@
-<x-master>
+<x-support.master>
     <x-slot:title>
         {{$mensPurchaseOrder->po_no}}
     </x-slot:title>
@@ -223,4 +223,4 @@
 
 
 
-</x-master>
+</x-support.master>

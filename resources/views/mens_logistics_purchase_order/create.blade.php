@@ -1,4 +1,4 @@
-<x-master>
+<x-support.master>
     <x-slot:title>
         Create Purchase Order
     </x-slot:title>
@@ -8,4 +8,4 @@
 
 
 
-</x-master>
+</x-support.master>

@@ -31,8 +31,10 @@ class LoginController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected function authenticated(Request $request, $user)
     {
-        if (Auth::user()->role_as == '1' || Auth::user()->role_as == '2') {
+        if (Auth::user()->role_as == '1') {
             return redirect('admin/home')->with('success_message', 'Welcome');
+        } elseif (Auth::user()->role_as == '2') {
+            return redirect('/support/dashboard')->with('success_message', 'welcome ');
         } else {
             return redirect('/')->with('success_message', 'Welcome');
         }

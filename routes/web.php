@@ -10,6 +10,7 @@ use App\Http\Controllers\VendorsController;
 use App\Http\Controllers\PartsListController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\PurchasedOrderController;
+use App\Http\Controllers\SupportController;
 use App\Models\CatelogPartList;
 use App\Models\MensPurchaseOrder;
 
@@ -61,11 +62,17 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::resource('/purchased_order', PurchasedOrderController::class);
     Route::resource('/catelog_part_list', CatelogPartListController::class);
-    Route::resource('/m_purchase_order', MensPurchaseOrderController::class);
 
     Route::get('purchase-order/pdf/{id}', [PurchasedOrderController::class, 'purchaseOrderGenerator'])->name('purchased_order.pdf_download');
 
 
     Route::resource('/vendors', VendorsController::class);
     Route::resource('/buyers', BuyersController::class);
+});
+Route::prefix('support')->middleware(['auth', 'isSupport'])->group(function () {
+
+    Route::resource('/m_purchase_order', MensPurchaseOrderController::class);
+
+
+    Route::get('/dashboard', [SupportController::class, 'index'])->name('support.dashboard');
 });
