@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Work_order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WorkOrderController extends Controller
 {
@@ -12,8 +13,11 @@ class WorkOrderController extends Controller
      */
     public function index()
     {
-
-        return view('orders.index');
+        if (Auth::user()->role_as == '1') {
+            return view('orders.index');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -21,7 +25,11 @@ class WorkOrderController extends Controller
      */
     public function create()
     {
-        return view('orders.create_work_order');
+        if (Auth::user()->role_as == '1') {
+            return view('orders.create_work_order');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -29,7 +37,11 @@ class WorkOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -37,7 +49,11 @@ class WorkOrderController extends Controller
      */
     public function show(Work_order $work_order)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -45,7 +61,11 @@ class WorkOrderController extends Controller
      */
     public function edit(Work_order $work_order)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -53,7 +73,11 @@ class WorkOrderController extends Controller
      */
     public function update(Request $request, Work_order $work_order)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -61,6 +85,10 @@ class WorkOrderController extends Controller
      */
     public function destroy(Work_order $work_order)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 }

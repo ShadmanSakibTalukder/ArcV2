@@ -16,7 +16,7 @@ class SupportMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role_as == '0') {
+        if (!Auth::user()->role_as == '2' || !Auth::user()->role_as == '1') {
             return redirect('/')->with('message', 'Access denied. Please contact authority');
         }
         return $next($request);

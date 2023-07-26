@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 
 class PurchasedOrderController extends Controller
 {
@@ -22,8 +23,12 @@ class PurchasedOrderController extends Controller
 
     public function index()
     {
-        $purchaseOrders = purchased_order::orderBy('id', 'DESC')->paginate(5);
-        return view('purchased.index', compact('purchaseOrders'));
+        if (Auth::user()->role_as == '1') {
+            $purchaseOrders = purchased_order::orderBy('id', 'DESC')->paginate(5);
+            return view('purchased.index', compact('purchaseOrders'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -31,7 +36,11 @@ class PurchasedOrderController extends Controller
      */
     public function create()
     {
-        return view('purchased.create_purchased_order');
+        if (Auth::user()->role_as == '1') {
+            return view('purchased.create_purchased_order');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -47,7 +56,11 @@ class PurchasedOrderController extends Controller
      */
     public function show(purchased_order $purchased_order)
     {
-        return view('purchased.show', compact('purchased_order'));
+        if (Auth::user()->role_as == '1') {
+            return view('purchased.show', compact('purchased_order'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -55,7 +68,11 @@ class PurchasedOrderController extends Controller
      */
     public function edit(purchased_order $purchased_order)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -63,7 +80,11 @@ class PurchasedOrderController extends Controller
      */
     public function update(Request $request, purchased_order $purchased_order)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -71,8 +92,12 @@ class PurchasedOrderController extends Controller
      */
     public function destroy(purchased_order $purchased_order)
     {
-        $purchased_order->delete();
-        return redirect()->back()->with('message', 'Successfully deleted!');
+        if (Auth::user()->role_as == '1') {
+            $purchased_order->delete();
+            return redirect()->back()->with('message', 'Successfully deleted!');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     function purchaseOrderGenerator($purchase_order_id)

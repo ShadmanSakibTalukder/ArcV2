@@ -7,6 +7,7 @@ use App\Models\tenders;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 
 class TendersController extends Controller
 {
@@ -19,8 +20,12 @@ class TendersController extends Controller
      */
     public function index()
     {
-        $tenderList = tenders::orderBy('id', 'DESC')->paginate(15);
-        return view('tenders.index', compact('tenderList'));
+        if (Auth::user()->role_as == '1') {
+            $tenderList = tenders::orderBy('id', 'DESC')->paginate(15);
+            return view('tenders.index', compact('tenderList'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -28,7 +33,11 @@ class TendersController extends Controller
      */
     public function create()
     {
-        return view('tenders.create_tenders');
+        if (Auth::user()->role_as == '1') {
+            return view('tenders.create_tenders');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -36,7 +45,11 @@ class TendersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -44,8 +57,12 @@ class TendersController extends Controller
      */
     public function show(tenders $tender)
     {
-        $cat_part = CatelogPartList::all();
-        return view('tenders.show', compact('tender', 'cat_part'));
+        if (Auth::user()->role_as == '1') {
+            $cat_part = CatelogPartList::all();
+            return view('tenders.show', compact('tender', 'cat_part'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -53,7 +70,11 @@ class TendersController extends Controller
      */
     public function edit(tenders $tenders)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -61,7 +82,11 @@ class TendersController extends Controller
      */
     public function update(Request $request, tenders $tenders)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -69,25 +94,37 @@ class TendersController extends Controller
      */
     public function destroy(tenders $tender)
     {
-        // dd($tender);
-        $tender->delete();
-        return redirect()->back()->with('message', 'Successfully deleted!');
+        if (Auth::user()->role_as == '1') {
+            // dd($tender);
+            $tender->delete();
+            return redirect()->back()->with('message', 'Successfully deleted!');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     public function active($id)
     {
-        // dd($id);
-        $tender = tenders::find($id);
-        $tender->status = 1;
-        $tender->update();
-        return back();
+        if (Auth::user()->role_as == '1') {
+            // dd($id);
+            $tender = tenders::find($id);
+            $tender->status = 1;
+            $tender->update();
+            return back();
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
     public function inactive($id)
     {
-        // dd($id);
-        $tender = tenders::find($id);
-        $tender->status = 0;
-        $tender->update();
-        return back();
+        if (Auth::user()->role_as == '1') {
+            // dd($id);
+            $tender = tenders::find($id);
+            $tender->status = 0;
+            $tender->update();
+            return back();
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 }

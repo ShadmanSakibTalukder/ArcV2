@@ -12,6 +12,12 @@
                         Dashboard
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('purchased_order.index')}}">
+                        <i class="fa-solid fa-cart-shopping fa-bounce fa-l"></i>
+                        Purchased Order
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('m_purchase_order.index')}}">
