@@ -65,8 +65,6 @@
             margin-top: 0.1cm;
             margin-bottom: 0.1cm;
         }
-
-        /* Use CSS Grid to achieve the layout */
         .grid-container {
             width: 100%;
         }
@@ -75,7 +73,6 @@
             vertical-align: top;
         }
 
-        /* Adjust table font size to fit within A4 page */
         .container table {
             font-size: 8px;
         }
@@ -102,7 +99,7 @@
                         <p>{{$po->company_address}}</p>
                     </div>
                 </td>
-                <td class="grid-item" style="text-align: right;"> <!-- Add "text-align: right" here -->
+                <td class="grid-item" style="text-align: right;">
                     <div class="section">
                         <p><span class="bold-text">Date:</span> <span class="regular-text">{{$po->po_date}}</span></p>
                         <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$po->po_no}}</span></p>
@@ -117,8 +114,8 @@
                         <p>{{$po->vendor_address}}</p>
                     </div>
                 </td>
-                <td class="grid-item" style="text-align: right;"> <!-- Add another column for Shipping Address -->
-                    <div class="section"> <!-- Separate div to keep the content in the same row -->
+                <td class="grid-item" style="text-align: right;"> 
+                    <div class="section">
                         <h4>Shipping Address</h4>
                         <p><strong>{{$po->buyer_name}}</strong></p>
                         <p>{{$po->shipping_address}}</p>
@@ -184,7 +181,6 @@
             <tfoot>
                 <tr>
                     <td colspan="6" style="border: none;">
-                        <!-- Add "Special Instructions/Comments" here -->
                         <p class="small-text" style="text-align: left;">Special Instructions/Comments</p>
                         <p class="small-text" style="text-align: left;">Shipping Mark, Address, BIN No and Work Order No to appear clearly on each page</p>
                     </td>
