@@ -92,6 +92,7 @@
                             <tr>
                                 <th>Parts No.</th>
                                 <th>Nomenclature</th>
+                                <th>QTY</th>
                                 <th>Add</th>
                             </tr>
                         </thead>
