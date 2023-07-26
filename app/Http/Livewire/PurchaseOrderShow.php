@@ -15,7 +15,7 @@ class PurchaseOrderShow extends Component
     public $selectedOption = [];
     public $parts_selected = [];
     public $added_to_list = [];
-    public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
+    public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $qty, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
 
     public function addToList($part_id)
     {
@@ -26,6 +26,7 @@ class PurchaseOrderShow extends Component
         } else {
             $order_item = AddToList::create([
                 'item_id' => $part_id,
+                'qty' => $this->qty
             ]);
 
             $this->emit('addToListUpdated');

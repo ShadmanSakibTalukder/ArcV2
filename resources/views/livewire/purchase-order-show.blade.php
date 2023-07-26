@@ -39,7 +39,7 @@
                                 <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
                                 <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
                                 <td>
-                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
+                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.$qty">
                                 </td>
                                 <td>
                                     <select class="form-select sm" wire:model="selectedOption.{{ $item->id }}">
@@ -143,7 +143,7 @@
                         </button>
                         <a href="{{ route('purchased_order.index') }}" class="btn btn-md btn-outline-secondary">Back</a>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -161,6 +161,7 @@
                             <tr>
                                 <th>Parts No.</th>
                                 <th>Nomenclature</th>
+                                <th>QTY</th>
                                 <th>Add</th>
                             </tr>
                         </thead>
@@ -169,6 +170,9 @@
                             <tr>
                                 <td>{{ $item->requested_part_no }}</td>
                                 <td>{{ $item->requested_nomenclature }}</td>
+                                <td>
+                                    <input type="qty" class="form-control" id="qty" wire:model="qty" name="qty">
+                                </td>
                                 <td>
                                     <button type="button" wire:click="addToList({{ $item->id }})" wire:loading.attr="disabled" wire:target="addToList({{ $item->id }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
                                         <span wire:loading.remove wire:target="addToList({{ $item->id }})">
