@@ -39,7 +39,7 @@
                                 <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
                                 <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
                                 <td>
-                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.$qty">
+                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
                                 </td>
                                 <td>
                                     <select class="form-select sm" wire:model="selectedOption.{{ $item->id }}">
