@@ -106,6 +106,7 @@ class PurchasedOrderController extends Controller
         $data = ['po' => $purchase_order];
         // return view('purchased.print_po', compact('purchase_order'));
         $pdf = PDF::loadView('purchased.print_po', $data);
-        return $pdf->download('Purchase_order' . '.' . 'pdf');
+        // return $pdf->download('Purchase_order' . '.' . 'pdf');
+        return $pdf->stream('purchased.print_po', $data);
     }
 }
