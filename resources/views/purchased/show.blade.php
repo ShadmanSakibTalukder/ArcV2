@@ -10,34 +10,34 @@
         <div class="line"></div>
     </div>
 
-     <h2 class="text-center">PURCHASE ORDER</h2>
+    <h2 class="text-center">PURCHASE ORDER</h2>
 
-     <div class="container">
+    <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="box" style="max-width: 400px;"> 
+                <div class="box" style="max-width: 400px;">
                     <h5>{{$purchased_order->company}}</h5>
                     <div class="d-flex align-items-center">
                         <p style="flex: 1;">{{$purchased_order->company_address}}</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
-                <div class="box" style="max-width: 400px;"> 
-                <div class="section d-flex justify-content-end align-items-center">
-                    <p><span class="bold-text">Date:</span></p>
-                    <p><span class="regular-text">{{$purchased_order->po_date}}</span></p>
+                <div class="box" style="max-width: 400px;">
+                    <div class="section d-flex justify-content-end align-items-center">
+                        <p><span class="bold-text">Date:</span></p>
+                        <p><span class="regular-text">{{$purchased_order->po_date}}</span></p>
+                    </div>
+                    <div class="section d-flex justify-content-end align-items-center">
+                        <p><span class="bold-text">Purchased Order No:</span></p>
+                        <p><span class="regular-text">{{$purchased_order->po_no}}</span></p>
+                    </div>
                 </div>
-                <div class="section d-flex justify-content-end align-items-center">
-                    <p><span class="bold-text">Purchased Order No:</span></p>
-                    <p><span class="regular-text">{{$purchased_order->po_no}}</span></p>
-                </div>
-            </div>
             </div>
         </div>
     </div>
-    
+
 
     <div class="container">
         <div class="row">
@@ -69,9 +69,9 @@
             </div>
         </div>
     </div>
-    
-    
-    
+
+
+
 
     <div class="container">
         <div class="row">

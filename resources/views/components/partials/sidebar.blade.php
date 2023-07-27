@@ -6,6 +6,7 @@
         </div>
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
+                @if (Auth::user()->role_as=='1')
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('home')}}">
                         <i class="fa-solid fa-earth-asia fa-spin"></i>
@@ -43,12 +44,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('m_purchase_order.index')}}">
-                        <i class="fa-solid fa-cart-shopping fa-bounce fa-l"></i>
-                        Mens Logistics Purchased Order
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('vendors.index')}}">
                         <i class="fa-solid fa-ghost fa-shake fa-xl"></i>
                         Vendors
@@ -72,6 +67,28 @@
                         Profit Loss
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('m_purchase_order.index')}}">
+                        <i class="fa-solid fa-cart-shopping fa-bounce fa-l"></i>
+                        Mens Logistics Purchased Order
+                    </a>
+                </li>
+                @else
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('support.dashboard')}}">
+                        <i class="fa-solid fa-earth-asia fa-spin"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('m_purchase_order.index')}}">
+                        <i class="fa-solid fa-cart-shopping fa-bounce fa-l"></i>
+                        Mens Logistics Purchased Order
+                    </a>
+                </li>
+                @endif
+
 
             </ul>
 

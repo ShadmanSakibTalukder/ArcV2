@@ -126,7 +126,7 @@ class CreateMensPurchaseOrder extends Component
         }
 
         // Reset the form and show success message
-        $this->reset(['po_no', 'buyer_name', 'buyer_address', 'vendor_name', 'vendor_address', 'shipping_address', 'tender_no', 'po_date', 'subTotal']);
+        $this->reset(['po_no', 'buyer_name', 'buyer_address', 'vendor_name', 'vendor_address', 'shipping_address', 'tender_no', 'po_date', 'subTotal', 'company', 'company_address']);
 
         $this->added_to_list = [];
         session()->flash('success_message', 'Purchase order created successfully!');

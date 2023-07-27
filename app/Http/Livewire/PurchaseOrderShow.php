@@ -15,7 +15,25 @@ class PurchaseOrderShow extends Component
     public $selectedOption = [];
     public $parts_selected = [];
     public $added_to_list = [];
+    public $addToCartQuantities = [];
     public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $qty, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
+
+    // public function addToList($part_id)
+    // {
+    //     $existingItem = AddToList::where('item_id', $part_id)->first();
+
+    //     if ($existingItem) {
+    //         session()->flash('message', $existingItem->parts_added_inlist->requested_nomenclature . ' already added to wishlist!');
+    //     } else {
+    //         $order_item = AddToList::create([
+    //             'item_id' => $part_id,
+    //             'qty' => $this->qty
+    //         ]);
+
+    //         $this->emit('addToListUpdated');
+    //         session()->flash('success_message', $order_item->parts_added_inlist->requested_nomenclature . ' added to wishlist!');
+    //     }
+    // }
 
     public function addToList($part_id)
     {
@@ -24,9 +42,11 @@ class PurchaseOrderShow extends Component
         if ($existingItem) {
             session()->flash('message', $existingItem->parts_added_inlist->requested_nomenclature . ' already added to wishlist!');
         } else {
+            $qty = $this->addToCartQuantities[$part_id] ?? 0;
+
             $order_item = AddToList::create([
                 'item_id' => $part_id,
-                'qty' => $this->qty
+                'qty' => $this->parts_selected[$part_id]['qty'] ?? 0,
             ]);
 
             $this->emit('addToListUpdated');
@@ -34,11 +54,15 @@ class PurchaseOrderShow extends Component
         }
     }
 
+
+
     public function removeListItem($listId)
     {
         $itemInList = AddToList::where('id', $listId)->first();
         if ($itemInList) {
             $itemInList->delete();
+
+            unset($this->parts_selected[$itemInList->item_id]);
             $this->emit('ListUpdate');
             session()->flash('success_message', 'Deleted!');
         } else {
@@ -64,13 +88,53 @@ class PurchaseOrderShow extends Component
         return $unitPrice;
     }
 
-    public function calculateTotalPrice($item, $qty)
+    public function updateTotalPrice($itemId)
     {
-        $unitPrice = $this->calculateUnitPrice($item);
+        foreach ($this->added_to_list as $item) {
+            if ($item['item_id'] == $itemId) {
+                $qty = $this->parts_selected[$itemId]['qty'] ?? 0;
+                $totalPrice = $this->calculateTotalPrice($item, $qty);
+
+                // Update the total price in the $parts_selected array
+                $this->parts_selected[$itemId]['totalPrice'] = $totalPrice;
+
+                // Recalculate the subTotal
+                // $this->subTotal = collect($this->parts_selected)->sum('totalPrice');
+
+                break;
+            }
+        }
+    }
+
+
+
+    // public function calculateTotalPrice($item, $qty)
+    // {
+    //     $unitPrice = $this->calculateUnitPrice($item);
+    //     $totalPrice = $unitPrice * $qty;
+
+    //     return $totalPrice;
+    // }
+
+    public function calculateTotalPrice($item)
+    {
+        $qty = $this->parts_selected[$item->id]['qty'] ?? 0;
+        $selectedOption = $this->selectedOption[$item->id] ?? '';
+
+        $unitPrice = 0;
+        if ($selectedOption === 'fsPrice') {
+            $unitPrice = $item->parts_added_inlist->fs_price;
+        } elseif ($selectedOption === 'surplusPrice') {
+            $unitPrice = $item->parts_added_inlist->surplus_price;
+        } elseif ($selectedOption === 'navisterPrice') {
+            $unitPrice = $item->parts_added_inlist->navister_price;
+        }
+
         $totalPrice = $unitPrice * $qty;
 
         return $totalPrice;
     }
+
 
     public function savePO()
     {
@@ -83,6 +147,7 @@ class PurchaseOrderShow extends Component
         }
 
         $this->subTotal = $subTotal;
+        // dd($subTotal);
 
         $validatedData = $this->validate([
             'po_no' => 'required',
@@ -142,6 +207,11 @@ class PurchaseOrderShow extends Component
     {
         $parts_list = Parts_list::orWhere('requested_part_no', 'like', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(20);
         $this->added_to_list = AddToList::all();
+        foreach ($this->added_to_list as $item) {
+            // $this->parts_selected[$item->id]['qty'] = $item->qty;
+            // $this->parts_selected[$item->id]['qty'] = 0;
+            $this->addToCartQuantities[$item->id] = 0;
+        }
 
         return view('livewire.purchase-order-show', ['parts_list' => $parts_list, 'added_to_list' => $this->added_to_list]);
     }

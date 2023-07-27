@@ -57,6 +57,7 @@ class PurchasedOrderController extends Controller
     public function show(purchased_order $purchased_order)
     {
         if (Auth::user()->role_as == '1') {
+            dd($purchased_order->purchaseOrderItems->parts->cat_part_no);
             return view('purchased.show', compact('purchased_order'));
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');

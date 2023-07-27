@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('purchase_order_items', function (Blueprint $table) {
             $table->id();
             $table->integer('purchase_order_id');
-            $table->integer('item_id');
+            $table->unsignedBigInteger('item_id');
             $table->integer('qty');
             $table->integer('price')->nullable();
             $table->integer('total_price')->nullable();
             $table->timestamps();
+
+            $table->foreign('item_id')->references('id')->on('parts_lists')->onDelete('cascade');
         });
     }
 
