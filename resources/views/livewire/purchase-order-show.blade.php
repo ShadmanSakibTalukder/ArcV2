@@ -33,50 +33,7 @@
                         </thead>
                         <tbody>
 
-                            <!-- @forelse ($added_to_list as $item)
-                            <tr>
-                                <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
-                                <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
-                                <td>
 
-                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
-                                </td>
-                                <td>
-                                    <select class="form-select sm" wire:model="selectedOption.{{ $item->id }}" wire:change="updateTotalPrice({{ $item->id }})">
-                                        <option value="fsPrice">FS Price</option>
-                                        <option value="surplusPrice">Surplus Price</option>
-                                        <option value="navisterPrice">Navister Price</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    {{ $this->calculateUnitPrice($item) }}
-                                </td>
-                                <td>
-                                    @if (isset($parts_selected[$item->id]) && isset($parts_selected[$item->id]['qty']))
-                                    {{ $this->calculateTotalPrice($item, $parts_selected[$item->id]['qty']) }}
-                                    @php
-                                    $subTotal += $this->calculateTotalPrice($item, $parts_selected[$item->id]['qty']);
-                                    @endphp
-                                    @else
-                                    0
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="remove">
-                                        <button type="button" wire:click="removeListItem({{ $item->id }})" wire:loading.attr="disabled" class="btn btn-danger btn-sm" title="{{__('Remove')}}">
-                                            <span wire:loading.remove wire:target="removeListItem({{ $item->id }})">
-                                                <i class="fa fa-trash"></i>
-                                            </span>
-                                            <span wire:loading wire:target="removeListItem({{ $item->id }})">{{__('Removing')}}</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="6">No items added yet.</td>
-                            </tr>
-                            @endforelse -->
 
                             @forelse ($added_to_list as $item)
                             <tr>
@@ -84,11 +41,9 @@
                                 <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
                                 <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
                                 <td>
-
-                                    <!-- <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty"> -->
-                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
+                                    <!-- Display the quantity from the parts_selected array -->
+                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->item_id }}.qty">
                                 </td>
-
                                 <td>
                                     <select class="form-select sm" wire:model="selectedOption.{{ $item->id }}">
                                         <option value="fsPrice">FS Price</option>
@@ -100,13 +55,13 @@
                                     {{ $this->calculateUnitPrice($item) }}
                                 </td>
                                 <td>
-                                    @if (isset($parts_selected[$item->id]) && isset($parts_selected[$item->id]['qty']))
-                                    {{ $this->calculateTotalPrice($item, $parts_selected[$item->id]['qty']) }}
-
+                                    @if (isset($parts_selected[$item->item_id]) && isset($parts_selected[$item->item_id]['qty']))
+                                    {{ $this->calculateTotalPrice($item) }}
                                     @else
                                     0
                                     @endif
                                 </td>
+
                                 <td>
                                     <div class="remove">
                                         <button type="button" wire:click="removeListItem({{ $item->id }})" wire:loading.attr="disabled" class="btn btn-danger btn-sm" title="{{__('Remove')}}">
@@ -219,8 +174,7 @@
                                 <td>{{ $item->requested_part_no }}</td>
                                 <td>{{ $item->requested_nomenclature }}</td>
                                 <td>
-                                    <!-- <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty"> -->
-                                    <input type="number" class="form-control" wire:model="addToCartQuantities.{{ $item->id }}">
+                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
                                 </td>
                                 <td>
                                     <button type="button" wire:click="addToList({{ $item->id }})" wire:loading.attr="disabled" wire:target="addToList({{ $item->id }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
