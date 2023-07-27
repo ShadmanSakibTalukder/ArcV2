@@ -36,11 +36,13 @@
         .table-container {
             width: 100%;
             margin-bottom: 1cm;
+            overflow-x: auto;
         }
 
         .table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: collapse; 
+        
         }
 
         .table th, .table td {
@@ -63,25 +65,18 @@
             margin-top: 0.1cm;
             margin-bottom: 0.1cm;
         }
-
-        /* Use CSS Grid to achieve the layout */
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 0.2cm;
-            width: 21cm; /* A4 paper width */
-            height: 21cm; /* Allow content to flow naturally */
+            width: 100%;
         }
 
         .grid-item {
-            text-align: center;
+            vertical-align: top;
         }
 
-        /* Adjust table font size to fit within A4 page */
         .container table {
             font-size: 8px;
         }
-
+        
     </style>
 </head>
 <body>
@@ -93,35 +88,41 @@
 
     <h2 style="text-align: center;">PURCHASE ORDER</h2>
 
+    
+
     <div class="container">
-        <div class="grid-container">
-            <div class="grid-item">
-                <div class="section">
-                    <h5>{{$po->company}}</h5>
-                    <p>{{$po->company_address}}</p>
-                </div>
-            </div>
-            <div class="grid-item">
-                <div class="section">
-                    <p><span class="bold-text">Date:</span> <span class="regular-text">{{$po->po_date}}</span></p>
-                    <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$po->po_no}}</span></p>
-                </div>
-            </div>
-            <div class="grid-item">
-                <div class="section">
-                    <h5>Vendor Name</h5>
-                    <p><strong>{{$po->vendor_name}}</strong></p>
-                    <p>{{$po->vendor_address}}</p>
-                </div>
-            </div>
-            <div class="grid-item">
-                <div class="section">
-                    <h5>Shipping Address</h5>
-                    <p><strong>{{$po->buyer_name}}</strong></p>
-                    <p>{{$po->shipping_address}}</p>
-                </div>
-            </div>
-        </div>
+        <table class="grid-container">
+            <tr>
+                <td class="grid-item">
+                    <div class="section">
+                        <h4>{{$po->company}}</h4>
+                        <p>{{$po->company_address}}</p>
+                    </div>
+                </td>
+                <td class="grid-item" style="text-align: right;">
+                    <div class="section">
+                        <p><span class="bold-text">Date:</span> <span class="regular-text">{{$po->po_date}}</span></p>
+                        <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$po->po_no}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="grid-item">
+                    <div class="section">
+                        <h4>Vendor Name</h4>
+                        <p><strong>{{$po->vendor_name}}</strong></p>
+                        <p>{{$po->vendor_address}}</p>
+                    </div>
+                </td>
+                <td class="grid-item" style="text-align: right;"> 
+                    <div class="section">
+                        <h4>Shipping Address</h4>
+                        <p><strong>{{$po->buyer_name}}</strong></p>
+                        <p>{{$po->shipping_address}}</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="table-container">
@@ -148,7 +149,7 @@
     <div class="table-container">
         <table class="table">
             <thead>
-                <tr>
+                <tr> 
                     <th>Item</th>
                     <th>Parts No</th>
                     <th>Description</th>
@@ -169,48 +170,64 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6">No items available</td>
+                    <td colspan="12">No items available</td>
                 </tr>
                 @endforelse
             </tbody>
+            </table>
+    </div>
+            <div class="table-container">
+        <table class="table">
             <tfoot>
                 <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">Sub Total</td>
+                    <td colspan="6" style="border: none;">
+                        <p class="small-text" style="text-align: left;">Special Instructions/Comments</p>
+                        <p class="small-text" style="text-align: left;">Shipping Mark, Address, BIN No and Work Order No to appear clearly on each page</p>
+                    </td>
+                    <td style="text-align: right; font-weight: bold;">Sub Total</td>
                     <td style="text-align: right; font-weight: bold;">${{$po->total_purchase_price_no}}</td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">Freight</td>
+                    <td colspan="6" style="border: none;"></td>
+                    <td style="text-align: right; font-weight: bold;">Freight</td>
                     <td style="text-align: right; font-weight: bold;">$0</td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">Tax</td>
+                    <td colspan="6" style="border: none;"></td>
+                    <td style="text-align: right; font-weight: bold;">Tax</td>
                     <td style="text-align: right; font-weight: bold;">$0</td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">Miscellaneous</td>
+                    <td colspan="6" style="border: none;"></td>
+                    <td style="text-align: right; font-weight: bold;">Miscellaneous</td>
                     <td style="text-align: right; font-weight: bold;">$0</td>
                 </tr>
                 <tr>
-                    <td colspan="5" style="text-align: right; font-weight: bold;">Total</td>
+                    <td colspan="6" style="border: none;"></td>
+                    <td style="text-align: right; font-weight: bold;">Total</td>
                     <td style="text-align: right; font-weight: bold;">${{$po->total_purchase_price_no}}</td>
                 </tr>
             </tfoot>
         </table>
     </div>
 
+
     <div class="container">
         <hr>
-        <div class="grid-container">
-            <div class="grid-item">
-                <p><span class="bold-text">Authorised By:</span></p>
-            </div>
-            <div class="grid-item">
-                <p> <span class="bold-text">Date:</span></p>
-            </div>
-        </div>
-
+        <table class="grid-container" style="width: 100%;">
+            <tr>
+                <td class="grid-item" style="text-align: left;">
+                    <p><span class="bold-text">Authorised By:</span></p>
+                </td>
+                <td class="grid-item" style="text-align: center;">
+                    <p><span class="bold-text">Date:</span></p>
+                </td>
+            </tr>
+        </table>
+    
         <div class="line"></div>
         <p class="small-text" style="text-align: center;">For more info on this purchase order, feel free to contact: missionsupport.procurement@protonmail.com</p>
     </div>
+    
 </body>
 </html>
