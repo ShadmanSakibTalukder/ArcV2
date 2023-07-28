@@ -9,13 +9,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PurchaseOrderItem extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'purchase_order_id',
-        'item_id',
-        'qty',
-        'price',
-        'total_price'
-    ];
+    // protected $fillable = [
+    //     'purchase_order_id',
+    //     'item_id',
+    //     'qty',
+    //     'price',
+    //     'total_price'
+    // ];
+
+    protected $guarded = [];
 
     /**
      * Get the parts that owns the PurchaseOrderItem

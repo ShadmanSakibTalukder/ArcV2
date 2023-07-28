@@ -33,15 +33,15 @@
                         </thead>
                         <tbody>
 
-                            @forelse ($added_to_list as $item)
 
+
+                            @forelse ($added_to_list as $item)
                             <tr>
                                 <td>{{ $item->parts_added_inlist->requested_part_no }}</td>
                                 <td>{{ $item->parts_added_inlist->requested_nomenclature }}</td>
-
-                                <td>{{ $item->qty }}</td>
-                                <!-- <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty"> -->
-
+                                <td>
+                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->item_id }}.qty">
+                                </td>
                                 <td>
                                     <select class="form-select sm" wire:model="selectedOption.{{ $item->id }}">
                                         <option value="fsPrice">FS Price</option>
@@ -49,24 +49,18 @@
                                         <option value="navisterPrice">Navister Price</option>
                                     </select>
                                 </td>
+
                                 <td>
                                     {{ $this->calculateUnitPrice($item) }}
                                 </td>
                                 <td>
-                                    <!-- @if (isset($parts_selected[$item->id]) && isset($parts_selected[$item->id][$item->qty]))
-                                    {{ $this->calculateTotalPrice($item, $parts_selected[$item->id][$item->qty]) }}
-                                    @php
-                                    $subTotal += $this->calculateTotalPrice($item, $parts_selected[$item->id][$item->qty]);
-                                    @endphp
+                                    @if (isset($parts_selected[$item->item_id]) && isset($parts_selected[$item->item_id]['qty']))
+                                    {{ $this->calculateTotalPrice($item) }}
                                     @else
                                     0
-                                    @endif -->
-                                    {{$this->calculateTotalPrice($item)}}
-                                    @php
-                                    $subTotal+=$this->calculateTotalPrice($item);
-
-                                    @endphp
+                                    @endif
                                 </td>
+
                                 <td>
                                     <div class="remove">
                                         <button type="button" wire:click="removeListItem({{ $item->id }})" wire:loading.attr="disabled" class="btn btn-danger btn-sm" title="{{__('Remove')}}">
@@ -80,9 +74,11 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6">No items added yet.</td>
+                                <td colspan="4">No items added yet.</td>
                             </tr>
                             @endforelse
+
+
 
                             <tr>
                                 <td colspan="5">
@@ -177,7 +173,7 @@
                                 <td>{{ $item->requested_part_no }}</td>
                                 <td>{{ $item->requested_nomenclature }}</td>
                                 <td>
-                                    <input type="qty" class="form-control" id="qty" wire:model="qty" name="qty">
+                                    <input type="number" class="form-control" wire:model="parts_selected.{{ $item->id }}.qty">
                                 </td>
                                 <td>
                                     <button type="button" wire:click="addToList({{ $item->id }})" wire:loading.attr="disabled" wire:target="addToList({{ $item->id }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
@@ -190,9 +186,11 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="3">No parts available</td>
+                                <td colspan="4">No parts available</td>
                             </tr>
                             @endforelse
+
+
                         </tbody>
                     </table>
                 </div>

@@ -51,21 +51,12 @@ class CreateMensPurchaseOrder extends Component
         return $unitPrice;
     }
 
-    // public function calculateTotalPrice($item, $qty)
-    // {
-    //     $unitPrice = $item->parts_added_inlist->declared_price;
-    //     $totalPrice = $unitPrice * $qty;
-
-    //     return $totalPrice;
-    // }
 
     public function calculateTotalPrice($item)
     {
-        // Get the qty and declared_price directly from the $item
         $qty = $item->qty;
         $declaredPrice = $item->parts_added_inlist->declared_price;
 
-        // Calculate the total price
         $totalPrice = $qty * $declaredPrice;
 
         return $totalPrice;
