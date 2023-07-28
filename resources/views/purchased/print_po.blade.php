@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 1.5cm;
+            padding: 0.5cm;
             font-size: 10px;
         }
 
@@ -35,17 +36,18 @@
 
         .table-container {
             width: 100%;
-            margin-bottom: 1cm;
+            margin: 0.3cm 0;
             overflow-x: auto;
         }
 
         .table {
             width: 100%;
-            border-collapse: collapse; 
-        
+            border-collapse: collapse;
+
         }
 
-        .table th, .table td {
+        .table th,
+        .table td {
             padding: 0.2cm;
             border: 1px solid #000;
             text-align: center;
@@ -65,6 +67,7 @@
             margin-top: 0.1cm;
             margin-bottom: 0.1cm;
         }
+
         .grid-container {
             width: 100%;
         }
@@ -76,9 +79,9 @@
         .container table {
             font-size: 8px;
         }
-        
     </style>
 </head>
+
 <body>
     <div class="company-details">
         <h2>{{$po->company}}</h2>
@@ -88,14 +91,14 @@
 
     <h2 style="text-align: center;">PURCHASE ORDER</h2>
 
-    
+
 
     <div class="container">
-        <table class="grid-container">
+        <table class="grid-container" style="margin-bottom: 5px;">
             <tr>
                 <td class="grid-item">
-                    <div class="section">
-                        <h4>{{$po->company}}</h4>
+                    <div class="section" style="max-width: 100px;">
+                        <h4 style="background-color: #D5F5E3;">{{$po->company}}</h4>
                         <p>{{$po->company_address}}</p>
                     </div>
                 </td>
@@ -108,15 +111,15 @@
             </tr>
             <tr>
                 <td class="grid-item">
-                    <div class="section">
-                        <h4>Vendor Name</h4>
+                    <div class="section" style="max-width: 100px;">
+                        <h4 style="background-color: #D5F5E3;">Vendor Name</h4>
                         <p><strong>{{$po->vendor_name}}</strong></p>
                         <p>{{$po->vendor_address}}</p>
                     </div>
                 </td>
-                <td class="grid-item" style="text-align: right;"> 
-                    <div class="section">
-                        <h4>Shipping Address</h4>
+                <td class="grid-item" style="text-align: right; ">
+                    <div class="section" style="max-width: 170px; float:right;">
+                        <h4 style="background-color: #D5F5E3;">Shipping Address</h4>
                         <p><strong>{{$po->buyer_name}}</strong></p>
                         <p>{{$po->shipping_address}}</p>
                     </div>
@@ -125,7 +128,7 @@
         </table>
     </div>
 
-    <div class="table-container">
+    <div class="table-container" style="margin-top: 5px ;">
         <table class="table">
             <thead>
                 <tr>
@@ -149,7 +152,7 @@
     <div class="table-container">
         <table class="table">
             <thead>
-                <tr> 
+                <tr>
                     <th>Item</th>
                     <th>Parts No</th>
                     <th>Description</th>
@@ -174,9 +177,9 @@
                 </tr>
                 @endforelse
             </tbody>
-            </table>
+        </table>
     </div>
-            <div class="table-container">
+    <div class="table-container">
         <table class="table">
             <tfoot>
                 <tr>
@@ -224,10 +227,11 @@
                 </td>
             </tr>
         </table>
-    
+
         <div class="line"></div>
         <p class="small-text" style="text-align: center;">For more info on this purchase order, feel free to contact: missionsupport.procurement@protonmail.com</p>
     </div>
-    
+
 </body>
+
 </html>
