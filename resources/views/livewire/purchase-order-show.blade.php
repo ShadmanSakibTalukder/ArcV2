@@ -53,14 +53,6 @@
                                     {{ $this->calculateUnitPrice($item) }}
                                 </td>
                                 <td>
-                                    <!-- @if (isset($parts_selected[$item->id]) && isset($parts_selected[$item->id][$item->qty]))
-                                    {{ $this->calculateTotalPrice($item, $parts_selected[$item->id][$item->qty]) }}
-                                    @php
-                                    $subTotal += $this->calculateTotalPrice($item, $parts_selected[$item->id][$item->qty]);
-                                    @endphp
-                                    @else
-                                    0
-                                    @endif -->
                                     {{$this->calculateTotalPrice($item)}}
                                     @php
                                     $subTotal+=$this->calculateTotalPrice($item);

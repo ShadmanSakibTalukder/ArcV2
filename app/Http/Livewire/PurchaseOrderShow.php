@@ -118,7 +118,8 @@ class PurchaseOrderShow extends Component
 
 
         foreach ($this->added_to_list as $item) {
-            $qty = $this->parts_selected[$item->id]['qty'] ?? 0;
+            // $qty = $this->parts_selected[$item->id]['qty'] ?? 0;
+            $qty = $item->qty;
             $unitPrice = $this->calculateUnitPrice($item);
             $totalPrice = $this->calculateTotalPrice($item, $qty);
 
@@ -126,7 +127,7 @@ class PurchaseOrderShow extends Component
 
             PurchaseOrderItem::create([
                 'purchase_order_id' => $purchaseOrder->id,
-                'item_id' => $item->id,
+                'item_id' => $item->parts_added_inlist->id,
                 'qty' => $qty,
                 'price' => $unitPrice,
                 'total_price' => $totalPrice,
