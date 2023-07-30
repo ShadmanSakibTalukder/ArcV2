@@ -8,6 +8,7 @@ use App\Http\Controllers\MensPurchaseOrderController;
 use App\Http\Controllers\TendersController;
 use App\Http\Controllers\VendorsController;
 use App\Http\Controllers\PartsListController;
+use App\Http\Controllers\ProfitLossController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\PurchasedOrderController;
 use App\Http\Controllers\SupportController;
@@ -51,6 +52,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::resource('/vendors', VendorsController::class);
     Route::resource('/buyers', BuyersController::class);
+    Route::resource('/profit_loss', ProfitLossController::class);
 });
 Route::prefix('support')->middleware(['auth', 'isSupport'])->group(function () {
 

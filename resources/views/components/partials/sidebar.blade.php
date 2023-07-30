@@ -62,7 +62,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('profit_loss.index')}}">
                         <i class="fa-solid fa-chart-line fa-bounce"></i>
                         Profit Loss
                     </a>
