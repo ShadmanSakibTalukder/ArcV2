@@ -28,7 +28,7 @@ use App\Models\MensPurchaseOrder;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('front_view');
 
 Auth::routes();
 
