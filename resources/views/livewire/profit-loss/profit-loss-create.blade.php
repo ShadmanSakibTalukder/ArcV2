@@ -5,12 +5,11 @@
                 <div class="card-header bg-transparent">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h2>Profit Loss</h2>
-                        <div class="btn-toolbar mb-2 mb-md-0 d-flex align-items-center">
-                            <!-- Search option -->
-                            <input type="text" class="form-control mr-2" placeholder="Search">
-
-                            <!-- Add Tender button -->
-                            <a href="{{ route('profit_loss.create') }}" class="btn btn-md btn-outline-secondary">Add Tender</a>
+                        <div class="search-section">
+                            <div class="input-group">
+                                <input type="text" class="form-control" wire:model="search" placeholder="Search purchase order">
+                                <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-search"></i></button>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mb-3" style="background-color: rgb(179, 179, 248); color: black; padding: 8px;">

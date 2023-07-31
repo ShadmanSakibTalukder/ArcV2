@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProfitLoss;
+use App\Models\purchased_order;
 use Illuminate\Http\Request;
 
 class ProfitLossController extends Controller
@@ -20,7 +21,8 @@ class ProfitLossController extends Controller
      */
     public function create()
     {
-        return view('profit_loss.create');
+        $pos = purchased_order::all();
+        return view('profit_loss.create', compact('pos'));
     }
 
     /**
