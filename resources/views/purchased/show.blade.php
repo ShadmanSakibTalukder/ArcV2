@@ -23,21 +23,16 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex justify-content-end"> <!-- Modified class: d-flex justify-content-end -->
                 <div class="box" style="max-width: 400px;">
-                    <div class="section d-flex justify-content-end align-items-center">
-                        <p><span class="bold-text">Date:</span></p>
-                        <p><span class="regular-text">{{$purchased_order->po_date}}</span></p>
-                    </div>
-                    <div class="section d-flex justify-content-end align-items-center">
-                        <p><span class="bold-text">Purchased Order No:</span></p>
-                        <p><span class="regular-text">{{$purchased_order->po_no}}</span></p>
+                    <div class="section" style="text-align: right;"> <!-- Modified style: text-align right -->
+                        <p><span class="bold-text">Date:</span> <span class="regular-text">{{$purchased_order->po_date}}</span></p>
+                        <p><span class="bold-text">Purchased Order No:</span> <span class="regular-text">{{$purchased_order->po_no}}</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="container">
         <div class="row">
@@ -54,11 +49,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 ">
                 <h5>Shipping Address</h5>
                 <div class="card mb-3 border-0" style="width: 100%;">
                     <div class="card-body">
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center;">
                             <strong>{{$purchased_order->buyer_name}}</strong>
                         </div>
                         <div class="d-flex align-items-center">
@@ -69,6 +64,7 @@
             </div>
         </div>
     </div>
+
 
 
 
