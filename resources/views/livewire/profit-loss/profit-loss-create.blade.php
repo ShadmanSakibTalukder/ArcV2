@@ -25,74 +25,11 @@
                         @endphp
 
                     </div>
-                    <div class="d-flex justify-content-between mb-3" style="background-color: rgb(179, 179, 248); color: black; padding: 8px;">
-                        <p>Total Tender: {{$total_tender}}</p>
-                        <p>Total PO: {{$total_po}}</p>
-                        <p>Total Purchase Price: {{$total_purchase_price}}</p>
-                        <p>Total Declared: {{$total_declared_price}}</p>
-                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('profit_loss.store') }}" method="POST">
-                    @csrf
-                    <table class="table table-bordered align-middle">
-                        <thead>
-                            <tr>
-                                <th scope="col">Tender No</th>
-                                <th scope="col">Po No</th>
-                                <th scope="col">Parts No</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Qty</th>
-                                <th scope="col">Purchased Price</th>
-                                <th scope="col">Purchased Total</th>
-                                <th scope="col">Declared Price</th>
-                                <th scope="col">Declared Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $total_tender=0;
-                            $total_po=0;
-                            $total_purchase_price=0;
-                            $total_declared_price=0;
-                            @endphp
-                            @forelse ($addToPLList as $item)
-                            @forelse ($item->purchase_orders->purchaseOrderItems as $sitem )
-                            <tr>
-                                <td scope="col">{{$sitem->purchaseOrder->tender_no }}</td>
-                                <td scope="col">{{$sitem->purchaseOrder->po_no }}</td>
-                                <td scope="col">{{$sitem->parts->requested_part_no }}</td>
-                                <td scope="col">{{$sitem->parts->requested_nomenclature }}</td>
-                                <td scope="col">{{$sitem->qty }}</td>
-                                <td scope="col">{{$sitem->price }}</td>
-                                <td scope="col">{{$sitem->total_price }}</td>
-                                <td scope="col">{{$sitem->parts->declared_price }}</td>
-                                <td scope="col">{{($sitem->parts->declared_price)*($sitem->qty) }}</td>
-
-                            </tr>
-                            @php
-
-                            $total_purchase_price+=$sitem->total_price;
-                            $total_declared_price+=(($sitem->parts->declared_price)*($sitem->qty));
-                            @endphp
-                            @empty
-                            <tr>
-                                <td colspan="8">No Parts Available</td>
-                            </tr>
-                            @endforelse
-                            @empty
-                            <tr>
-                                <td colspan="8">No tender Available</td>
-                            </tr>
-                            @endforelse
-
-                        </tbody>
-                    </table>
-                </form>
             </div>
 
             <div class="mt-4">
+                <h4>Tender/PO List</h4>
                 <table class="table table-bordered align-middle">
                     <thead>
                         <tr>
@@ -108,6 +45,12 @@
                             <td scope="col">{{$item->purchase_orders->tender_no }}</td>
                             <td scope="col">{{$item->purchase_orders->total_purchase_price_no }}</td>
                             <td scope="col">{{$item->purchase_orders->total_declared_price_no }}</td>
+                            @php
+                            $total_tender+=1;
+                            $total_po+=1;
+                            $total_purchase_price+=$item->purchase_orders->total_purchase_price_no;
+                            $total_declared_price+=$item->purchase_orders->total_declared_price_no;
+                            @endphp
                             <td>
                                 <a href="#" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
                                 <a href="#" class="btn btn-sm link-warning" comment="Edit Product"><i class="fa-solid fa-pen-to-square fs-5"></i></a>
@@ -127,6 +70,73 @@
                     </tbody>
                 </table>
             </div>
+            <div class="card-body">
+                <h4>Parts List</h4>
+                <form action="{{ route('profit_loss.store') }}" method="POST">
+                    @csrf
+                    <table class="table table-bordered align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tender No</th>
+                                <th scope="col">Po No</th>
+                                <th scope="col">Parts No</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Purchased Price</th>
+                                <th scope="col">Purchased Total</th>
+                                <th scope="col">Declared Price</th>
+                                <th scope="col">Declared Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @forelse ($addToPLList as $item)
+                            @forelse ($item->purchase_orders->purchaseOrderItems as $sitem )
+                            <tr>
+                                <td scope="col">{{$sitem->purchaseOrder->tender_no }}</td>
+                                <td scope="col">{{$sitem->purchaseOrder->po_no }}</td>
+                                <td scope="col">{{$sitem->parts->requested_part_no }}</td>
+                                <td scope="col">{{$sitem->parts->requested_nomenclature }}</td>
+                                <td scope="col">{{$sitem->qty }}</td>
+                                <td scope="col">{{$sitem->price }}</td>
+                                <td scope="col">{{$sitem->total_price }}</td>
+                                <td scope="col">{{$sitem->parts->declared_price }}</td>
+                                <td scope="col">{{($sitem->parts->declared_price)*($sitem->qty) }}</td>
+
+                            </tr>
+
+                            @empty
+                            <tr>
+                                <td colspan="8">No Parts Available</td>
+                            </tr>
+                            @endforelse
+                            @empty
+                            <tr>
+                                <td colspan="8">No tender Available</td>
+                            </tr>
+                            @endforelse
+
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+
+            <div class="d-flex justify-content-between mb-3" style="background-color: rgb(179, 179, 248); color: black; padding: 8px;">
+                <p>Total Tender: {{$total_tender}}</p>
+                <p>Total PO: {{$total_po}}</p>
+                <p>Total Purchase Price: {{$total_purchase_price}}</p>
+                <p>Total Declared: {{$total_declared_price}}</p>
+            </div>
+            @if ($total_purchase_price > $total_declared_price)
+            <div class="d-flex justify-content-center mb-3" style="background-color: red; color: white; padding: 8px;">
+                <h4>Total Loss : {{$total_declared_price-$total_purchase_price}}</h4>
+            </div>
+            @else
+            <div class="d-flex justify-content-center mb-3" style="background-color: rgb(51, 173, 51);; color: white; padding: 8px;">
+                <h4>Total Profit : {{$total_declared_price-$total_purchase_price}}</h4>
+            </div>
+            @endif
         </div>
 
         <div class="col-md-4">

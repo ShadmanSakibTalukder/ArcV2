@@ -104,6 +104,7 @@ class PurchaseOrderShow extends Component
         // dd($this->added_to_list);
         // dd($declaredTotal);
 
+        $this->subTotal = $subTotal;
         $this->declaredTotal = $declaredTotal;
 
         $validatedData = $this->validate([
