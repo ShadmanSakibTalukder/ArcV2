@@ -28,4 +28,13 @@ class PurchaseOrderItem extends Model
     {
         return $this->belongsTo(Parts_list::class, 'item_id', 'id');
     }
+    /**
+     * Get the purchaseOrder that owns the PurchaseOrderItem
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function purchaseOrder(): BelongsTo
+    {
+        return $this->belongsTo(purchased_order::class, 'purchase_order_id', 'id');
+    }
 }

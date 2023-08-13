@@ -14,6 +14,7 @@
 
     @php
     $subTotal=0;
+    $declaredTotal=0;
     @endphp
     <h3>Create Purchase Order</h3>
     <div class="row">
@@ -56,6 +57,7 @@
                                     {{$this->calculateTotalPrice($item)}}
                                     @php
                                     $subTotal+=$this->calculateTotalPrice($item);
+                                    $declaredTotal+=$this->calculateDeclaredTotalPrice($item);
 
                                     @endphp
                                 </td>
@@ -132,6 +134,10 @@
 
                     <div class="mb-3">
                         <input type="hidden" name="subTotal" value="{{ $subTotal }}">
+
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" name="declaredTotal" value="{{ $declaredTotal }}">
 
                     </div>
                     <div class="my-5 d-flex justify-content-end p-3">

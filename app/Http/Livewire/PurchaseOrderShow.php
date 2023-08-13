@@ -17,7 +17,7 @@ class PurchaseOrderShow extends Component
     public $selectedOption = [];
     public $parts_selected = [];
     public $added_to_list = [];
-    public $po_no, $company, $company_address, $buyer_name, $buyer_address, $vendor_name, $qty, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
+    public $po_no, $company, $company_address, $declaredTotal, $buyer_name, $buyer_address, $vendor_name, $qty, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
 
     public function addToList($part_id)
     {
@@ -75,18 +75,36 @@ class PurchaseOrderShow extends Component
         return $totalPrice;
     }
 
+
+
+
+    public function calculateDeclaredTotalPrice($item)
+    {
+        $qty = $item->qty;
+        $declaredPrice = $item->parts_added_inlist->declared_price;
+
+        $totalDeclaredPrice = $qty * $declaredPrice;
+
+        return $totalDeclaredPrice;
+    }
+
     public function savePO()
     {
         $subTotal = 0;
+        $declaredTotal = 0;
         foreach ($this->added_to_list as $item) {
             $qty = $this->parts_selected[$item->id]['qty'] ?? 0;
             $unitPrice = $this->calculateUnitPrice($item);
             $totalPrice = $this->calculateTotalPrice($item, $qty);
             $subTotal += $totalPrice;
+            $declaredTotalPrice = $this->calculateDeclaredTotalPrice($item, $qty);
+            $declaredTotal += $declaredTotalPrice;
         }
-        // dd($this->added_to_list);
 
-        $this->subTotal = $subTotal;
+        // dd($this->added_to_list);
+        // dd($declaredTotal);
+
+        $this->declaredTotal = $declaredTotal;
 
         $validatedData = $this->validate([
             'po_no' => 'required',
@@ -100,6 +118,7 @@ class PurchaseOrderShow extends Component
             'tender_no' => 'required',
             'po_date' => 'required',
             'subTotal' => 'required',
+            'declaredTotal' => 'required',
         ]);
 
         $purchaseOrder = purchased_order::create([
@@ -114,6 +133,7 @@ class PurchaseOrderShow extends Component
             'tender_no' => $validatedData['tender_no'],
             'po_date' => $validatedData['po_date'],
             'total_purchase_price_no' => $subTotal,
+            'total_declared_price_no' => $declaredTotal,
         ]);
 
 
