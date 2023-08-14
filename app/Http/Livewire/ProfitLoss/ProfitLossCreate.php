@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\ProfitLoss;
 
 use App\Models\AddToProfitLoss;
+use App\Models\ProfitLoss;
+use App\Models\ProfitLossItems;
 use App\Models\purchased_order;
 use Livewire\Component;
 
@@ -26,6 +28,46 @@ class ProfitLossCreate extends Component
             session()->flash('success_message', $ordered_po->purchase_orders->po_no . ' added to wishlist!');
         }
     }
+
+    public function removeListItem($listId)
+    {
+        $itemInList = AddToProfitLoss::where('id', $listId)->first();
+        if ($itemInList) {
+            $itemInList->delete();
+            $this->emit('ListUpdate');
+            session()->flash('success_message', 'Deleted!');
+        } else {
+            session()->flash('message', 'Something went wrong. Please refresh.');
+            return false;
+        }
+    }
+
+    function savveProfitLoss()
+    {
+        $validateData = $this->validate([]);
+
+        $tender = ProfitLoss::create([]);
+
+        foreach ($this->added_to_tender_list as $item) {
+            ProfitLossItems::create([]);
+        }
+
+        $this->reset(['tender_no', 'issue_date', 'orderd_by']);
+    }
+
+    public function codOrder()
+    {
+        $codOrder = $this->saveTender();
+        if ($codOrder) {
+            AddToProfitLoss::query()->forceDelete();
+            session()->flash('success_message', 'Purchase order created successfully!');
+            return redirect()->back();
+        } else {
+            // session()->flash('message', 'Something Went Wrong!');
+            return redirect()->back();
+        }
+    }
+
     public function render()
     {
         $searchPO = purchased_order::orWhere('po_no', 'like', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(20);

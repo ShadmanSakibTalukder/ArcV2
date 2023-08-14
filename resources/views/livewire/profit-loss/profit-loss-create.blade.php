@@ -34,6 +34,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Tender No</th>
+                            <th scope="col">PO No</th>
                             <th scope="col">Total Purchased</th>
                             <th scope="col">Total Declared</th>
                             <th scope="col">Action</th>
@@ -43,6 +44,7 @@
                         @forelse ($addToPLList as $item)
                         <tr>
                             <td scope="col">{{$item->purchase_orders->tender_no }}</td>
+                            <td scope="col">{{$item->purchase_orders->po_no }}</td>
                             <td scope="col">{{$item->purchase_orders->total_purchase_price_no }}</td>
                             <td scope="col">{{$item->purchase_orders->total_declared_price_no }}</td>
                             @php
@@ -52,13 +54,12 @@
                             $total_declared_price+=$item->purchase_orders->total_declared_price_no;
                             @endphp
                             <td>
-                                <a href="#" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                                <a href="#" class="btn btn-sm link-warning" comment="Edit Product"><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                                <form action="#" method="post" style="display: inline;">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
-                                </form>
+                                <button type="button" wire:click="removeListItem({{ $item->id }})" wire:loading.attr="disabled" class="btn btn-sm link-danger" title="{{__('Remove')}}">
+                                    <span wire:loading.remove wire:target="removeListItem({{ $item->id }})">
+                                        <i class="fa-solid fa-trash fs-5"></i>
+                                    </span>
+                                    <span wire:loading wire:target="removeListItem({{ $item->id }})">{{__('Removing')}}</span>
+                                </button>
                             </td>
                         </tr>
                         @empty
