@@ -22,6 +22,8 @@
                                 <th scope="col">Tender No.</th>
                                 <th scope="col">Work Order No.</th>
                                 <th scope="col">Total Purchase Price</th>
+                                <th scope="col">Total Declared Price</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -33,6 +35,15 @@
                                 <td>{{ $item->tender_no }}</td>
                                 <td>{{ $item->wo_no }}</td>
                                 <td>{{ $item->total_purchase_price_no }}</td>
+                                <td>{{ $item->total_declared_price_no }}</td>
+
+                                <td>@if($item->status==0)
+                                    <a href="{{route('purchased_order.active',$item->id)}}" class="btn btn-sm link-success">{{__('Under Process')}}</a>
+                                    @else
+                                    <a href="{{route('purchased_order.inactive',$item->id)}}" class="btn btn-sm link-danger">{{__('Delivered')}}</a>
+
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ route('purchased_order.pdf_download', $item->id) }}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
                                     <a href="{{ route('purchased_order.show', $item->id) }}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>

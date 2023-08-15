@@ -46,6 +46,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 
     Route::resource('/purchased_order', PurchasedOrderController::class);
+    Route::get('/purchased_order/active/{id}', [PurchasedOrderController::class, 'active'])->name('purchased_order.active');
+    Route::get('/purchased_order/inactive/{id}', [PurchasedOrderController::class, 'inactive'])->name('purchased_order.inactive');
 
 
 

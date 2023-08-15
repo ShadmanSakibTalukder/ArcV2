@@ -109,4 +109,30 @@ class PurchasedOrderController extends Controller
         // return $pdf->download('Purchase_order' . $purchase_order->po_no . '.' . 'pdf');
         return $pdf->stream('purchased.print_po', $data);
     }
+
+
+    public function active($id)
+    {
+        if (Auth::user()->role_as == '1') {
+            // dd($id);
+            $purchase_order = purchased_order::find($id);
+            $purchase_order->status = 1;
+            $purchase_order->update();
+            return back();
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
+    }
+    public function inactive($id)
+    {
+        if (Auth::user()->role_as == '1') {
+            // dd($id);
+            $purchase_order = purchased_order::find($id);
+            $purchase_order->status = 0;
+            $purchase_order->update();
+            return back();
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
+    }
 }

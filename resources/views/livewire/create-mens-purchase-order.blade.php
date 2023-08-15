@@ -82,7 +82,7 @@
                     </table>
                 </div>
 
-                <form wire:submit.prevent="savePO">
+                <form wire:submit.prevent="codOrder">
                     <div class="mb-3">
                         <label for="po_no" class="form-label">Purchase Order No:</label>
                         <input type="text" class="form-control" id="po_no" wire:model.defer="po_no" required>
@@ -122,8 +122,8 @@
                     </div>
                     <div class="my-5 d-flex justify-content-end p-3">
                         <button type="submit" class="btn btn-md btn-outline-primary px-3 mx-2">
-                            <span wire:loading.remove wire:target="savePO">Save</span>
-                            <span wire:loading wire:target="savePO">Saving Purchase Order</span>
+                            <span wire:loading.remove wire:target="codOrder">Save</span>
+                            <span wire:loading wire:target="codOrder">Saving Purchase Order</span>
                         </button>
                         <a href="{{ route('purchased_order.index') }}" class="btn btn-md btn-outline-secondary">Back</a>
                     </div>

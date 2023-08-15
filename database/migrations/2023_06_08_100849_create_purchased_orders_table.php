@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('purchased_orders', function (Blueprint $table) {
             $table->id();
             $table->string('po_no');
+            $table->tinyInteger('status')->default('0')->comment('1=done,0=working');
             $table->string('company');
             $table->mediumText('company_address');
             $table->string('buyer_name')->nullable();

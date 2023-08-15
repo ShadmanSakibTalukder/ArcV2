@@ -119,8 +119,22 @@ class CreateMensPurchaseOrder extends Component
         // Reset the form and show success message
         $this->reset(['po_no', 'buyer_name', 'buyer_address', 'vendor_name', 'vendor_address', 'shipping_address', 'tender_no', 'po_date', 'subTotal', 'company', 'company_address']);
 
-        $this->added_to_list = [];
-        session()->flash('success_message', 'Purchase order created successfully!');
+        AddToList::query()->forceDelete();
+
+        return true;
+    }
+
+    public function codOrder()
+    {
+
+        $codOrder = $this->savePO();
+        if ($codOrder) {
+            session()->flash('success_message', 'Purchase order created successfully!');
+            return redirect()->back();
+        } else {
+            session()->flash('message', 'Something Went Wrong!');
+            return redirect()->back();
+        }
     }
 
     public function render()

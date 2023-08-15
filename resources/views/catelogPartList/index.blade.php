@@ -49,7 +49,7 @@
                         <tbody>
                             @forelse ($cat_parts as $item)
                             <tr @if($item->has_missing_data) class="table-danger" @endif>
-                                <td>{{$loop->iteration}}</td>
+                                <td>{{$item->id}}</td>
                                 <td>{{$item->item_no}}</td>
                                 <td @if(empty($item->part_no)) class="table-danger" @endif>{{$item->part_no}}</td>
                                 <td @if(empty($item->nsn)) class="table-danger" @endif>{{$item->cagec}}</td>

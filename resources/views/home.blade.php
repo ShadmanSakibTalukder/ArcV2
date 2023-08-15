@@ -47,71 +47,68 @@
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-                <svg class="bi">
-                    <use xlink:href="#calendar3" />
-                </svg>
-                This week
-            </button>
-        </div>
+
     </div>
 
     <div class="container">
         <div class="row mb-4">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">Total Tender</div>
-                    <div class="card-body">Dummy Value 1</div>
+                    <div class="card-header text-center">Total Tender</div>
+                    <div class="card-body text-center fs-2"><strong>{{$tenderReceivedCount}}</strong></div>
+
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">Tender Completed</div>
-                    <div class="card-body">Dummy Value 2</div>
+                    <div class="card-header text-center">Tender Completed</div>
+
+                    <div class="card-body text-center fs-2"><strong>{{$tenderDoneCount}}</strong></div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">Tender Under Process</div>
-                    <div class="card-body">Dummy Value 3</div>
+                    <div class="card-header text-center">Tender Under Process</div>
+                    <div class="card-body text-center fs-2"><strong>{{$tenderWorkingCount}}</strong></div>
+
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">Tender Waiting</div>
-                    <div class="card-body">Dummy Value 4</div>
-                </div>
-            </div>
+
         </div>
 
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header text-center">Total Purchase Order Created</div>
+                    <div class="card-body text-center fs-2"><strong>{{$totalPOCount}}</strong></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header text-center">Purchase Order Done</div>
+                    <div class="card-body text-center fs-2"><strong>{{$donePOCount}}</strong></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header text-center">Purchase Order Under Process</div>
+                    <div class="card-body text-center fs-2"><strong>{{$workingPOCount}}</strong></div>
+
+                </div>
+            </div>
+
+        </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Total Purchase</div>
-                    <div class="card-body">Dummy Value 5</div>
+                    <div class="card-header text-center">Total Purchase Price for Prcessing POs</div>
+                    <div class="card-body text-center fs-2"><strong>&#36; {{$processingPurchasePrice}}</strong></div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">Purchase Account</div>
-                    <div class="card-body">Dummy Value 6</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">Total Declared</div>
-                    <div class="card-body">Dummy Value 7</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">Payment Account</div>
-                    <div class="card-body">Dummy Value 8</div>
+                    <div class="card-header text-center">Total Declared Price for Processing POs</div>
+                    <div class="card-body text-center fs-2"><strong>&#36; {{$processingDeclaredPrice}}</strong></div>
                 </div>
             </div>
         </div>
@@ -121,95 +118,109 @@
     <h2>Tender Under Process</h2>
     <div class="line"></div>
     <br>
-    <table class="table table-hover">
+    <table class="table table-bordered align-middle">
         <thead>
             <tr>
-                <th scope="col">SL</th>
+                <th scope="col">No.</th>
+                <th scope="col">Tender No.</th>
                 <th scope="col">Date</th>
-                <th scope="col">Tender No</th>
+                <th scope="col">Ordered By</th>
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
+            @forelse ($tender as $item)
+            @if ($item->status=='0')
             <tr>
-                <td>1</td>
-                <td>2023-07-17</td>
-                <td>TN001</td>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $item->tender_no }}</td>
+                <td>{{ $item->issue_date }}</td>
+                <td>{{ $item->orderd_by }}</td>
+                <td>@if($item->status==0)
+                    <a href="{{route('tenders.active',$item->id)}}" class="btn btn-sm link-success">{{__('Working')}}</a>
+                    @else
+                    <a href="{{route('tenders.inactive',$item->id)}}" class="btn btn-sm link-danger">{{__('Done')}}</a>
+
+                    @endif
+                </td>
                 <td>
-                    <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
-                    <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                    <form action="{{('#')}}" method="post" style="display:inline">
+                    <a href="{{ route('tenders.show', $item->id) }}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                    <form action="{{ route('tenders.destroy', $item->id) }}" method="POST" style="display:inline">
                         @csrf
                         @method('delete')
-                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
+                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>
                     </form>
                 </td>
             </tr>
+            @else
+            <td colspan="7">All Tenders Done</td>
+            @endif
+            @empty
             <tr>
-                <td>2</td>
-                <td>2023-07-18</td>
-                <td>TN002</td>
-                <td>
-                    <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
-                    <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                    <form action="{{('#')}}" method="post" style="display:inline">
-                        @csrf
-                        @method('delete')
-                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
-                    </form>
-                </td>
+                <td colspan="7"><Strong>No Tenders Available</Strong></td>
             </tr>
+            @endforelse
         </tbody>
     </table>
 
 
 
-    <div class="col-md-12">
+    <div class="col-md-12 mb-5">
         <h2>Purchase Order In Process</h2>
         <div class="line"></div>
         <br>
         <div class="table-responsive d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+
             <table class="table table-striped table-sm">
                 <thead>
                     <tr>
-                        <th>SL</th>
-                        <th>Date</th>
-                        <th>Purchase Order No</th>
-                        <th>Purchase Order Position</th>
-                        <th>Action</th>
+                        <th scope="col">No.</th>
+                        <th scope="col">PO No.</th>
+                        <th scope="col">Tender No.</th>
+                        <th scope="col">Work Order No.</th>
+                        <th scope="col">Total Purchase Price</th>
+                        <th scope="col">Total Declared Price</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($purchaseOrder as $item)
+                    @if ($item->status=='0')
                     <tr>
-                        <td>1</td>
-                        <td>2023-07-17</td>
-                        <td>poiuyt567</td>
-                        <td>TN001</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->po_no }}</td>
+                        <td>{{ $item->tender_no }}</td>
+                        <td>{{ $item->wo_no }}</td>
+                        <td>{{ $item->total_purchase_price_no }}</td>
+                        <td>{{ $item->total_declared_price_no }}</td>
+
+                        <td>@if($item->status==0)
+                            <a href="{{route('purchased_order.active',$item->id)}}" class="btn btn-sm link-success">{{__('Under Process')}}</a>
+                            @else
+                            <a href="{{route('purchased_order.inactive',$item->id)}}" class="btn btn-sm link-danger">{{__('Delivered')}}</a>
+
+                            @endif
+                        </td>
                         <td>
-                            <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
-                            <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                            <form action="{{('#')}}" method="post" style="display:inline">
+                            <a href="{{ route('purchased_order.pdf_download', $item->id) }}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
+                            <a href="{{ route('purchased_order.show', $item->id) }}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                            <form action="{{ route('purchased_order.destroy', $item->id) }}" method="post" style="display:inline">
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
+                                <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>
                             </form>
                         </td>
                     </tr>
+                    @else
+                    <td></td>
+                    @endif
+                    @empty
                     <tr>
-                        <td>2</td>
-                        <td>2023-07-18</td>
-                        <td>poiuyt567</td>
-                        <td>TN002</td>
-                        <td>
-                            <a href="{{('#')}}" class="btn btn-sm link-success"><i class="fa-solid fa-download"></i></a>
-                            <a href="{{('#')}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                            <form action="{{('#')}}" method="post" style="display:inline">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
-                            </form>
-                        </td>
+                        <td colspan="8">No Purchased Orders Available</td>
                     </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
