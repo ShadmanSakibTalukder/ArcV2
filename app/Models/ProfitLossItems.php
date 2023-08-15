@@ -19,6 +19,6 @@ class ProfitLossItems extends Model
      */
     public function purchaseOrder(): BelongsTo
     {
-        return $this->belongsTo(purchaseOrder::class, 'po_id', 'id');
+        return $this->belongsTo(purchased_order::class, 'po_id', 'id');
     }
 }

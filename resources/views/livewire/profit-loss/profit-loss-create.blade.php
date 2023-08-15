@@ -13,16 +13,17 @@
 
     <div class="row">
         <div class="col-md-8">
+            @php
+            $total_tender=0;
+            $total_po=0;
+            $total_purchase_price=0;
+            $total_declared_price=0;
+            @endphp
             <div class="card border-0">
                 <div class="card-header bg-transparent">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h2>Profit Loss</h2>
-                        @php
-                        $total_tender=0;
-                        $total_po=0;
-                        $total_purchase_price=0;
-                        $total_declared_price=0;
-                        @endphp
+
 
                     </div>
                 </div>
@@ -73,53 +74,50 @@
             </div>
             <div class="card-body">
                 <h4>Parts List</h4>
-                <form action="{{ route('profit_loss.store') }}" method="POST">
-                    @csrf
-                    <table class="table table-bordered align-middle">
-                        <thead>
-                            <tr>
-                                <th scope="col">Tender No</th>
-                                <th scope="col">Po No</th>
-                                <th scope="col">Parts No</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Qty</th>
-                                <th scope="col">Purchased Price</th>
-                                <th scope="col">Purchased Total</th>
-                                <th scope="col">Declared Price</th>
-                                <th scope="col">Declared Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <table class="table table-bordered align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tender No</th>
+                            <th scope="col">Po No</th>
+                            <th scope="col">Parts No</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Purchased Price</th>
+                            <th scope="col">Purchased Total</th>
+                            <th scope="col">Declared Price</th>
+                            <th scope="col">Declared Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                            @forelse ($addToPLList as $item)
-                            @forelse ($item->purchase_orders->purchaseOrderItems as $sitem )
-                            <tr>
-                                <td scope="col">{{$sitem->purchaseOrder->tender_no }}</td>
-                                <td scope="col">{{$sitem->purchaseOrder->po_no }}</td>
-                                <td scope="col">{{$sitem->parts->requested_part_no }}</td>
-                                <td scope="col">{{$sitem->parts->requested_nomenclature }}</td>
-                                <td scope="col">{{$sitem->qty }}</td>
-                                <td scope="col">{{$sitem->price }}</td>
-                                <td scope="col">{{$sitem->total_price }}</td>
-                                <td scope="col">{{$sitem->parts->declared_price }}</td>
-                                <td scope="col">{{($sitem->parts->declared_price)*($sitem->qty) }}</td>
+                        @forelse ($addToPLList as $item)
+                        @forelse ($item->purchase_orders->purchaseOrderItems as $sitem )
+                        <tr>
+                            <td scope="col">{{$sitem->purchaseOrder->tender_no }}</td>
+                            <td scope="col">{{$sitem->purchaseOrder->po_no }}</td>
+                            <td scope="col">{{$sitem->parts->requested_part_no }}</td>
+                            <td scope="col">{{$sitem->parts->requested_nomenclature }}</td>
+                            <td scope="col">{{$sitem->qty }}</td>
+                            <td scope="col">{{$sitem->price }}</td>
+                            <td scope="col">{{$sitem->total_price }}</td>
+                            <td scope="col">{{$sitem->parts->declared_price }}</td>
+                            <td scope="col">{{($sitem->parts->declared_price)*($sitem->qty) }}</td>
 
-                            </tr>
+                        </tr>
 
-                            @empty
-                            <tr>
-                                <td colspan="8">No Parts Available</td>
-                            </tr>
-                            @endforelse
-                            @empty
-                            <tr>
-                                <td colspan="8">No tender Available</td>
-                            </tr>
-                            @endforelse
+                        @empty
+                        <tr>
+                            <td colspan="8">No Parts Available</td>
+                        </tr>
+                        @endforelse
+                        @empty
+                        <tr>
+                            <td colspan="8">No tender Available</td>
+                        </tr>
+                        @endforelse
 
-                        </tbody>
-                    </table>
-                </form>
+                    </tbody>
+                </table>
             </div>
 
 
@@ -138,6 +136,17 @@
                 <h4>Total Profit : {{$total_declared_price-$total_purchase_price}}</h4>
             </div>
             @endif
+
+            <form wire:submit.prevent="codOrder">
+
+                <div class="my-5 d-flex justify-content-end p-3">
+                    <button type="submit" class="btn btn-md btn-outline-primary px-3 mx-2">
+                        <span wire:loading.remove wire:target="codOrder">Save</span>
+                        <span wire:loading wire:target="codOrder">Saving profit loss status</span>
+                    </button>
+                    <a href="{{ route('profit_loss.index') }}" class="btn btn-md btn-outline-secondary">Back</a>
+                </div>
+            </form>
         </div>
 
         <div class="col-md-4">

@@ -53,6 +53,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('/vendors', VendorsController::class);
     Route::resource('/buyers', BuyersController::class);
     Route::resource('/profit_loss', ProfitLossController::class);
+
+    Route::get('/profit_loss/active/{id}', [ProfitLossController::class, 'active'])->name('profit_loss.active');
+    Route::get('/profit_loss/inactive/{id}', [ProfitLossController::class, 'inactive'])->name('profit_loss.inactive');
 });
 Route::prefix('support')->middleware(['auth', 'isSupport'])->group(function () {
 

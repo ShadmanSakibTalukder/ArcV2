@@ -7,11 +7,13 @@ use App\Models\ProfitLoss;
 use App\Models\ProfitLossItems;
 use App\Models\purchased_order;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class ProfitLossCreate extends Component
 {
     public $search = '';
     public $addToPLList = [];
+    public $total_purchase_price, $total_declared_price;
 
     public function addToPL($p_id)
     {
@@ -42,28 +44,50 @@ class ProfitLossCreate extends Component
         }
     }
 
-    function savveProfitLoss()
+    function saveProfitLoss()
     {
-        $validateData = $this->validate([]);
 
-        $tender = ProfitLoss::create([]);
 
-        foreach ($this->added_to_tender_list as $item) {
-            ProfitLossItems::create([]);
+        $total_purchase_price = 0;
+        $total_declared_price = 0;
+
+        // Calculate the totals from the table data
+        foreach ($this->addToPLList as $item) {
+            $total_purchase_price += $item->purchase_orders->total_purchase_price_no;
+            $total_declared_price += $item->purchase_orders->total_declared_price_no;
         }
 
-        $this->reset(['tender_no', 'issue_date', 'orderd_by']);
+        // Create the profit loss record
+        $profitLoss = ProfitLoss::create([
+            'name' => 'mens-' . Str::random(5),
+            'total_purchase_price' => $total_purchase_price,
+            'total_declared_price' => $total_declared_price,
+            'status' => '0'
+        ]);
+        foreach ($this->addToPLList as $item) {
+            ProfitLossItems::create([
+                'profit_loss_id' => $profitLoss->id,
+                'po_id' => $item->purchase_orders->id
+            ]);
+        }
+
+        $total_purchase_price = 0;
+        $total_declared_price = 0;
+
+        AddToProfitLoss::query()->forceDelete();
+
+        return true;
     }
 
     public function codOrder()
     {
-        $codOrder = $this->saveTender();
+
+        $codOrder = $this->saveProfitLoss();
         if ($codOrder) {
-            AddToProfitLoss::query()->forceDelete();
             session()->flash('success_message', 'Purchase order created successfully!');
             return redirect()->back();
         } else {
-            // session()->flash('message', 'Something Went Wrong!');
+            session()->flash('message', 'Something Went Wrong!');
             return redirect()->back();
         }
     }
