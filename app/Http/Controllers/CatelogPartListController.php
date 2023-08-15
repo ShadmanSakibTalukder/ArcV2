@@ -219,6 +219,7 @@ class CatelogPartListController extends Controller
 
     public function showCatalogBook()
     {
+        dd('test');
         if (Auth::user()->role_as == '1') {
             return view('catelogPartList.show_catalog');
         } else {
