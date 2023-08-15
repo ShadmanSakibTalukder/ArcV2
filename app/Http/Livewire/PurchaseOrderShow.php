@@ -9,6 +9,7 @@ use App\Models\Parts_list;
 use App\Models\purchased_order;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\tenders;
 use Livewire\Component;
 
 class PurchaseOrderShow extends Component
@@ -36,6 +37,7 @@ class PurchaseOrderShow extends Component
         }
     }
 
+
     public function removeListItem($listId)
     {
         $itemInList = AddToList::where('id', $listId)->first();
@@ -48,6 +50,8 @@ class PurchaseOrderShow extends Component
             return false;
         }
     }
+
+
 
     public function calculateUnitPrice($item)
     {
@@ -156,10 +160,23 @@ class PurchaseOrderShow extends Component
         }
 
         // Reset the form and show success message
-        $this->reset(['po_no', 'buyer_name', 'buyer_address', 'vendor_name', 'vendor_address', 'shipping_address', 'tender_no', 'po_date', 'subTotal']);
+        $this->reset(['po_no', 'buyer_name', 'buyer_address', 'vendor_name', 'vendor_address', 'shipping_address', 'tender_no', 'po_date', 'subTotal', 'company', 'company_address']);
         $this->parts_selected = [];
-        $this->added_to_list = [];
-        session()->flash('success_message', 'Purchase order created successfully!');
+        AddToList::query()->forceDelete();
+
+        return true;
+    }
+    public function codOrder()
+    {
+
+        $codOrder = $this->savePO();
+        if ($codOrder) {
+            session()->flash('success_message', 'Purchase order created successfully!');
+            return redirect()->back();
+        } else {
+            session()->flash('message', 'Something Went Wrong!');
+            return redirect()->back();
+        }
     }
 
 
@@ -168,6 +185,8 @@ class PurchaseOrderShow extends Component
     {
         $parts_list = Parts_list::orWhere('requested_part_no', 'like', '%' . $this->search . '%')->orderBy('id', 'desc')->paginate(20);
         $this->added_to_list = AddToList::all();
+
+
 
         return view('livewire.purchase-order-show', ['parts_list' => $parts_list, 'added_to_list' => $this->added_to_list]);
     }

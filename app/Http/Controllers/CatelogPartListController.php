@@ -217,6 +217,12 @@ class CatelogPartListController extends Controller
     //             ];
 
 
-
-
+    public function showCatalogBook()
+    {
+        if (Auth::user()->role_as == '1') {
+            return view('catelogPartList.show_catalog');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
+    }
 }

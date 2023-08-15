@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfitLossController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\PurchasedOrderController;
 use App\Http\Controllers\SupportController;
+use App\Http\Livewire\PurchaseOrderShow;
 use App\Models\CatelogPartList;
 use App\Models\MensPurchaseOrder;
 
@@ -45,7 +46,12 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 
     Route::resource('/purchased_order', PurchasedOrderController::class);
+
+
+
     Route::resource('/catelog_part_list', CatelogPartListController::class);
+
+    Route::get('/catelog_part_list/catalog_show', [CatelogPartListController::class, 'showCatalogBook'])->name('catalog_part_list.book_show');
 
     Route::get('purchase-order/pdf/{id}', [PurchasedOrderController::class, 'purchaseOrderGenerator'])->name('purchased_order.pdf_download');
 
