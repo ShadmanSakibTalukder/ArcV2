@@ -49,9 +49,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 
 
+    Route::get('/catelog_part_list/book', [CatelogPartListController::class, 'showCatalogBook'])->name('book_show');
     Route::resource('/catelog_part_list', CatelogPartListController::class);
 
-    Route::get('/catelog_part_list/book', [CatelogPartListController::class, 'showCatalogBook'])->name('catalog_part_list.book_show');
 
     Route::get('purchase-order/pdf/{id}', [PurchasedOrderController::class, 'purchaseOrderGenerator'])->name('purchased_order.pdf_download');
 

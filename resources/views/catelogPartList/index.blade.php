@@ -25,7 +25,7 @@
                         <a type="button" href="{{route('catelog_part_list.create')}}" class="btn btn-sm btn-outline-secondary">
                             <span><i class="fa-solid fa-plus"></i></span>{{__(' Create')}}
                         </a>
-                        <a type="button" href="{{route('catalog_part_list.book_show')}}" class="btn btn-sm btn-outline-secondary">
+                        <a type="button" href="{{route('book_show')}}" class="btn btn-sm btn-outline-secondary">
                             {{__(' Show Catalog')}}
                         </a>
                     </div>

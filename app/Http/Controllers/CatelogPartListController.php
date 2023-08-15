@@ -14,12 +14,23 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CatelogPartListController extends Controller
 {
     public function __construct()
     {
         Paginator::useBootstrap();
+    }
+
+    public function showCatalogBook()
+    {
+        Log::info('Reached showCatalogBook method');
+        if (Auth::user()->role_as == '1') {
+            return view('catelogPartList.showCatalog');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -217,13 +228,5 @@ class CatelogPartListController extends Controller
     //             ];
 
 
-    public function showCatalogBook()
-    {
-        dd('test');
-        if (Auth::user()->role_as == '1') {
-            return view('catelogPartList.show_catalog');
-        } else {
-            return redirect()->back()->with('message', 'Access not Authorised');
-        }
-    }
+
 }
