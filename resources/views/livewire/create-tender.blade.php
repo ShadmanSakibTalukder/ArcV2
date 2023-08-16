@@ -23,6 +23,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>SL</th>
                                 <th>Parts No.</th>
                                 <th>Nomenclature</th>
                                 <th>Qty</th>
@@ -32,6 +33,7 @@
                             @forelse ($added_to_tender_list as $item)
 
                             <tr>
+                                <td>{{$loop->iteration}}</td>
                                 <td>{{ $item->part_no }}</td>
                                 <td>{{ $item->nomenclature }}</td>
                                 <td>{{ $item->qty }}</td>
@@ -73,18 +75,18 @@
             <button type="submit" class="btn btn-primary">
                 <span wire:loading.remove wire:target="codOrder">Save</span>
                 <span wire:loading wire:target="codOrder">Saving Tender</span>
-            </button> <a class="btn btn-md btn-outline-danger py-3 mx-2 mb-5" href="{{route('tenders.index')}}">
+            </button> <a class="btn btn-danger mx-5" href="{{route('tenders.index')}}">
                 Back
             </a>
             </form>
         </div>
         <div class="col-md-6">
-            <div class="search-section">
+            <!-- <div class="search-section">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search parts">
                     <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-search"></i></button>
                 </div>
-            </div>
+            </div> -->
             <div class="listbox-section">
                 <div class="listbox">
                     <table class="table table-bordered">
@@ -99,16 +101,16 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" id="part_no" wire:model="part_no" name="part_no">
+                                    <input type="text" class="form-control" id="part_no" wire:model.defer="part_no" name="part_no">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" id="nomenclature" wire:model="nomenclature" name="nomenclature">
+                                    <input type="text" class="form-control" id="nomenclature" wire:model.defer="nomenclature" name="nomenclature">
                                 </td>
                                 <td>
-                                    <input type="qty" class="form-control" id="qty" wire:model="qty" name="qty">
+                                    <input type="qty" class="form-control" id="qty" wire:model.defer="qty" name="qty">
                                 </td>
                                 <td>
-                                    <button type="button" wire:click="addToList({{ $part_no }})" wire:loading.attr="disabled" wire:target="addToList({{ $part_no }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
+                                    <button type="button" wire:click="addToList()" wire:loading.attr="disabled" wire:target="addToList({{ $part_no }})" class="btn btn1 rounded mb-5" title="{{__('Add To PO')}}">
                                         <span wire:loading.remove wire:target="addToList({{ $part_no }})">
                                             <i class="fa fa-plus fa-bounce"></i>
                                         </span>

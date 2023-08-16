@@ -7,6 +7,7 @@ use App\Models\Parts_list;
 use App\Models\TenderItem;
 use App\Models\tenders;
 use Livewire\Component;
+use PhpParser\Node\Stmt\Return_;
 
 class CreateTender extends Component
 {
@@ -14,29 +15,57 @@ class CreateTender extends Component
     public $added_to_tender_list = [];
     public $tender_no, $issue_date, $orderd_by, $part_no, $nomenclature, $qty;
 
-    public function addToList($part_id)
+    // public function addToList($part_no)
+    // {
+    //     $existingItem = AddToTenderList::where('part_no', $this->part_no)->first();
+
+    //     if ($existingItem) {
+    //         session()->flash('message', $existingItem->nomenclature . ' already added to wishlist!');
+    //     } else {
+    //         $validateData = $this->validate([
+    //             'part_no' => 'string',
+    //             'nomenclature' => 'string',
+    //             'qty' => 'required',
+    //         ]);
+
+    //         $order_item = AddToTenderList::create([
+    //             'part_no' => $validateData['part_no'],
+    //             'nomenclature' => $validateData['nomenclature'],
+    //             'qty' => $validateData['qty'],
+    //         ]);
+
+    //         $this->emit('addToTenderListUpdated');
+    //         session()->flash('success_message', $order_item->nomenclature . ' added to wishlist!');
+    //     }
+    // }
+
+    public function addToList()
     {
         $existingItem = AddToTenderList::where('part_no', $this->part_no)->first();
 
         if ($existingItem) {
             session()->flash('message', $existingItem->nomenclature . ' already added to wishlist!');
         } else {
-            $validateData = $this->validate([
-                'part_no' => 'required',
-                'nomenclature' => 'required',
+            $this->validate([
+                'part_no' => 'string',
+                'nomenclature' => 'string',
                 'qty' => 'required',
             ]);
 
             $order_item = AddToTenderList::create([
-                'part_no' => $validateData['part_no'],
-                'nomenclature' => $validateData['nomenclature'],
-                'qty' => $validateData['qty'],
+                'part_no' => $this->part_no,
+                'nomenclature' => $this->nomenclature,
+                'qty' => $this->qty,
             ]);
 
             $this->emit('addToTenderListUpdated');
             session()->flash('success_message', $order_item->nomenclature . ' added to wishlist!');
+
+            $this->reset(['part_no', 'nomenclature', 'qty']);
         }
     }
+
+
 
     public function removeListItem($listId)
     {
@@ -76,13 +105,16 @@ class CreateTender extends Component
         }
 
         $this->reset(['tender_no', 'issue_date', 'orderd_by']);
+        AddToTenderList::query()->forceDelete();
+
+        return true;
     }
 
     public function codOrder()
     {
         $codOrder = $this->saveTender();
         if ($codOrder) {
-            AddToTenderList::query()->forceDelete();
+
             session()->flash('success_message', 'Purchase order created successfully!');
             return redirect()->back();
         } else {

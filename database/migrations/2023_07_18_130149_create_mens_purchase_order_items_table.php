@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('purchase_order_id');
             $table->integer('item_id');
             $table->integer('qty');
-            $table->integer('price')->nullable();
-            $table->integer('total_price')->nullable();
+            $table->float('price')->nullable();
+            $table->float('total_price')->nullable();
             $table->timestamps();
 
 

@@ -28,7 +28,8 @@ class PartsListController extends Controller
     public function create()
     {
         if (Auth::user()->role_as == '1') {
-            return view('parts.create_parts_list');
+            $existingPartNos = Parts_list::pluck('requested_part_no')->toArray();
+            return view('parts.create_parts_list', compact('existingPartNos'));
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
         }
@@ -41,24 +42,43 @@ class PartsListController extends Controller
     {
         if (Auth::user()->role_as == '1') {
             // dd($request->image);
-            $fileName = $this->uploadImage($request->file('image'));
-            $request_data = [
-                'requested_part_no' => $request->requested_part_no,
-                'requested_nomenclature' => $request->requested_nomenclature,
-                'cat_part_no' => $request->cat_part_no,
-                'cat_nomenclature' => $request->cat_nomenclature,
-                'nsn' => $request->nsn,
-                'classification' => $request->classification,
-                'lead_time' => $request->lead_time,
-                'weight' => $request->weight,
-                'surplus_price' => $request->surplus_price,
-                'fs_price' => $request->fs_price,
-                'navister_price' => $request->navister_price,
-                'declared_price' => $request->declared_price,
-                'image' => $fileName
-            ];
+            if ($request->file('image') != null) {
+                $fileName = $this->uploadImage($request->file('image'));
+                $request_data = [
+                    'requested_part_no' => $request->requested_part_no,
+                    'requested_nomenclature' => $request->requested_nomenclature,
+                    'cat_part_no' => $request->cat_part_no,
+                    'cat_nomenclature' => $request->cat_nomenclature,
+                    'nsn' => $request->nsn,
+                    'classification' => $request->classification,
+                    'lead_time' => $request->lead_time,
+                    'weight' => $request->weight,
+                    'surplus_price' => $request->surplus_price,
+                    'fs_price' => $request->fs_price,
+                    'navister_price' => $request->navister_price,
+                    'declared_price' => $request->declared_price,
+                    'image' => $fileName
+                ];
+            } else {
+                $request_data = [
+                    'requested_part_no' => $request->requested_part_no,
+                    'requested_nomenclature' => $request->requested_nomenclature,
+                    'cat_part_no' => $request->cat_part_no,
+                    'cat_nomenclature' => $request->cat_nomenclature,
+                    'nsn' => $request->nsn,
+                    'classification' => $request->classification,
+                    'lead_time' => $request->lead_time,
+                    'weight' => $request->weight,
+                    'surplus_price' => $request->surplus_price,
+                    'fs_price' => $request->fs_price,
+                    'navister_price' => $request->navister_price,
+                    'declared_price' => $request->declared_price,
+
+                ];
+            }
             Parts_list::create($request_data);
-            return redirect()->route('parts_list.index')->with('message', 'Successfully Created!');
+            // return redirect()->route('parts_list.index')->with('message', 'Successfully Created!');
+            return redirect()->back()->with('message', 'Successfully Created!');
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
         }

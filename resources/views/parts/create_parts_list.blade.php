@@ -2,6 +2,17 @@
     <x-slot:title>
         Create Parts List
     </x-slot:title>
+    @if (session()->has('message'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ session('message') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @elseif (session()->has('success_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success_message') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="card border-0">
@@ -23,8 +34,9 @@
 
                             <div class="col-md-6 mb-3">
                                 <label>Requested Parts No.</label>
-                                <input type="text" name="requested_part_no" class="form-control" />
-                                @error('requested_part_no') <small class="text-danger">{($message)}</small> @enderror
+                                <input type="text" name="requested_part_no" id="requested_part_no" class="form-control" />
+                                <small class="text-danger" id="requested_part_no_error"></small>
+                                @error('requested_part_no') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>Requested Nomenclature</label>
@@ -82,9 +94,14 @@
                                 @error('declared_price') <small class="text-danger">{($message)}</small> @enderror
                             </div>
 
-                            <div class="my-5 d-flex justify-content-end p-3">
+                            <!-- <div class="my-5 d-flex justify-content-end p-3">
                                 <button type="submit" class="btn btn-md btn-outline-primary px-3 mx-2">{{__('Save')}}</button>
                                 <a href="{{route('parts_list.index')}}" class="btn btn-md btn-outline-secondary px-3 mx-2">{{__('Close')}}</a>
+                            </div> -->
+
+                            <div class="my-5 d-flex justify-content-end p-3">
+                                <button type="submit" id="saveButton" class="btn btn-md btn-outline-primary px-3 mx-2">{{ __('Save') }}</button>
+                                <a href="{{ route('parts_list.index') }}" class="btn btn-md btn-outline-secondary px-3 mx-2">{{ __('Close') }}</a>
                             </div>
 
                     </form>
@@ -93,5 +110,35 @@
         </div>
     </div>
 
+    @push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const requestedPartNoInput = document.getElementById('requested_part_no');
+            const requestedPartNoError = document.getElementById('requested_part_no_error');
+            const saveButton = document.getElementById('saveButton');
+
+            const existingPartNos = <?php echo json_encode($existingPartNos); ?>;
+
+            requestedPartNoInput.addEventListener('input', function() {
+                const inputValue = requestedPartNoInput.value.trim();
+
+                if (inputValue === '') {
+                    requestedPartNoError.textContent = 'Requested Parts No. is required';
+                    saveButton.disabled = true;
+                } else {
+                    requestedPartNoError.textContent = '';
+                    saveButton.disabled = false;
+
+                    if (existingPartNos.includes(inputValue)) {
+                        requestedPartNoError.textContent = 'Requested Parts No. already exists';
+                        saveButton.disabled = true;
+                    }
+                }
+            });
+        });
+    </script>
+
+
+    @endpush
 
 </x-master>
