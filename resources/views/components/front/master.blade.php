@@ -127,14 +127,14 @@
         }
 
         .partners .partner-logo {
-            width: 80px;
+            width: 100px;
             height: auto;
             margin: 10px;
             transition: transform 0.3s ease-in-out;
         }
 
         .partners .partner-logo:hover {
-            transform: scale(1.1);
+            transform: scale(2.1);
         }
 
         .contact {
@@ -203,7 +203,7 @@
 <body>
     <x-front.partials.navbar />
     {{$slot}}
-
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="{{asset('assets/js/jquery-3.7.0.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
     <script>

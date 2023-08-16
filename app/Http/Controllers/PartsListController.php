@@ -95,22 +95,39 @@ class PartsListController extends Controller
     {
         if (Auth::user()->role_as == '1') {
             // dd($request->image);
-            $fileName = $this->uploadImage($request->file('image'));
-            $request_data = [
-                'requested_part_no' => $request->requested_part_no,
-                'requested_nomenclature' => $request->requested_nomenclature,
-                'cat_part_no' => $request->cat_part_no,
-                'cat_nomenclature' => $request->cat_nomenclature,
-                'nsn' => $request->nsn,
-                'classification' => $request->classification,
-                'lead_time' => $request->lead_time,
-                'weight' => $request->weight,
-                'surplus_price' => $request->surplus_price,
-                'fs_price' => $request->fs_price,
-                'navister_price' => $request->navister_price,
-                'declared_price' => $request->declared_price,
-                'image' => $fileName
-            ];
+            if ($request->file('image') != null) {
+                $fileName = $this->uploadImage($request->file('image'));
+                $request_data = [
+                    'requested_part_no' => $request->requested_part_no,
+                    'requested_nomenclature' => $request->requested_nomenclature,
+                    'cat_part_no' => $request->cat_part_no,
+                    'cat_nomenclature' => $request->cat_nomenclature,
+                    'nsn' => $request->nsn,
+                    'classification' => $request->classification,
+                    'lead_time' => $request->lead_time,
+                    'weight' => $request->weight,
+                    'surplus_price' => $request->surplus_price,
+                    'fs_price' => $request->fs_price,
+                    'navister_price' => $request->navister_price,
+                    'declared_price' => $request->declared_price,
+                    'image' => $fileName
+                ];
+            } else {
+                $request_data = [
+                    'requested_part_no' => $request->requested_part_no,
+                    'requested_nomenclature' => $request->requested_nomenclature,
+                    'cat_part_no' => $request->cat_part_no,
+                    'cat_nomenclature' => $request->cat_nomenclature,
+                    'nsn' => $request->nsn,
+                    'classification' => $request->classification,
+                    'lead_time' => $request->lead_time,
+                    'weight' => $request->weight,
+                    'surplus_price' => $request->surplus_price,
+                    'fs_price' => $request->fs_price,
+                    'navister_price' => $request->navister_price,
+                    'declared_price' => $request->declared_price,
+                ];
+            }
             $parts_list->update($request_data);
             return redirect()->route('parts_list.index')->with('message', 'Successfully Updated!');
         } else {

@@ -5,12 +5,11 @@
     {{-- <h2>Mission Support FZ-LLC</h2> --}}
 
 
-    <!-- Hero Section -->
     <section class="hero" id="gallery">
         <div class="container">
             <!-- Image carousel will be added here -->
-            <h1>Your ERP Solution</h1>
-            <p>Streamline your business operations with our cutting-edge ERP system.</p>
+            <img src="{{asset('assets/img/logo.png')}}" alt="Logo">
+            <h2>Mission Support LLC FZ</h2>
         </div>
     </section>
 
@@ -20,10 +19,10 @@
             <h2>About Us</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <img src="path-to-ceo-image.jpg" alt="CEO Image" class="img-fluid rounded-circle mb-3">
+                    <img src="{{asset('assets/img/Shayan_Rasheed_Photo.jpg')}}" alt="CEO Image" class="img-fluid rounded-circle mb-3">
                 </div>
                 <div class="col-md-6">
-                    <p>ARC Trading, led by CEO Shayan Rasheed, is a dynamic and experienced company that specializes in providing high-quality engineering solutions and services. With a young workforce, ARC has completed challenging Artificial Intelligence-based CCTV Surveillance work in the country. The company supplies various capital machinery from world-leading manufacturers, including diesel and gas generators, turning-key power solutions, and mobile cranes. ARC Trading is one of the largest suppliers of diesel generating sets in the region, and has completed installations in conventional energy exceeding 1000 megawatts. The company's core purpose is to improve the vivacity of societies through long-term value creation based on quality and trust.</p>
+                    <p>Mission Support LLC FZ, led by CEO Shayan Rasheed, is a dynamic and experienced company that specializes in providing high-quality engineering solutions and services. With a young workforce, Mission Support has completed challenging Artificial Intelligence-based CCTV Surveillance work in the country. The company supplies various capital machinery from world-leading manufacturers, including diesel and gas generators, turning-key power solutions, and mobile cranes. Mission Support is one of the largest suppliers of diesel generating sets in the region, and has completed installations in conventional energy exceeding 1000 megawatts. The company's core purpose is to improve the vivacity of societies through long-term value creation based on quality and trust.</p>
                 </div>
             </div>
         </div>
@@ -35,16 +34,16 @@
             <h2>Our Partners</h2>
             <div class="row">
                 <div class="col-md-3">
-                    <img src="path-to-partner-logo-1.png" alt="Partner Logo" class="partner-logo">
+                    <img src="{{asset('assets/img/navistar.jpg')}}" alt="Partner Logo" class="partner-logo">
                 </div>
                 <div class="col-md-3">
-                    <img src="path-to-partner-logo-2.png" alt="Partner Logo" class="partner-logo">
+                    <img src="{{asset('assets/img/macDefence.png')}}" alt="Partner Logo" class="partner-logo">
                 </div>
                 <div class="col-md-3">
-                    <img src="path-to-partner-logo-3.png" alt="Partner Logo" class="partner-logo">
+                    <img src="{{asset('assets/img/MLR.png')}}" alt="Partner Logo" class="partner-logo">
                 </div>
                 <div class="col-md-3">
-                    <img src="path-to-partner-logo-4.png" alt="Partner Logo" class="partner-logo">
+                    <img src="{{asset('assets/img/sunseeker.png')}}" alt="Partner Logo" class="partner-logo">
                 </div>
             </div>
         </div>
@@ -65,6 +64,10 @@
                 <div class="col-md-6">
                     <p class="address">
                         House-51, Road - 4, Sector - 3, Uttara, Dhaka - 1230
+                        <hr>
+                        Phone No - +8801711-896299 <br>
+                        Email - missionsupportLLC@protonmail.com <br>
+                        Email - missionsupport.Procurement@protonmail.com
                     </p>
                 </div>
             </div>
@@ -83,12 +86,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Scroll to top script -->
+    @push('js')
     <script>
         $(document).ready(function() {
             $(window).scroll(function() {
@@ -107,8 +105,6 @@
             });
         });
     </script>
-    </body>
-
-    </html>
+    @endpush
 
 </x-front.master>
