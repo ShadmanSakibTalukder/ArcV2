@@ -1,4 +1,4 @@
-<x-support.master>
+<x-master>
     <x-slot:title>
         Mens Logistics Purchase Order List
     </x-slot:title>
@@ -72,4 +72,4 @@
         </div>
 
     </div>
-</x-support.master>
+</x-master>

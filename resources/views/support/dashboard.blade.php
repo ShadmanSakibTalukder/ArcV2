@@ -1,4 +1,4 @@
-<x-support.master>
+<x-master>
     <x-slot:title>
         ARC Trading
     </x-slot:title>
@@ -214,4 +214,4 @@
             </table>
         </div>
     </div>
-</x-support.master>
+</x-master>

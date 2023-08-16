@@ -55,8 +55,8 @@
                     </td>
                     <td>
                         <a href="#" class="btn btn-sm link-success"><i class="fa-solid fa-pen-to-square fs-5"></i></a>
-                        <a href="#" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                        <form action="#" method="post" style="display:inline">
+                        <a href="{{route('profit_loss.show',$item->id)}}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
+                        <form action="{{route('profit_loss.destroy',$item->id)}}" method="post" style="display:inline">
                             @csrf
                             @method('delete')
                             <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>

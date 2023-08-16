@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('tender_no')->nullable();
             $table->string('wo_no')->nullable();
             $table->date('po_date');
-            $table->integer('total_purchase_price_no')->nullable();
-            $table->integer('total_declared_price_no')->nullable();
+            $table->float('total_purchase_price_no')->nullable();
+            $table->float('total_declared_price_no')->nullable();
             $table->timestamps();
         });
     }

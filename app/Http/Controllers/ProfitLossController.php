@@ -21,9 +21,13 @@ class ProfitLossController extends Controller
      */
     public function index()
     {
-        $consolidate = ProfitLoss::orderBy('id', 'DESC')->paginate(5);
-        // dd($consolidate);
-        return view('profit_loss.index', compact('consolidate'));
+        if (Auth::user()->role_as == '1') {
+            $consolidate = ProfitLoss::orderBy('id', 'DESC')->paginate(5);
+            // dd($consolidate);
+            return view('profit_loss.index', compact('consolidate'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -31,8 +35,12 @@ class ProfitLossController extends Controller
      */
     public function create()
     {
-        $pos = purchased_order::all();
-        return view('profit_loss.create', compact('pos'));
+        if (Auth::user()->role_as == '1') {
+            $pos = purchased_order::all();
+            return view('profit_loss.create', compact('pos'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -48,7 +56,12 @@ class ProfitLossController extends Controller
      */
     public function show(ProfitLoss $profitLoss)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            $tenderCount = $profitLoss->profitLossItems->count();
+            return view('profit_loss.show', compact('profitLoss', 'tenderCount'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -72,7 +85,12 @@ class ProfitLossController extends Controller
      */
     public function destroy(ProfitLoss $profitLoss)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            $profitLoss->delete();
+            return redirect()->back()->with('message', 'Successfully deleted!');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
 
