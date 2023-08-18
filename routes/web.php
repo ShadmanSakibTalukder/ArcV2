@@ -39,7 +39,16 @@ Auth::routes();
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/work_orders', WorkOrderController::class);
+
+
+    Route::post('/vendor-price/{price_id}', [PartsListController::class, 'updateVendorPrice']);
+    Route::get('/vendor-price/delete/{price_id}', [PartsListController::class, 'deleteVendorPrice']);
+
     Route::resource('/parts_list', PartsListController::class);
+
+
+
+
     Route::resource('/tenders', TendersController::class);
     Route::get('/tenders/active/{id}', [TendersController::class, 'active'])->name('tenders.active');
     Route::get('/tenders/inactive/{id}', [TendersController::class, 'inactive'])->name('tenders.inactive');

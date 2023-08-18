@@ -63,25 +63,58 @@
                                 <input type="text" name="weight" class="form-control" value="{{old('weight',$parts_list->weight)}}" />
                                 @error('weight') <small class="text-danger">{($message)}</small> @enderror
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Surplus Price</label>
-                                <input type="text" name="surplus_price" class="form-control" value="{{old('surplus_price',$parts_list->surplus_price)}}" />
-                                @error('surplus_price') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>FS Price</label>
-                                <input type="text" name="fs_price" class="form-control" value="{{old('fs_price',$parts_list->fs_price)}}" />
-                                @error('fs_price') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Navister Price</label>
-                                <input type="text" name="navister_price" class="form-control" value="{{old('navister_price',$parts_list->navister_price)}}" />
-                                @error('navister_price') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
+
                             <div class="col-md-6 mb-3">
                                 <label>Declared Price</label>
                                 <input type="text" name="declared_price" class="form-control" value="{{old('declared_price',$parts_list->declared_price)}}" />
                                 @error('declared_price') <small class="text-danger">{($message)}</small> @enderror
+                            </div>
+
+                            <br>
+                            <div class="form-group my-3">
+                                <label for="vendor" class="form-label"><strong>{{__('Select Vendor')}}</strong></label>
+                                <div class="row">
+                                    @forelse($vendor as $item)
+                                    <div class="col-md-2">
+                                        <div class="p-2 border m-3">
+                                            <input type="checkbox" id="vendor" name="vendor[{{$item->id}}]" value="{{$item->id}}"><span> </span>{{$item->name}}
+                                            <br>
+                                            <input type="number" class="form-control" id="price" name="price[{{$item->id}}]" value="{{old('price')}}" placeholder="price">
+
+                                        </div>
+                                    </div>
+                                    @empty
+                                    <div class="col-md-12">
+                                        <h4>{{__('No Vendors Available')}}</h4>
+                                    </div>
+
+                                    @endforelse
+                                </div>
+
+                            </div>
+
+                            <div class="form-group my-3">
+                                <label for="sizes" class="form-label"><strong>{{__('Available Prices')}}</strong></label>
+
+                                <div class="row">
+                                    @foreach ($parts_list->vendorPrice as $item)
+                                    <div class="col-md-3 mb-5">
+                                        <div class="p-2 border m-3 sizeStocks">
+                                            @if ($item->vendorName)
+                                            {{$item->vendorName->name}}
+                                            @else
+
+                                            @endif
+                                            <br>
+                                            <input type="text" class="form-control mt-2 priceUpdate" id="price" value="{{old('price',$item->price)}}" placeholder="Price">
+
+                                            <span><button type="button" value="{{$item->id}}" class="updatePartPriceBtn btn btn-primary btn sm text-white m-1" comment="Update Price wise values"><i class="fa-regular fa-pen-to-square"></i></button></span>
+                                            <button type="button" value="{{$item->id}}" class="deletePartPriceBtn btn btn-danger btn sm text-white m-1" comment="Delete Price"><i class="fa-regular fa-trash-can"></i></button>
+                                        </div>
+                                    </div>
+
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="my-5 d-flex justify-content-end p-3">
@@ -90,10 +123,60 @@
                             </div>
 
                     </form>
+
+
                 </div>
             </div>
         </div>
     </div>
+
+    @push('js')
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click', '.updatePartPriceBtn', function() {
+            var price_id = $(this).val();
+            var part_id = "{{$parts_list->id}}";
+
+            var price = $(this).closest('.price').find('.priceUpdate').val();
+
+            var data = {
+                'part_id': part_id,
+                'price': price
+            }
+
+            $.ajax({
+                type: "POST",
+                $url: "/admin/vendor-price/" + price_id,
+                data: data,
+                success: function(response) {
+                    alert(response.message)
+                }
+            });
+        });
+        $(document).on('click', '.deletePartPriceBtn', function() {
+            var price_id = $(this).val();
+            var part_id = "{{$parts_list->id}}";
+            var ths = $(this);
+
+
+            $.ajax({
+                type: "GET",
+                $url: "/admin/vendor-price/delete" + price_id,
+                data: data,
+                success: function(response) {
+                    ths.closest('.sizeStocks').remove();
+                    alert(response.message)
+                }
+            });
+        });
+    </script>
+
+    @endpush
 
 
 </x-master>

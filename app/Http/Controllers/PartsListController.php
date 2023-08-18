@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parts_list;
+use App\Models\VendorPrice;
+use App\Models\vendors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -15,10 +17,11 @@ class PartsListController extends Controller
     public function index()
     {
         if (Auth::user()->role_as == '1') {
-            $parts = Parts_list::orderBy('id', 'DESC')->paginate(15);
+            $parts = Parts_list::orderBy('id', 'DESC')->paginate(50);
+
             return view('parts.index', compact('parts'));
         } else {
-            return redirect()->back()->with('message', 'Access not Authorised');
+            return redirect()->back()->with('success_message', 'Access not Authorised');
         }
     }
 
@@ -29,7 +32,10 @@ class PartsListController extends Controller
     {
         if (Auth::user()->role_as == '1') {
             $existingPartNos = Parts_list::pluck('requested_part_no')->toArray();
-            return view('parts.create_parts_list', compact('existingPartNos'));
+            $catPartNo = Parts_list::pluck('cat_part_no')->toArray();
+
+            $vendor = vendors::all();
+            return view('parts.create', compact('existingPartNos', 'catPartNo', 'vendor'));
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
         }
@@ -53,9 +59,6 @@ class PartsListController extends Controller
                     'classification' => $request->classification,
                     'lead_time' => $request->lead_time,
                     'weight' => $request->weight,
-                    'surplus_price' => $request->surplus_price,
-                    'fs_price' => $request->fs_price,
-                    'navister_price' => $request->navister_price,
                     'declared_price' => $request->declared_price,
                     'image' => $fileName
                 ];
@@ -69,16 +72,26 @@ class PartsListController extends Controller
                     'classification' => $request->classification,
                     'lead_time' => $request->lead_time,
                     'weight' => $request->weight,
-                    'surplus_price' => $request->surplus_price,
-                    'fs_price' => $request->fs_price,
-                    'navister_price' => $request->navister_price,
                     'declared_price' => $request->declared_price,
 
                 ];
             }
-            Parts_list::create($request_data);
-            // return redirect()->route('parts_list.index')->with('message', 'Successfully Created!');
-            return redirect()->back()->with('message', 'Successfully Created!');
+            $part = Parts_list::create($request_data);
+
+
+            if ($request->vendor) {
+                foreach ($request->vendor as $key => $item) {
+                    $part->vendorPrice()->create([
+                        'part_id' => $part->id,
+                        'vendor_id' => $item,
+                        'price' => $request->price[$key] ?? 0
+                    ]);
+                }
+            }
+
+
+            // return redirect()->route('parts_list.index')->with('success_message', 'Successfully Created!');
+            return redirect()->back()->with('success_message', 'Successfully Created!');
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
         }
@@ -102,7 +115,9 @@ class PartsListController extends Controller
     public function edit(Parts_list $parts_list)
     {
         if (Auth::user()->role_as == '1') {
-            return view('parts.edit', compact('parts_list'));
+            $prices = $parts_list->vendorPrice->pluck('vendor_id')->toArray();
+            $vendor = vendors::whereNotIn('id', $prices)->get();
+            return view('parts.edit', compact('parts_list', 'prices', 'vendor'));
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
         }
@@ -126,9 +141,7 @@ class PartsListController extends Controller
                     'classification' => $request->classification,
                     'lead_time' => $request->lead_time,
                     'weight' => $request->weight,
-                    'surplus_price' => $request->surplus_price,
-                    'fs_price' => $request->fs_price,
-                    'navister_price' => $request->navister_price,
+
                     'declared_price' => $request->declared_price,
                     'image' => $fileName
                 ];
@@ -142,13 +155,22 @@ class PartsListController extends Controller
                     'classification' => $request->classification,
                     'lead_time' => $request->lead_time,
                     'weight' => $request->weight,
-                    'surplus_price' => $request->surplus_price,
-                    'fs_price' => $request->fs_price,
-                    'navister_price' => $request->navister_price,
+
                     'declared_price' => $request->declared_price,
                 ];
             }
             $parts_list->update($request_data);
+
+            if ($request->vendor) {
+                foreach ($request->vendor as $key => $item) {
+                    $parts_list->vendorPrice()->create([
+                        'part_id' => $parts_list->id,
+                        'vendor_id' => $item,
+                        'price' => $request->price[$key] ?? 0
+                    ]);
+                }
+            }
+
             return redirect()->route('parts_list.index')->with('message', 'Successfully Updated!');
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
@@ -178,5 +200,26 @@ class PartsListController extends Controller
         //     ->save(storage_path() . '/app/public/parts/' . $fileName);
 
         return $fileName;
+    }
+    function updateVendorPrice(Request $request, $vendorPrice_id)
+    {
+        $partPrice = Parts_list::findOrFail($request->parts_id)->vendorPrice()->where('id', $vendorPrice_id)->first();
+        $partPrice->update([
+            'price' => $request->price
+        ]);
+        return response()->json(['message' => 'Price Updated']);
+    }
+
+    public function deleteVendorPrice($vendorPrice_id)
+    {
+        try {
+            $vendor_price = VendorPrice::findOrFail($vendorPrice_id);
+            $vendor_price->delete();
+            return response()->json(['message' => 'Price Deleted']);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['message' => 'Size not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error occurred while deleting the size'], 500);
+        }
     }
 }

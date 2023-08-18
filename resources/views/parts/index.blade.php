@@ -90,30 +90,19 @@
                                 <td>
                                     <table class="table table-bordered align-middle">
                                         <tbody>
+                                            @forelse ($item->vendorPrice as $pItem)
+                                            @php
+                                            //dd($pItem)
+                                            @endphp
                                             <tr>
-                                                <td>Surplus Price</td>
-                                                @if ($item->surplus_price)
-                                                <td>{{$item->surplus_price}}</td>
-                                                @else
-                                                <td class="text-danger">Not Available!</td>
-                                                @endif
+                                                <td>{{$pItem->vendorName->name}}</td>
+                                                <td>{{$pItem->price}}</td>
                                             </tr>
+                                            @empty
                                             <tr>
-                                                <td>FS Price</td>
-                                                @if ($item->fs_price)
-                                                <td>{{$item->fs_price}}</td>
-                                                @else
-                                                <td class="text-danger">Not Available!</td>
-                                                @endif
+                                                <td colspan="2">No Price Available</td>
                                             </tr>
-                                            <tr>
-                                                <td>Navister Price</td>
-                                                @if ($item->navister_price)
-                                                <td>{{$item->navister_price}}</td>
-                                                @else
-                                                <td class="text-danger">Not Available!</td>
-                                                @endif
-                                            </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </td>
@@ -137,10 +126,7 @@
                                 @else
                                 <td class="text-danger">Not Available!</td>
                                 @endif
-
                                 <td>
-
-
                                     <!-- <a href="#" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a> -->
                                     <a href="{{route('parts_list.edit',$item->id)}}" class=" btn btn-sm link-warning" comment="Edit Product"><i class="fa-solid fa-pen-to-square fs-5"></i></a>
                                     <form action="{{route('parts_list.destroy',$item->id)}}" method="post" style="display:inline">
@@ -148,13 +134,7 @@
                                         @method('delete')
                                         <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure want to delete')"><i class="fa-solid fa-trash fs-5"></i></button>
                                     </form>
-
-
                                 </td>
-
-
-
-
                             </tr>
                             @empty
                             <div class="p-3 py-md-5 bg-light">

@@ -73,25 +73,34 @@
                                 <input type="text" name="weight" class="form-control" />
                                 @error('weight') <small class="text-danger">{($message)}</small> @enderror
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Surplus Price</label>
-                                <input type="text" name="surplus_price" class="form-control" />
-                                @error('surplus_price') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>FS Price</label>
-                                <input type="text" name="fs_price" class="form-control" />
-                                @error('fs_price') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Navister Price</label>
-                                <input type="text" name="navister_price" class="form-control" />
-                                @error('navister_price') <small class="text-danger">{($message)}</small> @enderror
-                            </div>
+
                             <div class="col-md-6 mb-3">
                                 <label>Declared Price</label>
                                 <input type="text" name="declared_price" class="form-control" />
                                 @error('declared_price') <small class="text-danger">{($message)}</small> @enderror
+                            </div>
+
+                            <br>
+                            <div class="form-group my-3">
+                                <label for="vendor" class="form-label"><strong>{{__('Select Vendor')}}</strong></label>
+                                <div class="row">
+                                    @forelse($vendor as $item)
+                                    <div class="col-md-2">
+                                        <div class="p-2 border m-3">
+                                            <input type="checkbox" id="vendor" name="vendor[{{$item->id}}]" value="{{$item->id}}"><span> </span>{{$item->name}}
+                                            <br>
+                                            <input type="text" class="form-control" id="price" name="price[{{$item->id}}]" value="{{old('price')}}" placeholder="price">
+
+                                        </div>
+                                    </div>
+                                    @empty
+                                    <div class="col-md-12">
+                                        <h4>{{__('No Vendors Available')}}</h4>
+                                    </div>
+
+                                    @endforelse
+                                </div>
+
                             </div>
 
                             <!-- <div class="my-5 d-flex justify-content-end p-3">

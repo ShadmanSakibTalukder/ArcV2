@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('lead_time')->nullable();
             $table->string('weight')->nullable();
             $table->string('image')->nullable();
-            $table->float('surplus_price')->nullable();
-            $table->float('fs_price')->nullable();
-            $table->float('navister_price')->nullable();
+            // $table->float('surplus_price')->nullable();
+            // $table->float('fs_price')->nullable();
+            // $table->float('navister_price')->nullable();
             $table->float('declared_price')->nullable();
 
 

@@ -97,7 +97,7 @@ class TendersController extends Controller
         if (Auth::user()->role_as == '1') {
             // dd($tender);
             $tender->delete();
-            return redirect()->back()->with('message', 'Successfully deleted!');
+            return redirect()->back()->with('success_message', 'Successfully deleted!');
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
         }

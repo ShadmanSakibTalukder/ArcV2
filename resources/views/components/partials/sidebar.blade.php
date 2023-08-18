@@ -43,12 +43,12 @@
                         Purchased Order
                     </a>
                 </li>
-                <!-- <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('vendors.index')}}">
                         <i class="fa-solid fa-ghost fa-shake fa-xl"></i>
                         Vendors
                     </a>
-                </li> -->
+                </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('buyers.index')}}">
                         <i class="fa-regular fa-handshake fa-bounce"></i>

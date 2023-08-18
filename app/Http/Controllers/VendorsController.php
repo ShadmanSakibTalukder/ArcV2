@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\vendors;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorsController extends Controller
 {
@@ -12,7 +13,12 @@ class VendorsController extends Controller
      */
     public function index()
     {
-        return view('vendors.index');
+        if (Auth::user()->role_as == '1') {
+            $vendors = vendors::orderBy('id', 'DESC')->paginate(30);
+            return view('vendors.index', compact('vendors'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -20,7 +26,11 @@ class VendorsController extends Controller
      */
     public function create()
     {
-        return view('vendors.create_vendors');
+        if (Auth::user()->role_as == '1') {
+            return view('vendors.create_vendors');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -28,7 +38,16 @@ class VendorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            $requestData = [
+                'name' => $request->name,
+                'vendor_address' => $request->vendor_address
+            ];
+            vendors::create($requestData);
+            return redirect()->back()->with('success_message', 'Successfully Created!');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -36,7 +55,11 @@ class VendorsController extends Controller
      */
     public function show(vendors $vendors)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            //
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -44,7 +67,11 @@ class VendorsController extends Controller
      */
     public function edit(vendors $vendors)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            return view('vendors.edit', compact('vendors'));
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -52,7 +79,16 @@ class VendorsController extends Controller
      */
     public function update(Request $request, vendors $vendors)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            $requestData = [
+                'name' => $request->name,
+                'vendor_address' => $request->vendor_address
+            ];
+            $vendors->update($requestData);
+            return redirect()->back()->with('message', 'Successfully Updated!');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 
     /**
@@ -60,6 +96,11 @@ class VendorsController extends Controller
      */
     public function destroy(vendors $vendors)
     {
-        //
+        if (Auth::user()->role_as == '1') {
+            $vendors->delete();
+            return redirect()->back()->with('success_message', 'Successfully deleted!');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorised');
+        }
     }
 }
