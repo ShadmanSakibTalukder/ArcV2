@@ -77,9 +77,9 @@
                                     @forelse($vendor as $item)
                                     <div class="col-md-2">
                                         <div class="p-2 border m-3">
-                                            <input type="checkbox" id="vendor" name="vendor[{{$item->id}}]" value="{{$item->id}}"><span> </span>{{$item->name}}
+                                            <input type="checkbox" name=" vendor[{{$item->id}}]" value="{{$item->id}}"><span> </span>{{$item->name}}
                                             <br>
-                                            <input type="number" class="form-control" id="price" name="price[{{$item->id}}]" value="{{old('price')}}" placeholder="price">
+                                            <input type="text" class="form-control" name="price[{{$item->id}}]" value="{{old('price')}}" placeholder="price">
 
                                         </div>
                                     </div>
@@ -117,12 +117,16 @@
                                 </div>
                             </div>
 
+
+
                             <div class="my-5 d-flex justify-content-end p-3">
                                 <button type="submit" class="btn btn-md btn-outline-primary px-3 mx-2">{{__('Update')}}</button>
                                 <a href="{{route('parts_list.index')}}" class="btn btn-md btn-outline-secondary px-3 mx-2">{{__('Close')}}</a>
                             </div>
 
                     </form>
+
+
 
 
                 </div>
@@ -133,25 +137,22 @@
     @push('js')
 
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         $(document).on('click', '.updatePartPriceBtn', function() {
             var price_id = $(this).val();
             var part_id = "{{$parts_list->id}}";
+            var price = $(this).closest('.sizeStocks').find('.priceUpdate').val();
 
-            var price = $(this).closest('.price').find('.priceUpdate').val();
 
             var data = {
                 'part_id': part_id,
                 'price': price
             }
+            // alert(data);
+            // console.log(data);
 
             $.ajax({
                 type: "POST",
-                $url: "/admin/vendor-price/" + price_id,
+                url: "/admin/vendor_price/" + price_id,
                 data: data,
                 success: function(response) {
                     alert(response.message)
@@ -163,11 +164,9 @@
             var part_id = "{{$parts_list->id}}";
             var ths = $(this);
 
-
             $.ajax({
                 type: "GET",
-                $url: "/admin/vendor-price/delete" + price_id,
-                data: data,
+                url: "/admin/vendor_price/delete/" + price_id,
                 success: function(response) {
                     ths.closest('.sizeStocks').remove();
                     alert(response.message)
@@ -175,6 +174,8 @@
             });
         });
     </script>
+
+
 
     @endpush
 

@@ -201,9 +201,11 @@ class PartsListController extends Controller
 
         return $fileName;
     }
-    function updateVendorPrice(Request $request, $vendorPrice_id)
+    function vendorPriceUpdate(Request $request, $vendorPrice_id)
     {
-        $partPrice = Parts_list::findOrFail($request->parts_id)->vendorPrice()->where('id', $vendorPrice_id)->first();
+        // dd($request->part_id);
+        // var_dump($request->parts_id);
+        $partPrice = Parts_list::findOrFail($request->part_id)->vendorPrice()->where('id', $vendorPrice_id)->first();
         $partPrice->update([
             'price' => $request->price
         ]);

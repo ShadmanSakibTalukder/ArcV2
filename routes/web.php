@@ -41,10 +41,12 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('/work_orders', WorkOrderController::class);
 
 
-    Route::post('/vendor-price/{price_id}', [PartsListController::class, 'updateVendorPrice']);
-    Route::get('/vendor-price/delete/{price_id}', [PartsListController::class, 'deleteVendorPrice']);
+    Route::post('/vendor_price/{price_id}', [PartsListController::class, 'vendorPriceUpdate']);
+    Route::get('/vendor_price/delete/{price_id}', [PartsListController::class, 'deleteVendorPrice']);
 
+    Route::resource('/vendors', VendorsController::class);
     Route::resource('/parts_list', PartsListController::class);
+
 
 
 
@@ -67,7 +69,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('purchase-order/pdf/{id}', [PurchasedOrderController::class, 'purchaseOrderGenerator'])->name('purchased_order.pdf_download');
 
 
-    Route::resource('/vendors', VendorsController::class);
+
     Route::resource('/buyers', BuyersController::class);
     Route::resource('/profit_loss', ProfitLossController::class);
 
