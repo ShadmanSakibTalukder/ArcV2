@@ -122,6 +122,7 @@ class CatelogPartListController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->role_as == '1') {
+            dd($request);
             $validator = Validator::make($request->all(), [
                 'csv' => 'required|mimes:csv,txt',
             ]);
@@ -138,12 +139,13 @@ class CatelogPartListController extends Controller
                 if (count($row) >= 5) { // Check if the row has at least 5 columns
 
                     // Extract the correct columns based on their positions
-                    $item_no = $row[0];
-                    $smr_code = $row[1];
-                    $nsn = $row[2];
-                    $cagec = $row[3];
-                    $part_no = $row[4];
-                    $description = $row[5];
+                    $item_no = isset($row[0]) ? $row[0] : null;
+                    $smr_code = isset($row[1]) ? $row[1] : null;
+                    $nsn = isset($row[2]) ? $row[2] : null;
+                    $cagec = isset($row[3]) ? $row[3] : null;
+                    $part_no = isset($row[4]) ? $row[4] : null;
+                    $description = isset($row[5]) ? $row[5] : null;
+                    $page_no = isset($row[6]) ? $row[6] : null;
 
                     // Check if item_no is an integer, if not, skip this row
                     if (!is_numeric($item_no)) {
@@ -159,9 +161,12 @@ class CatelogPartListController extends Controller
                     $catelogPartList->nsn = $nsn;
                     $catelogPartList->description = $description;
                     $catelogPartList->cagec = $cagec;
+                    $catelogPartList->page_no = $page_no;
 
                     // Save the record
                     $catelogPartList->save();
+                } else {
+                    return redirect()->back()->with('message', 'Something went wrong');
                 }
             }
 
@@ -170,6 +175,65 @@ class CatelogPartListController extends Controller
             return redirect()->back()->with('message', 'Access not Authorised');
         }
     }
+
+
+
+    // public function store(Request $request)
+    // {
+    //     if (Auth::user()->role_as == '1') {
+    //         $validator = Validator::make($request->all(), [
+    //             'csv' => 'required|mimes:csv,txt',
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return redirect()->back()->withErrors($validator)->withInput();
+    //         }
+
+    //         $csvPath = $request->file('csv')->getRealPath();
+    //         $rows = array_map('str_getcsv', file($csvPath));
+    //         $headers = array_shift($rows);
+
+    //         foreach ($rows as $row) {
+    //             dd(count($row));
+    //             if (count($row) >= 10) { // Check if the row has at least 10 columns
+    //                 // Extract the correct columns based on their positions
+    //                 $item_no = isset($row[0]) ? $row[0] : null;
+    //                 $smr_code = isset($row[1]) ? $row[1] : null;
+    //                 $nsn = isset($row[2]) ? $row[2] : null;
+    //                 $cagec = isset($row[3]) ? $row[3] : null;
+    //                 $part_no = isset($row[4]) ? $row[4] : null;
+    //                 $description = isset($row[5]) ? $row[5] : null;
+    //                 $page_no = isset($row[6]) ? $row[6] : null;
+
+    //                 // Check if item_no is an integer, if not, skip this row
+    //                 if (!is_numeric($item_no)) {
+    //                     continue;
+    //                 }
+
+    //                 // Create a new CatelogPartList instance
+    //                 $catelogPartList = new CatelogPartList();
+
+    //                 // Set the values for item_no, part_no, nsn, description, and cagec
+    //                 $catelogPartList->item_no = $item_no;
+    //                 $catelogPartList->part_no = $part_no;
+    //                 $catelogPartList->nsn = $nsn;
+    //                 $catelogPartList->description = $description;
+    //                 $catelogPartList->cagec = $cagec;
+    //                 $catelogPartList->page_no = $page_no;
+
+    //                 // Save the record
+    //                 $catelogPartList->save();
+    //             } else {
+    //                 return redirect()->back()->with('message', 'Something went wrong');
+    //             }
+    //         }
+
+    //         return redirect()->back()->with('success_message', 'CSV data loaded and saved successfully.');
+    //     } else {
+    //         return redirect()->back()->with('message', 'Access not Authorised');
+    //     }
+    // }
+
 
 
 

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('catelog_part_lists', function (Blueprint $table) {
             $table->id();
-            $table->integer('item_no');
-            $table->string('nsn');
-            $table->string('part_no');
-            $table->string('description');
+            $table->integer('item_no')->nullable();
+            $table->string('nsn')->nullable();
+            $table->string('part_no')->nullable();
+            $table->string('description')->nullable();
+            $table->string('page_no')->nullable();
             $table->timestamps();
         });
     }
