@@ -17,11 +17,11 @@
     <section id="about" class="about">
         <div class="container">
             <h2>About Us</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="{{asset('assets/img/logo.png')}}" alt="Logo"  width="470" height="550" style="float:left">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="{{asset('assets/img/logo.png')}}" alt="Logo" width="200" height="200">
                 </div>
-                <div class="col-md-6">
+                <div class="about-text">
                     <p> <small> At Mission Support LLC FZ, we are the vanguards of precision and reliability in the realm of international trade. With an unyielding dedication to delivering the right parts, at the right place, at the right time, and at the right price, we have become an indomitable force in supplying defence military-grade parts. As a trusted defence supplier in Bangladesh, our mission is simple yet profound: to fortify the nation's defence by sourcing and providing critical components with unparalleled excellence.
                         
                     <br> <b> Unrivalled Position </b> <br>
@@ -113,6 +113,50 @@
                     $('#scroll-to-top').fadeOut();
                 }
             });
+    
+            $('#scroll-to-top').click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 1000); // Adjust the duration as needed
+                return false;
+            });
+        });
+    </script>
+    
+    {{-- <script>
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('#scroll-to-top').fadeIn();
+                } else {
+                    $('#scroll-to-top').fadeOut();
+                }
+            });
+    
+            $('#scroll-to-top').click(function() {
+            slowScrollToTop(1000); // Adjust the time as needed
+            return false;
+        });
+        });
+        function slowScrollToTop(duration) {
+        var scrollStep = -window.scrollY / (duration / 15); // Adjust the division value for speed
+        var scrollInterval = setInterval(function() {
+            if (window.scrollY !== 0) {
+                window.scrollBy(0, scrollStep);
+            } else {
+                clearInterval(scrollInterval);
+            }
+        }, 15); // This interval will control the smoothness of scrolling
+    }
+    </script> --}}
+    
+    {{-- <script>
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('#scroll-to-top').fadeIn();
+                } else {
+                    $('#scroll-to-top').fadeOut();
+                }
+            });
 
             $('#scroll-to-top').click(function() {
                 $('html, body').animate({
@@ -121,7 +165,34 @@
                 return false;
             });
         });
-    </script>
+
+    //     document.addEventListener("DOMContentLoaded", function() {
+    //     var aboutSection = document.getElementById("about");
+    //     var aboutImage = document.querySelector(".about-image");
+
+    //     // Check if the user is in the About section
+    //     function isInAboutSection() {
+    //         var rect = aboutSection.getBoundingClientRect();
+    //         return rect.top <= window.innerHeight && rect.bottom >= 0;
+    //     }
+
+    //     // Toggle the visibility of the logo based on the user's scroll position
+    //     function toggleLogoVisibility() {
+    //         if (isInAboutSection()) {
+    //             aboutImage.style.display = "block";
+    //         } else {
+    //             aboutImage.style.display = "none";
+    //         }
+    //     }
+
+    //     // Listen for scroll events
+    //     window.addEventListener("scroll", toggleLogoVisibility);
+
+    //     // Initial check on page load
+    //     toggleLogoVisibility();
+    // });
+
+    </script> --}}
     @endpush
 
 </x-front.master>
