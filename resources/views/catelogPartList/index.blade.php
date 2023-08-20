@@ -44,6 +44,8 @@
                                 <th scope="col">CAGEC</th>
                                 <th scope="col">NSN</th>
                                 <th scope="col">Description</th>
+                                <th scope="col">Page No</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +57,10 @@
                                 <td @if(empty($item->nsn)) class="table-danger" @endif>{{$item->cagec}}</td>
                                 <td @if(empty($item->nsn)) class="table-danger" @endif>{{$item->nsn}}</td>
                                 <td>{{$item->description}}</td>
+                                <td>{{$item->page_no}}</td>
+                                <td>
+                                    <a href="{{route('catelog_part_list.edit',$item->id)}}" class=" btn btn-sm link-warning" comment="Edit Part"><i class="fa-solid fa-pen-to-square fs-5"></i></a>
+                                </td>
                             </tr>
                             @empty
                             <tr>

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CatelogPartListController extends Controller
 {
@@ -39,7 +40,7 @@ class CatelogPartListController extends Controller
     public function index()
     {
         if (Auth::user()->role_as == '1') {
-            $cat_parts = CatelogPartList::orderBy('id', 'DESC')->paginate(100);
+            $cat_parts = CatelogPartList::orderBy('id', 'ASC')->paginate(100);
             return view('catelogPartList.index', compact('cat_parts'));
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
@@ -119,65 +120,6 @@ class CatelogPartListController extends Controller
     // }
 
 
-    public function store(Request $request)
-    {
-        if (Auth::user()->role_as == '1') {
-            dd($request);
-            $validator = Validator::make($request->all(), [
-                'csv' => 'required|mimes:csv,txt',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-            $csvPath = $request->file('csv')->getRealPath();
-            $rows = array_map('str_getcsv', file($csvPath));
-            $headers = array_shift($rows);
-
-            foreach ($rows as $row) {
-                if (count($row) >= 5) { // Check if the row has at least 5 columns
-
-                    // Extract the correct columns based on their positions
-                    $item_no = isset($row[0]) ? $row[0] : null;
-                    $smr_code = isset($row[1]) ? $row[1] : null;
-                    $nsn = isset($row[2]) ? $row[2] : null;
-                    $cagec = isset($row[3]) ? $row[3] : null;
-                    $part_no = isset($row[4]) ? $row[4] : null;
-                    $description = isset($row[5]) ? $row[5] : null;
-                    $page_no = isset($row[6]) ? $row[6] : null;
-
-                    // Check if item_no is an integer, if not, skip this row
-                    if (!is_numeric($item_no)) {
-                        continue;
-                    }
-
-                    // Create a new CatelogPartList instance
-                    $catelogPartList = new CatelogPartList();
-
-                    // Set the values for item_no, part_no, nsn, description, and cagec
-                    $catelogPartList->item_no = $item_no;
-                    $catelogPartList->part_no = $part_no;
-                    $catelogPartList->nsn = $nsn;
-                    $catelogPartList->description = $description;
-                    $catelogPartList->cagec = $cagec;
-                    $catelogPartList->page_no = $page_no;
-
-                    // Save the record
-                    $catelogPartList->save();
-                } else {
-                    return redirect()->back()->with('message', 'Something went wrong');
-                }
-            }
-
-            return redirect()->back()->with('success_message', 'CSV data loaded and saved successfully.');
-        } else {
-            return redirect()->back()->with('message', 'Access not Authorised');
-        }
-    }
-
-
-
     // public function store(Request $request)
     // {
     //     if (Auth::user()->role_as == '1') {
@@ -192,10 +134,12 @@ class CatelogPartListController extends Controller
     //         $csvPath = $request->file('csv')->getRealPath();
     //         $rows = array_map('str_getcsv', file($csvPath));
     //         $headers = array_shift($rows);
+    //         // dd($headers);
 
     //         foreach ($rows as $row) {
     //             dd(count($row));
-    //             if (count($row) >= 10) { // Check if the row has at least 10 columns
+    //             if (count($row) >= 5) { // Check if the row has at least 5 columns
+
     //                 // Extract the correct columns based on their positions
     //                 $item_no = isset($row[0]) ? $row[0] : null;
     //                 $smr_code = isset($row[1]) ? $row[1] : null;
@@ -236,6 +180,60 @@ class CatelogPartListController extends Controller
 
 
 
+    public function store(Request $request)
+    {
+        if (Auth::user()->role_as == '1') {
+            $validator = Validator::make($request->all(), [
+                'excel' => 'required|mimes:xlsx,xls',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $excelPath = $request->file('excel')->getRealPath();
+
+            // Load Excel file using Laravel Excel
+            $rows = Excel::toArray([], $excelPath);
+
+            foreach ($rows[0] as $row) {
+                // Modify the column indices according to your Excel file structure
+                $item_no = isset($row[0]) ? $row[0] : null;
+                $smr_code = isset($row[1]) ? $row[1] : null;
+                $nsn = isset($row[2]) ? $row[2] : null;
+                $cagec = isset($row[3]) ? $row[3] : null;
+                $part_no = isset($row[4]) ? $row[4] : null;
+                $description = isset($row[5]) ? $row[5] : null;
+                $page_no = isset($row[7]) ? $row[7] : null;
+
+                // Check if item_no is an integer, if not, skip this row
+                if (!is_numeric($item_no)) {
+                    continue;
+                }
+
+                // Create a new CatalogPartList instance
+                $catalogPartList = new CatelogPartList();
+
+                // Set the values for attributes
+                $catalogPartList->item_no = $item_no;
+                $catalogPartList->part_no = $part_no;
+                $catalogPartList->nsn = $nsn;
+                $catalogPartList->description = $description;
+                $catalogPartList->cagec = $cagec;
+                $catalogPartList->page_no = $page_no;
+
+                // Save the record
+                $catalogPartList->save();
+            }
+
+            return redirect()->back()->with('success_message', 'Excel data loaded and saved successfully.');
+        } else {
+            return redirect()->back()->with('message', 'Access not Authorized');
+        }
+    }
+
+
+
 
     /**
      * Display the specified resource.
@@ -255,7 +253,7 @@ class CatelogPartListController extends Controller
     public function edit(CatelogPartList $catelogPartList)
     {
         if (Auth::user()->role_as == '1') {
-            //
+            return view('catelogPartList.edit', compact('catelogPartList'));
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
         }
@@ -267,7 +265,16 @@ class CatelogPartListController extends Controller
     public function update(Request $request, CatelogPartList $catelogPartList)
     {
         if (Auth::user()->role_as == '1') {
-            //
+            $requestedData = [
+                'item_no' => $request->item_no,
+                'part_no' => $request->part_no,
+                'nsn' => $request->nsn,
+                'cagec' => $request->cagec,
+                'page_no' => $request->page_no,
+                'description' => $request->description,
+            ];
+            $catelogPartList->update($requestedData);
+            return redirect()->back()->with('success_message', 'Updated Successfully!');
         } else {
             return redirect()->back()->with('message', 'Access not Authorised');
         }
