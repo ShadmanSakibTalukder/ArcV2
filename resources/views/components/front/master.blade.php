@@ -114,6 +114,11 @@
             margin: 0 auto;
         }
 
+        .about{
+            text-align: justify;
+            
+        }
+
         .partners {
             padding: 100px 0;
             background-color: #f9f9f9;
