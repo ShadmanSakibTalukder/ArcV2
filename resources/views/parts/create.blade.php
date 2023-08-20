@@ -45,17 +45,17 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>Cat Parts No.</label>
-                                <input type="text" name="cat_part_no" class="form-control" />
+                                <input type="text" name="cat_part_no" id="cat_part_no" class="form-control" />
                                 @error('cat_part_no') <small class="text-danger">{($message)}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>Cat Nomenclature</label>
-                                <input type="text" name="cat_nomenclature" class="form-control" />
+                                <input type="text" name="cat_nomenclature" id="cat_nomenclature" class="form-control" />
                                 @error('cat_nomenclature') <small class="text-danger">{($message)}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label>NSN</label>
-                                <input type="text" name="nsn" class="form-control" />
+                                <input type="text" name="nsn" id="nsn" class="form-control" />
                                 @error('nsn') <small class="text-danger">{($message)}</small> @enderror
                             </div>
                             <div class="col-md-6 mb-3">
@@ -143,6 +143,37 @@
                         saveButton.disabled = true;
                     }
                 }
+            });
+        });
+
+        $(document).ready(function() {
+            // Add an event listener to the requested_part_no input
+            $('#requested_part_no').on('change', function() {
+                var requestedPartNo = $(this).val();
+
+                $.ajax({
+                    url: '/admin/getCatPartInfo', // Update this to your route for retrieving cat part info
+                    method: 'GET',
+                    data: {
+                        requestedPartNo: requestedPartNo
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Update the cat_part_no and cat_nomenclature inputs
+                            $('#cat_part_no').val(response.cat_part_no);
+                            $('#cat_nomenclature').val(response.cat_nomenclature);
+                            $('#nsn').val(response.nsn);
+                        } else {
+                            // Clear the cat_part_no and cat_nomenclature inputs
+                            $('#cat_part_no').val('');
+                            $('#cat_nomenclature').val('');
+                            $('#nsn').val('');
+                            $('#cat_part_no').addClass('error');
+                            $('#cat_nomenclature').addClass('error');
+                            $('#nsn').addClass('error');
+                        }
+                    }
+                });
             });
         });
     </script>

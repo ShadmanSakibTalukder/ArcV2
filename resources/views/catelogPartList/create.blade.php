@@ -1,8 +1,8 @@
 <x-master>
     <x-slot:title>
-        Catelog Part List
+        Catalog Part List
     </x-slot:title>
-    <h4>Catelog Part List Create</h4>
+    <h4>Catalog Part List Create</h4>
     @if (session()->has('message'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         {{ session('message') }}

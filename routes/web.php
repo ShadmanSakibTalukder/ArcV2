@@ -45,6 +45,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/vendor_price/delete/{price_id}', [PartsListController::class, 'deleteVendorPrice']);
 
     Route::resource('/vendors', VendorsController::class);
+
+    Route::get('/getCatPartInfo', [PartsListController::class, 'getCatPartInfo']);
     Route::resource('/parts_list', PartsListController::class);
 
 

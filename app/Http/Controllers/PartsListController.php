@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CatelogPartList;
 use App\Models\Parts_list;
 use App\Models\VendorPrice;
 use App\Models\vendors;
@@ -223,5 +224,25 @@ class PartsListController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error occurred while deleting the size'], 500);
         }
+    }
+
+    public function getCatPartInfo(Request $request)
+    {
+        $requestedPartNo = $request->input('requestedPartNo');
+
+        $matchingPart = CatelogPartList::where('part_no', $requestedPartNo)->first();
+
+        if ($matchingPart) {
+            $response = [
+                'success' => true,
+                'cat_part_no' => $matchingPart->part_no,
+                'cat_nomenclature' => $matchingPart->description,
+                'nsn' => $matchingPart->nsn,
+            ];
+        } else {
+            $response = ['success' => false];
+        }
+
+        return response()->json($response);
     }
 }

@@ -1,6 +1,6 @@
 <x-master>
     <x-slot:title>
-        Category Parts List
+        Catalogue Parts List
     </x-slot:title>
     @if (session()->has('message'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h4 class="h2">{{__('Parts List')}}</h4>
+                    <h4 class="h2">{{__('Catalogue Parts List')}}</h4>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
                             <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
@@ -26,7 +26,7 @@
                             <span><i class="fa-solid fa-plus"></i></span>{{__(' Create')}}
                         </a>
                         <a type="button" href="{{route('book_show')}}" class="btn btn-sm btn-outline-secondary">
-                            {{__(' Show Catalog')}}
+                            {{__(' Show Catalogue')}}
                         </a>
                     </div>
                 </div>
