@@ -19,14 +19,17 @@ class PurchaseOrderShow extends Component
     public $selectedOption = [];
     public $parts_selected = [];
     public $added_to_list = [];
+    protected $vendorPrices = [];
     public $po_no, $company, $company_address, $declaredTotal, $buyer_name, $buyer_address, $vendor_name, $qty, $vendor_address, $shipping_address, $tender_no, $po_date, $subTotal;
 
-    // Declare $vendorPrices variable to hold vendor price data
-    public $vendorPrices = [];
 
-
-
-
+    public function mount()
+    {
+        // Initialize vendor prices for existing items
+        foreach ($this->added_to_list as $item) {
+            $this->vendorPrices[$item->id] = $this->getVendorPrices($item->parts_added_inlist->id);
+        }
+    }
 
     public function addToList($part_id)
     {
@@ -56,14 +59,6 @@ class PurchaseOrderShow extends Component
     public function updateVendorPrices($itemId)
     {
         $this->vendorPrices[$itemId] = $this->getVendorPrices($itemId);
-    }
-
-    public function mount()
-    {
-        // Initialize vendor prices for existing items
-        foreach ($this->added_to_list as $item) {
-            $this->vendorPrices[$item->id] = $this->getVendorPrices($item->parts_added_inlist->id);
-        }
     }
 
 
