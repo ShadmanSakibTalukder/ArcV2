@@ -114,6 +114,36 @@
             margin: 0 auto;
         }
 
+.about-content {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.about-image {
+    width: 400px; 
+    height: 400px;
+    position: sticky;
+    top: 100px; 
+    margin-right: 30px; 
+    z-index: 1; 
+}
+
+.about-text {
+    flex-grow: 1;
+    max-width: calc(100% - 230px); 
+    text-align: justify;
+}
+
+.about {
+    margin-top: 300px; 
+}
+
+#partners .about-image {
+    display: none;
+}
+
+
         .partners {
             padding: 100px 0;
             background-color: #f9f9f9;
