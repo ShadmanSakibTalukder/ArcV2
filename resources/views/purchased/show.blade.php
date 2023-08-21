@@ -52,17 +52,20 @@
             <div class="col-md-6 ">
                 <h5>Shipping Address</h5>
                 <div class="card mb-3 border-0" style="width: 100%;">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center;">
-                            <strong>{{$purchased_order->buyer_name}}</strong>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <p class="card-text">{{$purchased_order->shipping_address}}</p>
-                        </div>
-                    </div>
+                    <p>
+                        <strong>Commandant</strong><br>
+                        Central Maintenance Transport Depot (CMTD),<br>
+                        Dhaka Cantonment, Dhaka - 1206, Bangladesh. <br>
+                        Phone: 01769013886, <br>
+                        cmtd.lpo@army.mil.bd, <br>
+                        BIN Number -002635181-0401
+
+
+                    </p>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 

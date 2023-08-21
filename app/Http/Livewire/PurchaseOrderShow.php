@@ -55,16 +55,18 @@ class PurchaseOrderShow extends Component
 
     public function updateVendorPrices($itemId)
     {
-        $this->vendorPrices[$itemId] = $this->getVendorPrices($itemId);
-    }
+        $selectedOption = $this->selectedOption[$itemId];
 
-    public function mount()
-    {
-        // Initialize vendor prices for existing items
-        foreach ($this->added_to_list as $item) {
-            $this->vendorPrices[$item->id] = $this->getVendorPrices($item->parts_added_inlist->id);
+        if ($selectedOption) {
+            $vendorPrice = VendorPrice::find($selectedOption);
+            $this->vendorPrices[$itemId] = $vendorPrice ? $vendorPrice->price : 0;
+        } else {
+            $this->vendorPrices[$itemId] = 0;
         }
     }
+
+
+
 
 
 
@@ -84,22 +86,29 @@ class PurchaseOrderShow extends Component
 
 
 
+    // public function calculateUnitPrice($item)
+    // {
+    //     if (isset($this->vendorPrices[$item->id])) {
+    //         return $this->vendorPrices[$item->id]->price;
+    //     }
+    //     return 0;
+    // }   return $unitPrice;
+
     public function calculateUnitPrice($item)
     {
-        $unitPrice = 0;
-
-        $selectedOption = $this->selectedOption[$item->id] ?? '';
-
-        if ($selectedOption === 'fsPrice') {
-            $unitPrice = $item->parts_added_inlist->fs_price;
-        } elseif ($selectedOption === 'surplusPrice') {
-            $unitPrice = $item->parts_added_inlist->surplus_price;
-        } elseif ($selectedOption === 'navisterPrice') {
-            $unitPrice = $item->parts_added_inlist->navister_price;
-        }
-
-        return $unitPrice;
+        return isset($this->vendorPrices[$item->id]) ? $this->vendorPrices[$item->id] : 0;
     }
+
+
+
+    // public function calculateTotalPrice($item)
+    // {
+    //     $qty = $item->qty;
+    //     $unitPrice = $this->calculateUnitPrice($item);
+    //     $totalPrice = $unitPrice * $qty;
+
+    //     return $totalPrice;
+    // }
 
     public function calculateTotalPrice($item)
     {
@@ -109,6 +118,7 @@ class PurchaseOrderShow extends Component
 
         return $totalPrice;
     }
+
 
 
 
