@@ -31,7 +31,9 @@
             font-weight: bold;
             padding-right: 20px;
         }
-
+        .navbar-nav.ml-auto {
+    margin-left: auto;
+}
         .navbar-toggler {
             border-color: #fff;
         }

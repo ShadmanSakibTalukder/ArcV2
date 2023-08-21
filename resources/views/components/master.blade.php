@@ -16,7 +16,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     @livewireStyles
+<style>
 
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px; /* Adjust the width as needed */
+    background-color: #f9f9f9;
+    z-index: 1000;
+    overflow-y: auto;
+    padding-bottom: 60px; /* Add padding for the content at the bottom */
+}
+.main-content {
+    margin-left: 250px; /* Adjust this value to match the sidebar width */
+    padding-left: 15px; /* Add some padding to separate main content from sidebar */
+}
+.main-content {
+    min-height: 100vh; /* Set a minimum height to ensure scrolling */
+}
+/* .content-wrapper {
+    margin-left: 250px; /* Adjust this value to match the sidebar width */
+    padding-left: 15px; /* Add some padding to separate main content from sidebar */
+    padding-top: 15px; /* Add top padding to ensure content isn't hidden under the header */
+} */
+
+    </style>
 </head>
 
 <body>
