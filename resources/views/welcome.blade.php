@@ -9,7 +9,7 @@
         <div class="container">
             <!-- Image carousel will be added here -->
             <img src="{{asset('assets/img/maxxpro.png')}}" alt="Logo">
-            <h2>Mission Support LLC FZ</h2>
+            <h2 class="glow">Mission Support LLC FZ</h2>
         </div>
     </section>
 
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <p class="address">
+                    <p class="address text-right">
                         House-51, Road - 4, Sector - 3, Uttara, Dhaka - 1230
                         <hr>
                         Phone No - +8801711-896299 <br>

@@ -45,7 +45,7 @@
         }
 
         .navbar-nav .nav-item .nav-link:hover {
-            color: #ffc107;
+            color:hsl(180, 93%, 49%);
         }
 
         .hero {
@@ -121,8 +121,8 @@
 }
 
 .about-image {
-    width: 400px; 
-    height: 400px;
+    width: 500px; 
+    height: 500px;
     position: sticky;
     top: 100px; 
     margin-right: 30px; 
@@ -195,14 +195,28 @@
             padding: 20px 0;
             text-align: center;
         }
+        .glow {
+        font-size: 80px;
+        color: #fff;
+        text-align: center;
+        -webkit-animation: glow 1s ease-in-out infinite alternate;
+        -moz-animation: glow 1s ease-in-out infinite alternate;
+        animation: glow 1s ease-in-out infinite alternate;
+    }
 
-        /* Scroll to top button */
+    @-webkit-keyframes glow {
+        from {
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px hsl(239, 88%, 53%), 0 0 40px hsl(239, 88%, 53%), 0 0 50px hsl(239, 88%, 53%), 0 0 60px hsl(239, 88%, 53%), 0 0 70px hsl(239, 88%, 53%);
+        }
+        /* to {
+            text-shadow: 0 0 20px #fff, 0 0 30px hsl(315, 100%, 50%), 0 0 40px hsl(315, 100%, 50%), 0 0 50px hsl(315, 100%, 50%), 0 0 60px hsl(315, 100%, 50%), 0 0 70px hsl(315, 100%, 50%), 0 0 80px hsl(315, 100%, 50%);
+        } */
+    }
         #scroll-to-top {
             display: none;
             position: fixed;
             bottom: 20px;
             right: 20px;
-            /* background-color: rgba(255, 255, 255, 0.8); */
             border: none;
             color: #333;
             padding: 10px 15px;
@@ -227,6 +241,22 @@
                 background-color: rgba(0, 0, 0, 0.9);
             }
         }
+
+
+.contact-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 20px; 
+}
+
+
+.contact-icons a {
+    margin-right: 10px; 
+    font-size: 50px;
+}
+
     </style>
 </head>
 
