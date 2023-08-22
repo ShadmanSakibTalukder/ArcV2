@@ -6,7 +6,7 @@
     <div class="container">
         <a class="navbar-brand" href="{{route('front_view')}}">
             <img src="{{asset('assets/img/logo.png')}}" alt="Logo" width="50" height="50">
-            Mission Support LLC FZ
+            Mission Support LLC FZ 
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

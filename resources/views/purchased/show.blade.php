@@ -3,7 +3,7 @@
         {{$purchased_order->po_no}}
     </x-slot:title>
     {{-- <h4>{{$purchased_order->po_no}}</h4> --}}
-
+     <div class="content-wrapper">
     <div class="company-details">
         <h2>{{$purchased_order->company}}</h2>
         <p>{{$purchased_order->company_address}}</p>
@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    </div>
+    
 
 
 
@@ -179,7 +179,7 @@
         <div class="line"></div>
         <p class="small-text align-middle text-center">For more info on this purchase order, feel free to contact: missionsupport.procurement@protonmail.com</p>
     </div>
-
+</div>
 
 
 </x-master>
