@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BuyersController;
 use App\Http\Controllers\CatelogPartListController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MensPurchaseOrderController;
 use App\Http\Controllers\TendersController;
 use App\Http\Controllers\VendorsController;
@@ -77,6 +78,12 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::get('/profit_loss/active/{id}', [ProfitLossController::class, 'active'])->name('profit_loss.active');
     Route::get('/profit_loss/inactive/{id}', [ProfitLossController::class, 'inactive'])->name('profit_loss.inactive');
+
+
+
+    Route::get('/invoices/active/{id}', [InvoiceController::class, 'active'])->name('invoices.active');
+    Route::get('/invoices/inactive/{id}', [InvoiceController::class, 'inactive'])->name('invoices.inactive');
+    Route::resource('/invoices', InvoiceController::class);
 });
 Route::prefix('support')->middleware(['auth', 'isSupport'])->group(function () {
 
