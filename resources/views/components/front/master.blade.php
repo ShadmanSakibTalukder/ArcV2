@@ -197,6 +197,12 @@
             padding: 20px 0;
             text-align: center;
         }
+        .glow-text-fixed {
+             font-size: 80px;
+             color: hsl(180, 93%, 49%);
+             text-align: center;
+             text-shadow: 10px 0 10px hsl(239, 88%, 53%);
+}
         .glow {
         font-size: 80px;
         color: #fff;
@@ -244,6 +250,7 @@
             }
         }
 
+        
 
 .contact-icons {
     display: flex;

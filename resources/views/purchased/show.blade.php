@@ -49,9 +49,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" style="text-align: right;">
+            <div class="col-md-6 text-end">
                 <h5>Shipping Address</h5>
-                <div class="card mb-3 border-0" style="text-align: right;"" style="width: 100%;">
+                <div class="card mb-3 border-0" style="width: 100%;">
                     <p>
                         <strong>Commandant</strong><br>
                         Central Maintenance Transport Depot (CMTD),<br>
