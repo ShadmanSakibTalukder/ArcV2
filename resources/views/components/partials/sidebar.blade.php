@@ -44,6 +44,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{route('invoices.index')}}">
+                        <i class="fa-solid fa-ghost fa-shake fa-xl"></i>
+                        Invoices
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="{{route('vendors.index')}}">
                         <i class="fa-solid fa-ghost fa-shake fa-xl"></i>
                         Vendors
