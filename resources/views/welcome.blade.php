@@ -7,7 +7,6 @@
 
     <section class="hero" id="gallery">
         <div class="container">
-            <!-- Image carousel will be added here -->
             <img src="{{asset('assets/img/maxxpro.png')}}" alt="Logo">
             <h2 class="glow-text-fixed">Mission Support LLC FZ</h2>
         </div>
