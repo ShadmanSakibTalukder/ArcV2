@@ -23,7 +23,7 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: 250px; /* Adjust the width as needed */
+    width: 230px; /* Adjust the width as needed */
     background-color: #f9f9f9;
     z-index: 1000;
     overflow-y: auto;
